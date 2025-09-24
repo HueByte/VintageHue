@@ -8,8 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
 ### Changed
+
 ### Fixed
+
 ### Removed
 
 ## [1.0.0] - 2024-09-24
@@ -17,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Initial release of HueHordes mod for Vintage Story.
 
 ### Added
+
 - **Core horde spawning system** - Periodic wave spawning every 3 days (configurable)
 - **Player-specific tracking** - Individual horde timers for each player
 - **Configurable spawn parameters** - Adjustable timing, count, radius, and entity types
@@ -28,6 +32,7 @@ Initial release of HueHordes mod for Vintage Story.
 - **ModSystem architecture** - Follows Vintage Story modding best practices
 
 ### Configuration Options
+
 - `DaysBetweenHordes`: Days between horde events (default: 3)
 - `Count`: Number of mobs per horde (default: 8)
 - `SpawnRadiusMin/Max`: Spawn distance from player (default: 12-24 blocks)
@@ -37,6 +42,7 @@ Initial release of HueHordes mod for Vintage Story.
 - `NudgeSpeed`: Movement speed multiplier (default: 0.05)
 
 ### Technical Details
+
 - **Framework**: .NET 8.0
 - **API**: Vintage Story ModSystem architecture
 - **Dependencies**: VintagestoryAPI.dll, Newtonsoft.Json

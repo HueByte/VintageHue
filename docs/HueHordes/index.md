@@ -54,6 +54,7 @@ HueHordes is a sophisticated horde modification for Vintage Story that revolutio
 ## 🌟 Latest Updates
 
 ### Current Version: v1.1.0
+
 - **Command System** - Full administrative command suite
 - **Debug Tools** - Visual debugging and performance monitoring
 - **Statistics Tracking** - Comprehensive activity monitoring

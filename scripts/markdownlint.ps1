@@ -51,7 +51,17 @@ function Write-ColorOutput {
         [string]$Message,
         [string]$Color = "White"
     )
-    Write-Host $Message -ForegroundColor $Color
+
+    # Use simple Write-Host without complex formatting to avoid terminal compatibility issues
+    if ($env:NO_COLOR -or $env:CI) {
+        Write-Host $Message
+    } else {
+        try {
+            Write-Host $Message -ForegroundColor $Color
+        } catch {
+            Write-Host $Message
+        }
+    }
 }
 
 function Test-NodeInstalled {

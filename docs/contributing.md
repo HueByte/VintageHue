@@ -1,22 +1,25 @@
 # Contributing to HueByte Mods
 
-Thank you for your interest in contributing to HueByte mods! This guide will help you get started with contributing to any of our projects.
+Thank you for your interest in contributing to HueByte mods! This guide will help you get started with contributing to any of my projects.
 
 ## 🤝 Ways to Contribute
 
 ### 🐛 Bug Reports
+
 - Search existing issues before reporting
-- Use our bug report templates
+- Use bug report templates
 - Provide detailed reproduction steps
 - Include system information and logs
 
 ### 💡 Feature Requests
-- Check our roadmap first
+
+- Check roadmap first
 - Use feature request templates
 - Explain the use case and benefits
 - Consider implementation complexity
 
 ### 🔧 Code Contributions
+
 - Fork the repository
 - Create a feature branch
 - Write tests for new functionality
@@ -24,6 +27,7 @@ Thank you for your interest in contributing to HueByte mods! This guide will hel
 - Submit a pull request
 
 ### 📖 Documentation
+
 - Improve existing documentation
 - Add examples and tutorials
 - Fix typos and formatting
@@ -32,6 +36,7 @@ Thank you for your interest in contributing to HueByte mods! This guide will hel
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - .NET 8 SDK or later
 - Git for version control
 - Your preferred IDE (Visual Studio, VS Code, Rider)
@@ -40,22 +45,26 @@ Thank you for your interest in contributing to HueByte mods! This guide will hel
 ### Setup Development Environment
 
 1. **Fork and Clone**
+
    ```bash
    git clone https://github.com/YourUsername/HueHordes.git
    cd HueHordes
    ```
 
 2. **Install Dependencies**
+
    ```bash
    dotnet restore
    ```
 
 3. **Run Tests**
+
    ```bash
    dotnet test
    ```
 
 4. **Build the Project**
+
    ```bash
    ./scripts/build.ps1
    ```
@@ -63,6 +72,7 @@ Thank you for your interest in contributing to HueByte mods! This guide will hel
 ## 📋 Coding Standards
 
 ### Code Style
+
 - Follow existing code patterns
 - Use meaningful variable and method names
 - Add XML documentation for public APIs
@@ -70,6 +80,7 @@ Thank you for your interest in contributing to HueByte mods! This guide will hel
 - Use async/await for asynchronous operations
 
 ### Testing Requirements
+
 - Write unit tests for new functionality
 - Maintain high test coverage (>90%)
 - Use descriptive test names
@@ -77,6 +88,7 @@ Thank you for your interest in contributing to HueByte mods! This guide will hel
 - Test edge cases and error conditions
 
 ### Documentation
+
 - Update README files for significant changes
 - Add XML documentation for public methods
 - Include code examples in documentation
@@ -85,13 +97,16 @@ Thank you for your interest in contributing to HueByte mods! This guide will hel
 ## 🔄 Development Workflow
 
 ### Branch Naming
+
 - `feature/description` - New features
 - `bugfix/issue-number` - Bug fixes
 - `docs/topic` - Documentation updates
 - `refactor/component` - Code refactoring
 
 ### Commit Messages
+
 Follow conventional commit format:
+
 ```
 type(scope): description
 
@@ -103,6 +118,7 @@ type(scope): description
 Types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
 
 Examples:
+
 - `feat(ai): add formation movement patterns`
 - `fix(config): resolve hot-reload file watcher issue`
 - `docs(commands): update command reference examples`
@@ -130,6 +146,7 @@ Examples:
 ## 🧪 Testing Guidelines
 
 ### Test Structure
+
 ```csharp
 [Fact]
 public async Task MethodName_Scenario_ExpectedResult()
@@ -147,6 +164,7 @@ public async Task MethodName_Scenario_ExpectedResult()
 ```
 
 ### Test Categories
+
 - **Unit Tests**: Test individual components in isolation
 - **Integration Tests**: Test component interactions
 - **Performance Tests**: Validate performance requirements
@@ -155,15 +173,18 @@ public async Task MethodName_Scenario_ExpectedResult()
 ## 📚 Resources
 
 ### Documentation
+
 - [Architecture Overview](HueHordes/articles/development/architecture.md)
 - [API Reference](HueHordes/api/index.md)
 - [Building from Source](HueHordes/articles/development/building.md)
 
 ### Community
+
 - [GitHub Discussions](https://github.com/HueByte/HueHordes/discussions)
 - [Issue Tracker](https://github.com/HueByte/HueHordes/issues)
 
 ### Development Tools
+
 - [.NET 8 SDK](https://dotnet.microsoft.com/download)
 - [Visual Studio Code](https://code.visualstudio.com/)
 - [Git](https://git-scm.com/)

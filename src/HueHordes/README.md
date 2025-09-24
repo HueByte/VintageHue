@@ -5,12 +5,14 @@ A Vintage Story mod that implements a periodic horde spawning system. The mod sp
 ## Features
 
 ### Core Horde System
+
 - **Periodic Horde Events**: Spawns hordes every 3 days by default (configurable)
 - **Per-Player Tracking**: Each player has independent horde timers
 - **Admin Commands**: Full control over horde timing and testing
 - **Configurable Everything**: Spawn counts, timing, radius, entity types, and behavior
 
 ### Advanced AI System
+
 - **Player Base Detection**: Automatically detects enclosed areas, walls, and gates
 - **Smart Spawning**: Entities spawn outside detected player bases, not inside them
 - **Intelligent Targeting**: Dynamic target switching between players, base entrances, and patrol areas
@@ -160,6 +162,7 @@ The mod integrates with Vintage Story's help system. Use these commands to get i
 ```
 
 Each command includes comprehensive descriptions explaining:
+
 - What the command does
 - When to use it
 - Expected parameters

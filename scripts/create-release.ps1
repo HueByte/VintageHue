@@ -81,21 +81,15 @@ function Write-ColorOutput {
         [string]$Color = "White"
     )
 
-    $colors = @{
-        "Red"     = "91"
-        "Green"   = "92"
-        "Yellow"  = "93"
-        "Blue"    = "94"
-        "Magenta" = "95"
-        "Cyan"    = "96"
-        "White"   = "97"
-    }
-
-    if ($colors.ContainsKey($Color)) {
-        Write-Host "`e[$($colors[$Color])m$Message`e[0m"
-    }
-    else {
+    # Use PowerShell's built-in color support instead of ANSI codes for better compatibility
+    if ($env:NO_COLOR -or $env:CI) {
         Write-Host $Message
+    } else {
+        try {
+            Write-Host $Message -ForegroundColor $Color
+        } catch {
+            Write-Host $Message
+        }
     }
 }
 

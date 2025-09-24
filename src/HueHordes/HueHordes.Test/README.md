@@ -5,6 +5,7 @@ This project contains comprehensive unit and integration tests for the HueHordes
 ## Current Status ✅
 
 **AI System Test Framework Successfully Created!**
+
 - ✅ Project structure established
 - ✅ Dependencies configured (xUnit, FluentAssertions, Moq, Coverlet)
 - ✅ Basic tests passing (9/9 framework validation tests)
@@ -18,6 +19,7 @@ This project contains comprehensive unit and integration tests for the HueHordes
 ## Test Structure
 
 ### Currently Available
+
 - **BasicTests.cs** - Framework validation tests (9 tests passing)
   - Test framework verification
   - FluentAssertions validation
@@ -35,6 +37,7 @@ This project contains comprehensive unit and integration tests for the HueHordes
   - Performance testing patterns
 
 ### Planned (requires VintagestoryAPI setup)
+
 - **AI/**: Tests for async AI components
 - **Models/**: Tests for data models
 - **Integration/**: Full system integration tests
@@ -50,6 +53,7 @@ This project contains comprehensive unit and integration tests for the HueHordes
 ## Running Tests ✅
 
 ### Via Command Line (Working)
+
 ```bash
 cd src/HueHordes/HueHordes.Test
 dotnet build    # ✅ Builds successfully
@@ -57,14 +61,17 @@ dotnet test     # ✅ 9/9 tests pass
 ```
 
 ### With Coverage
+
 ```bash
 dotnet test --collect:"XPlat Code Coverage"
 ```
 
 ### Via Visual Studio
+
 Open `Main.sln` and use Test Explorer to run tests.
 
 ## Test Results
+
 ```
 Basic Framework Tests: Passed!  - Failed: 0, Passed: 9, Skipped: 0, Total: 9
 AI System Tests:      Passed!  - Failed: 0, Passed: 24, Skipped: 0, Total: 24
@@ -99,6 +106,7 @@ To enable the full test suite including AI and integration tests:
 ## Architecture Benefits
 
 The test project provides:
+
 - **Isolated testing** of mod components
 - **Modern .NET 8** async/await testing patterns
 - **Comprehensive mocking** for external dependencies

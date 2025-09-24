@@ -27,6 +27,7 @@ HueHordes/
 ## Current Mods
 
 ### 🧟 HueHordes - Vintage Story Horde Mod
+
 **Location:** `src/HueHordes/`
 **Game:** Vintage Story
 **Status:** ✅ Active Development
@@ -42,6 +43,7 @@ An advanced horde spawning modification for Vintage Story that features:
 - **📊 Performance Monitoring** - Built-in metrics and statistics tracking
 
 **Key Features:**
+
 - Spawns hordes outside detected player bases (not inside them!)
 - Configurable spawn intervals, entity types, and behavior
 - Advanced pathfinding and line-of-sight calculations
@@ -57,24 +59,28 @@ An advanced horde spawning modification for Vintage Story that features:
 All mods in this repository follow strict development standards:
 
 ### 🏗️ Architecture
+
 - **Modern .NET** - Latest framework versions with nullable reference types
 - **Async/Await** - Task-based asynchronous programming (TAP)
 - **SOLID Principles** - Clean, maintainable, and extensible code
 - **Dependency Injection** - Proper separation of concerns
 
 ### 🧪 Testing
+
 - **Comprehensive Test Suites** - Unit, integration, and performance tests
 - **High Code Coverage** - Aim for >90% test coverage
 - **Continuous Integration** - Automated testing on all commits
 - **Test-Driven Development** - Tests written alongside or before implementation
 
 ### 📦 Build & Deployment
+
 - **Automated Builds** - Cake Build system with PowerShell scripts
 - **Version Management** - Semantic versioning (SemVer)
 - **Documentation** - Comprehensive README files and code documentation
 - **Cross-Platform** - Windows, macOS, and Linux compatibility where applicable
 
 ### 🔧 Code Quality
+
 - **Static Analysis** - Code analysis and linting
 - **Performance Monitoring** - Built-in metrics and profiling
 - **Error Handling** - Comprehensive exception handling and logging
@@ -83,34 +89,41 @@ All mods in this repository follow strict development standards:
 ## Getting Started
 
 ### Prerequisites
+
 - **.NET 8 SDK** or later
 - **Game-specific requirements** (see individual mod documentation)
 - **Visual Studio 2022**, **VS Code**, or **JetBrains Rider** (recommended)
 
 ### Quick Start
+
 1. **Clone the repository:**
+
    ```bash
    git clone https://github.com/HueByte/HueHordes.git
    cd HueHordes
    ```
 
 2. **Navigate to desired mod:**
+
    ```bash
    cd src/HueHordes  # Example: HueHordes mod
    ```
 
 3. **Build the mod:**
+
    ```bash
    ./build.ps1       # Windows
    ./build.sh        # Linux/macOS
    ```
 
 4. **Run tests:**
+
    ```bash
    dotnet test
    ```
 
 ### Development Workflow
+
 1. **Fork** the repository
 2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
 3. **Write** tests for new functionality
@@ -123,9 +136,10 @@ All mods in this repository follow strict development standards:
 
 ## Contributing
 
-We welcome contributions from the community! Please read our contributing guidelines before submitting pull requests.
+We welcome contributions from the community! Please read contributing guidelines before submitting pull requests.
 
 ### Types of Contributions
+
 - 🐛 **Bug Reports** - Help us identify and fix issues
 - ✨ **Feature Requests** - Suggest new functionality
 - 🔧 **Code Contributions** - Submit bug fixes or new features
@@ -133,6 +147,7 @@ We welcome contributions from the community! Please read our contributing guidel
 - 🧪 **Testing** - Add or improve test coverage
 
 ### Code Style
+
 - Follow existing code patterns and conventions
 - Use meaningful variable and method names
 - Add XML documentation for public APIs
@@ -142,24 +157,29 @@ We welcome contributions from the community! Please read our contributing guidel
 ## Support
 
 ### Getting Help
+
 - 📖 **Documentation** - Check the mod-specific README files
 - 🐛 **Issues** - [Report bugs or request features](https://github.com/HueByte/HueHordes/issues)
 - 💬 **Discussions** - [Community discussions and Q&A](https://github.com/HueByte/HueHordes/discussions)
 
 ### Community
+
 - **Discord** - [Join our Discord server](https://discord.gg/your-server) (if applicable)
 - **Steam Workshop** - Find published mods on respective game workshops
 
 ## Roadmap
 
 ### Planned Features
+
 - 🔄 **Auto-Update System** - Automatic mod updates
 - 🌍 **Multiplayer Enhancements** - Better multiplayer compatibility
 - 📊 **Web Dashboard** - Real-time statistics and configuration
 - 🎮 **Additional Games** - Support for more games and platforms
 
 ### Future Mods
+
 We're always working on new mods for various games. Stay tuned for:
+
 - Additional Vintage Story mods
 - Minecraft modifications
 - Other survival and strategy games

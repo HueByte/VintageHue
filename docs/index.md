@@ -8,10 +8,10 @@
 
 [![GitHub Stars](https://img.shields.io/github/stars/HueByte/HueHordes?style=for-the-badge&logo=github)](https://github.com/HueByte/HueHordes)
 [![Total Downloads](https://img.shields.io/badge/total%20downloads-10k%2B-success?style=for-the-badge)](https://github.com/HueByte/HueHordes/releases)
-[![Active Mods](https://img.shields.io/badge/active%20mods-1-blue?style=for-the-badge)](#our-mods)
+[![Active Mods](https://img.shields.io/badge/active%20mods-1-blue?style=for-the-badge)](#-my-mods)
 [![License](https://img.shields.io/github/license/HueByte/HueHordes?style=for-the-badge)](https://github.com/HueByte/HueHordes/blob/main/LICENSE)
 
-**[🚀 Browse Mods](#our-mods) • [📖 Documentation](#documentation) • [💻 GitHub](https://github.com/HueByte) • [🤝 Community](#community)**
+**[🚀 Browse Mods](#-my-mods) • [📖 Documentation](#-documentation) • [💻 GitHub](https://github.com/HueByte) • [🤝 Community](#-community)**
 
 </div>
 
@@ -21,7 +21,7 @@
 
 Welcome to the central hub for all **HueByte** game modifications! We create high-quality, open-source mods that enhance your gaming experience with advanced features, modern architecture, and comprehensive testing.
 
-### 🌟 What Makes Our Mods Special
+### 🌟 What Makes My Mods Special
 
 <div class="row">
   <div class="col-md-4">
@@ -79,7 +79,7 @@ Welcome to the central hub for all **HueByte** game modifications! We create hig
 
 ---
 
-## 🎯 Our Mods
+## 🎯 My Mods
 
 ### 🧟 HueHordes - Vintage Story Horde Mod
 
@@ -168,7 +168,7 @@ Welcome to the central hub for all **HueByte** game modifications! We create hig
 
 ### 📋 Documentation Standards
 
-All our mods follow consistent documentation standards:
+All my mods follow consistent documentation standards:
 
 - **📖 Complete User Guides** - From installation to advanced usage
 - **⚡ Command References** - Detailed syntax and examples
@@ -228,12 +228,13 @@ Every HueByte mod adheres to strict quality standards:
 ### 1. **Choose Your Game**
 
 Currently, we support:
+
 - **Vintage Story** - Medieval survival game
 - **More games coming soon!**
 
 ### 2. **Select a Mod**
 
-Browse our [available mods](#our-mods) and choose the ones that enhance your gameplay experience.
+Browse our [available mods](#-my-mods) and choose the ones that enhance your gameplay experience.
 
 ### 3. **Install & Configure**
 
@@ -249,9 +250,10 @@ Follow the detailed installation guides for each mod:
 
 ### 4. **Get Support**
 
-Join our community or check documentation if you need help:
-- 📖 [Documentation](#documentation)
-- 💬 [Community Support](#community)
+Join my community or check documentation if you need help:
+
+- 📖 [Documentation](#-documentation)
+- 💬 [Community Support](#-community)
 - 🐛 [Issue Tracker](https://github.com/HueByte/HueHordes/issues)
 
 ---
@@ -282,7 +284,7 @@ Join our community or check documentation if you need help:
 
 We welcome contributions from the community!
 
-#### 🎯 Ways to Contribute:
+#### 🎯 Ways to Contribute
 
 - **🐛 Bug Reports** - Help us identify and fix issues
 - **💡 Feature Requests** - Suggest new functionality
@@ -291,7 +293,7 @@ We welcome contributions from the community!
 - **🧪 Testing** - Help test new releases and features
 - **🌍 Translations** - Help translate mods to other languages
 
-#### 📋 Contribution Guidelines:
+#### 📋 Contribution Guidelines
 
 1. **Fork** the repository
 2. **Create** a feature branch
@@ -331,10 +333,10 @@ We welcome contributions from the community!
 
 | Resource | Description | Link |
 |----------|-------------|------|
-| **📖 Documentation** | Complete guides and references | [Browse Docs](#documentation) |
+| **📖 Documentation** | Complete guides and references | [Browse Docs](#-documentation) |
 | **🐛 Issue Tracker** | Bug reports and feature requests | [GitHub Issues](https://github.com/HueByte/HueHordes/issues) |
 | **💬 Discussions** | Community Q&A and support | [GitHub Discussions](https://github.com/HueByte/HueHordes/discussions) |
-| **📧 Email Support** | Direct developer contact | support@huebyte.dev |
+| **📧 Email Support** | Direct developer contact | <support@huebyte.dev> |
 
 ---
 
@@ -383,12 +385,14 @@ We welcome contributions from the community!
 ## 🔮 Roadmap
 
 ### 🎯 Short-term Goals (Q1 2025)
+
 - **Enhanced Documentation** - Interactive guides and tutorials
 - **Community Features** - Mod configuration sharing platform
 - **Performance Improvements** - Further optimization across all mods
 - **New Game Support** - Expand to additional games beyond Vintage Story
 
 ### 🚀 Long-term Vision (2025+)
+
 - **Mod Development Framework** - Tools for community mod creation
 - **Advanced AI Systems** - Machine learning integration
 - **Cross-Game Compatibility** - Unified mod architecture
@@ -424,7 +428,7 @@ We respect your privacy:
 
 <div align="center">
 
-## 🌟 Thank You for Using HueByte Mods!
+## 🌟 Thank You for Using HueByte Mods
 
 **Your support and feedback help us create better gaming experiences for everyone.**
 
@@ -436,6 +440,6 @@ We respect your privacy:
 
 **Made with ❤️ by HueByte | Powered by .NET 8 | Built for Gaming Communities**
 
-*Documentation hub last updated: December 2024*
+_Documentation hub last updated: December 2024_
 
 </div>
