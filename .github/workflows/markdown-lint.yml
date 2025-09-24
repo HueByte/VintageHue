@@ -2,18 +2,18 @@ name: Markdown Lint
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ master ]
     paths:
       - '**/*.md'
       - 'scripts/markdownlint.ps1'
-      - '.markdownlint.json'
+      - 'config/.markdownlint.json'
       - '.github/workflows/markdown-lint.yml'
   pull_request:
-    branches: [ main, develop ]
+    branches: [ master ]
     paths:
       - '**/*.md'
       - 'scripts/markdownlint.ps1'
-      - '.markdownlint.json'
+      - 'config/.markdownlint.json'
       - '.github/workflows/markdown-lint.yml'
 
 jobs:
@@ -35,19 +35,11 @@ jobs:
 
       - name: Check for markdownlint config
         run: |
-          if [ ! -f .markdownlint.json ]; then
-            echo "Creating default .markdownlint.json configuration"
-            cat > .markdownlint.json << 'EOF'
-          {
-            "default": true,
-            "MD013": { "line_length": 120 },
-            "MD033": { "allowed_elements": ["summary", "details", "br"] },
-            "MD041": false,
-            "MD046": { "style": "fenced" }
-          }
-          EOF
+          if [ ! -f config/.markdownlint.json ]; then
+            echo "❌ Missing config/.markdownlint.json configuration file"
+            exit 1
           else
-            echo "Using existing .markdownlint.json"
+            echo "✅ Using config/.markdownlint.json"
           fi
 
       - name: Run markdownlint on all markdown files
@@ -56,7 +48,7 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
 
           # Run markdownlint and capture results
-          if markdownlint-cli2 "**/*.md" "!node_modules" "!.git"; then
+          if markdownlint-cli2 "**/*.md" "!node_modules" "!.git" "!docs/HueHordes/_site" "!docs/HueHordes/_temp" "!docs/HueHordes/api" "!bin" "!obj" --config config/.markdownlint.json; then
             echo "✅ All markdown files passed linting!" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "**Files checked:**" >> $GITHUB_STEP_SUMMARY
