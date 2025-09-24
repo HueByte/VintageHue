@@ -26,8 +26,6 @@
 .PARAMETER SkipBuild
     Skip mod build step (useful if already built)
 
-.PARAMETER CreateGitHubRelease
-    Create GitHub release with built artifacts (default: true)
 
 .PARAMETER BuildPath
     Custom path to build artifacts (default: auto-detect from build output)
@@ -51,9 +49,6 @@
     .\scripts\create-release-enhanced.ps1 -ModName "HueHordes" -SkipBuild
     Create release without building (assumes already built)
 
-.EXAMPLE
-    .\scripts\create-release-enhanced.ps1 -ModName "HueHordes" -CreateGitHubRelease:$false
-    Create release without GitHub release (local only)
 #>
 
 param(
@@ -64,7 +59,6 @@ param(
     [switch]$DryRun = $false,
     [switch]$SkipLint = $false,
     [switch]$SkipBuild = $false,
-    [switch]$CreateGitHubRelease = $true,
     [string]$BuildPath = "",
     [switch]$Help = $false
 )
@@ -281,15 +275,6 @@ function Get-ModBuildArtifacts {
     return $artifacts
 }
 
-function Test-GitHubCLI {
-    try {
-        $ghVersion = gh --version 2>$null
-        return $LASTEXITCODE -eq 0
-    }
-    catch {
-        return $false
-    }
-}
 
 # Get current version and determine new version
 $currentVersion = Get-CurrentVersion -ModInfoPath $modInfoPath
@@ -309,14 +294,6 @@ if ($Version -eq $currentVersion) {
     exit 1
 }
 
-# Check if tag already exists
-$tagName = "v$Version"
-$existingTag = git tag -l $tagName
-if ($existingTag) {
-    Write-ColorOutput "❌ Error: Tag '$tagName' already exists" "Red"
-    exit 1
-}
-
 Write-ColorOutput ""
 
 # Check for uncommitted changes
@@ -333,8 +310,8 @@ if ($gitStatus -and -not $DryRun) {
 
 # Check current branch
 $currentBranch = git branch --show-current
-if ($currentBranch -ne "main") {
-    Write-ColorOutput "⚠️ Warning: You are not on the main branch (current: $currentBranch)" "Yellow"
+if ($currentBranch -ne "master") {
+    Write-ColorOutput "⚠️ Warning: You are not on the master branch (current: $currentBranch)" "Yellow"
     $continue = Read-Host "Do you want to continue anyway? (y/N)"
     if ($continue -ne "y" -and $continue -ne "Y") {
         Write-ColorOutput "Aborted by user" "Yellow"
@@ -358,16 +335,9 @@ else {
 # Step 2: Generate release notes from git history
 Write-ColorOutput "📝 Generating release notes from git history..." "Cyan"
 
-# Get commits since last tag
-$lastTag = git describe --tags --abbrev=0 2>$null
-if (-not $lastTag) {
-    $commitRange = "HEAD"
-    Write-ColorOutput "   No previous tags found, using all commits" "Yellow"
-}
-else {
-    $commitRange = "$lastTag..HEAD"
-    Write-ColorOutput "   Comparing against last tag: $lastTag" "Cyan"
-}
+# Get all commits for the mod since project start
+$commitRange = "HEAD"
+Write-ColorOutput "   Getting all commits for this release" "Cyan"
 
 # Get commits that affect this mod
 $modSpecificPath = "src/$ModName/"
@@ -413,7 +383,7 @@ $releaseNotes = @"
 
 ## 📦 Download
 
-- **[⬇️ Download $ModName v$Version](https://github.com/HueByte/HueHordes/releases/tag/v$Version)**
+- **[⬇️ Download $ModName v$Version](https://github.com/HueByte/HueHordes/releases)**
 - **Compatibility:** Vintage Story 1.21.1+
 - **Platforms:** Windows, Linux, macOS
 
@@ -435,7 +405,7 @@ $commitsList
 
 ---
 
-**Full Changelog**: https://github.com/HueByte/HueHordes/compare/$lastTag...v$Version
+**Full Changelog**: https://github.com/HueByte/HueHordes/commits/master
 "@
 
 # Step 3: Create release notes file
@@ -557,28 +527,6 @@ else {
     }
 }
 
-# Step 6: Create git tag
-Write-ColorOutput "🏷️ Creating git tag..." "Cyan"
-if ($DryRun) {
-    Write-ColorOutput "   [DRY RUN] Would create tag: $tagName" "Yellow"
-}
-else {
-    git tag -a $tagName -m "$ModName Release v$Version
-
-$commitsList
-
-🚀 Release v$Version
-📅 Released on $releaseDate"
-
-    if ($LASTEXITCODE -eq 0) {
-        Write-ColorOutput "✅ Tag $tagName created successfully" "Green"
-    }
-    else {
-        Write-ColorOutput "❌ Failed to create tag" "Red"
-        exit 1
-    }
-}
-
 Write-ColorOutput ""
 
 # Step 6: Collect build artifacts
@@ -595,13 +543,6 @@ if (-not $SkipBuild -or (Test-Path (Join-Path $modPath "$ModName\bin\Release")))
     }
     else {
         Write-ColorOutput "⚠️ No build artifacts found" "Yellow"
-        if ($CreateGitHubRelease -and -not $DryRun) {
-            $continue = Read-Host "Continue without artifacts? (y/N)"
-            if ($continue -ne "y" -and $continue -ne "Y") {
-                Write-ColorOutput "Aborted by user" "Yellow"
-                exit 0
-            }
-        }
     }
 }
 else {
@@ -614,7 +555,7 @@ Write-ColorOutput ""
 Write-ColorOutput "📋 Release Summary:" "Yellow"
 Write-ColorOutput "- Mod: $ModName" "White"
 Write-ColorOutput "- Version: $currentVersion → $Version" "White"
-Write-ColorOutput "- Tag: $tagName" "White"
+Write-ColorOutput "- Release notes: Generated from commit history" "White"
 Write-ColorOutput "- Release notes: $releaseNotesFile" "White"
 Write-ColorOutput "- Commits: $($formattedCommits.Count) changes included" "White"
 Write-ColorOutput ""
@@ -635,7 +576,7 @@ if ($DryRun) {
     Write-ColorOutput "   - Collect build artifacts for release" "White"
     Write-ColorOutput "3. Git Operations:" "Cyan"
     Write-ColorOutput "   - Commit version and documentation changes" "White"
-    Write-ColorOutput "   - Create and push git tag: $tagName" "White"
+    Write-ColorOutput "   - Create release documentation" "White"
     Write-ColorOutput "   - Push changes to origin/$currentBranch" "White"
     if ($CreateGitHubRelease) {
         Write-ColorOutput "4. GitHub Release:" "Cyan"
@@ -651,91 +592,27 @@ if ($DryRun) {
 }
 
 # Ask user confirmation to push
-Write-ColorOutput "❓ Push changes and tag to remote repository?" "Yellow"
+Write-ColorOutput "❓ Commit changes to repository?" "Yellow"
 Write-ColorOutput "This will:" "White"
-Write-ColorOutput "- Push commit to origin/$currentBranch" "White"
-Write-ColorOutput "- Push tag $tagName to origin" "White"
-Write-ColorOutput "- Trigger CI workflows" "White"
+Write-ColorOutput "- Commit version bump and release notes" "White"
+Write-ColorOutput "- Add release documentation" "White"
 Write-ColorOutput ""
 
-$pushConfirm = Read-Host "Enter 'yes' to push, or 'no' to finish locally"
+$commitConfirm = Read-Host "Enter 'yes' to commit, or 'no' to finish without committing"
 
-if ($pushConfirm -eq "yes") {
-    Write-ColorOutput "📤 Pushing to remote repository..." "Cyan"
+if ($commitConfirm -eq "yes") {
+    Write-ColorOutput "📤 Committing to repository..." "Cyan"
 
-    # Push commit
-    git push origin $currentBranch
-    if ($LASTEXITCODE -ne 0) {
-        Write-ColorOutput "❌ Failed to push commit" "Red"
-        exit 1
-    }
-
-    # Push tag
-    git push origin $tagName
-    if ($LASTEXITCODE -ne 0) {
-        Write-ColorOutput "❌ Failed to push tag" "Red"
-        exit 1
-    }
-
-    Write-ColorOutput "✅ Successfully pushed changes and tag!" "Green"
-
-    # Create GitHub release if requested
-    if ($CreateGitHubRelease) {
-        Write-ColorOutput ""
-        Write-ColorOutput "🚀 Creating GitHub release..." "Cyan"
-
-        if (-not (Test-GitHubCLI)) {
-            Write-ColorOutput "⚠️ GitHub CLI (gh) not found or not authenticated" "Yellow"
-            Write-ColorOutput "📦 Manual release creation:" "Cyan"
-            Write-ColorOutput "   URL: https://github.com/HueByte/HueHordes/releases/new?tag=$tagName" "White"
-            Write-ColorOutput "   Release notes file: $releaseNotesFile" "White"
-        }
-        else {
-            try {
-                $releaseArgs = @(
-                    "release", "create", $tagName,
-                    "--title", "$ModName v$Version",
-                    "--notes-file", $releaseNotesFile
-                )
-
-                # Add artifacts if available
-                if ($buildArtifacts.Count -gt 0) {
-                    Write-ColorOutput "📎 Attaching $($buildArtifacts.Count) artifact(s)..." "Cyan"
-                    foreach ($artifact in $buildArtifacts) {
-                        $releaseArgs += $artifact.Path
-                    }
-                }
-
-                & gh @releaseArgs
-
-                if ($LASTEXITCODE -eq 0) {
-                    Write-ColorOutput "✅ GitHub release created successfully!" "Green"
-                    $releaseUrl = "https://github.com/HueByte/HueHordes/releases/tag/$tagName"
-                    Write-ColorOutput "🔗 Release URL: $releaseUrl" "Cyan"
-                }
-                else {
-                    Write-ColorOutput "❌ Failed to create GitHub release (exit code: $LASTEXITCODE)" "Red"
-                    Write-ColorOutput "📦 Manual release creation:" "Cyan"
-                    Write-ColorOutput "   URL: https://github.com/HueByte/HueHordes/releases/new?tag=$tagName" "White"
-                }
-            }
-            catch {
-                Write-ColorOutput "❌ Error creating GitHub release: $_" "Red"
-                Write-ColorOutput "📦 Manual release creation:" "Cyan"
-                Write-ColorOutput "   URL: https://github.com/HueByte/HueHordes/releases/new?tag=$tagName" "White"
-            }
-        }
-    }
-
+    # No push, just local commit
+    Write-ColorOutput "✅ Changes committed locally!" "Green"
     Write-ColorOutput ""
     Write-ColorOutput "🎉 Release $ModName v$Version completed!" "Green"
+    Write-ColorOutput "📝 Release notes: $releaseNotesFile" "Cyan"
     Write-ColorOutput "📚 Documentation will be available at: $changelogUrl" "Cyan"
 }
 else {
-    Write-ColorOutput "✅ Release prepared locally" "Green"
-    Write-ColorOutput "📝 To push later, run:" "Cyan"
-    Write-ColorOutput "   git push origin $currentBranch" "White"
-    Write-ColorOutput "   git push origin $tagName" "White"
+    Write-ColorOutput "✅ Release prepared locally (not committed)" "Green"
+    Write-ColorOutput "📝 To commit later, add and commit the changes manually" "Cyan"
     Write-ColorOutput ""
     Write-ColorOutput "🎉 Local release $ModName v$Version completed!" "Green"
 }
