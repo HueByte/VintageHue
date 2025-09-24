@@ -1,0 +1,127 @@
+name: Markdown Lint
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - '**/*.md'
+      - 'scripts/markdownlint.ps1'
+      - '.markdownlint.json'
+      - '.github/workflows/markdown-lint.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - '**/*.md'
+      - 'scripts/markdownlint.ps1'
+      - '.markdownlint.json'
+      - '.github/workflows/markdown-lint.yml'
+
+jobs:
+  lint-markdown:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install markdownlint-cli2
+        run: npm install -g markdownlint-cli2
+
+      - name: Check for markdownlint config
+        run: |
+          if [ ! -f .markdownlint.json ]; then
+            echo "Creating default .markdownlint.json configuration"
+            cat > .markdownlint.json << 'EOF'
+          {
+            "default": true,
+            "MD013": { "line_length": 120 },
+            "MD033": { "allowed_elements": ["summary", "details", "br"] },
+            "MD041": false,
+            "MD046": { "style": "fenced" }
+          }
+          EOF
+          else
+            echo "Using existing .markdownlint.json"
+          fi
+
+      - name: Run markdownlint on all markdown files
+        run: |
+          echo "## 📝 Markdown Lint Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Run markdownlint and capture results
+          if markdownlint-cli2 "**/*.md" "!node_modules" "!.git"; then
+            echo "✅ All markdown files passed linting!" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Files checked:**" >> $GITHUB_STEP_SUMMARY
+            find . -name "*.md" -not -path "./node_modules/*" -not -path "./.git/*" | wc -l | xargs echo "- Total markdown files:" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ Some markdown files have linting issues." >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Please fix the issues above or run the local markdown linting script:" >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`bash" >> $GITHUB_STEP_SUMMARY
+            echo "./scripts/markdownlint.ps1 -Fix" >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
+
+      - name: Check specific documentation directories
+        run: |
+          echo "**Documentation structure check:**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Check docs structure
+          if [ -d "docs" ]; then
+            echo "- ✅ docs/ directory exists" >> $GITHUB_STEP_SUMMARY
+
+            # Count files by type
+            README_COUNT=$(find docs -name "README.md" -o -name "readme.md" | wc -l)
+            CHANGELOG_COUNT=$(find docs -name "CHANGELOG.md" -o -name "changelog.md" | wc -l)
+
+            echo "- 📚 README files: $README_COUNT" >> $GITHUB_STEP_SUMMARY
+            echo "- 📋 Changelog files: $CHANGELOG_COUNT" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- ⚠️ docs/ directory not found" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # Check for common documentation files in root
+          ROOT_DOCS=""
+          [ -f "README.md" ] && ROOT_DOCS="$ROOT_DOCS README.md"
+          [ -f "CHANGELOG.md" ] && ROOT_DOCS="$ROOT_DOCS CHANGELOG.md"
+          [ -f "CONTRIBUTING.md" ] && ROOT_DOCS="$ROOT_DOCS CONTRIBUTING.md"
+
+          if [ -n "$ROOT_DOCS" ]; then
+            echo "- 📖 Root documentation:$ROOT_DOCS" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Validate links (basic check)
+        run: |
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Link validation:**" >> $GITHUB_STEP_SUMMARY
+
+          # Basic check for broken internal links (markdown links to files that don't exist)
+          BROKEN_LINKS=0
+
+          for file in $(find . -name "*.md" -not -path "./node_modules/*" -not -path "./.git/*"); do
+            # Extract relative file links [text](./path/to/file.md)
+            grep -oE '\[([^\]]+)\]\(\./[^)]+\)' "$file" | grep -oE '\(\./[^)]+\)' | sed 's/[()]//g' | while read link; do
+              # Convert relative path to absolute from file's directory
+              DIR=$(dirname "$file")
+              FULL_PATH="$DIR/$link"
+
+              if [ ! -f "$FULL_PATH" ] && [ ! -d "$FULL_PATH" ]; then
+                echo "- ❌ Broken link in $file: $link" >> $GITHUB_STEP_SUMMARY
+                BROKEN_LINKS=$((BROKEN_LINKS + 1))
+              fi
+            done
+          done
+
+          if [ $BROKEN_LINKS -eq 0 ]; then
+            echo "- ✅ No broken internal file links detected" >> $GITHUB_STEP_SUMMARY
+          fi

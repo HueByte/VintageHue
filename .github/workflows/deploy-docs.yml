@@ -1,0 +1,99 @@
+name: Deploy DocFX Documentation
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'docs/**'
+      - 'config/docfx.json'
+      - '.github/workflows/deploy-docs.yml'
+    tags:
+      - 'v*'
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "docs-deployment"
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Install DocFX
+        run: dotnet tool install -g docfx
+
+      - name: Build DocFX Documentation
+        working-directory: config
+        run: |
+          echo "Building documentation with DocFX..."
+          docfx docfx.json --warningsAsErrors
+
+      - name: Prepare deployment
+        run: |
+          # Create deployment directory
+          mkdir -p deploy
+
+          # Copy generated site to deployment directory
+          cp -r docs/_site/* deploy/
+
+          # Create .nojekyll to bypass Jekyll processing on GitHub Pages
+          touch deploy/.nojekyll
+
+          # Create CNAME if custom domain is needed (optional)
+          # echo "yourdomain.com" > deploy/CNAME
+
+          echo "Documentation built successfully!"
+          echo "Output size: $(du -sh deploy | cut -f1)"
+
+      - name: Deploy to web branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./deploy
+          publish_branch: web
+          force_orphan: true
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: |
+            Deploy documentation to GitHub Pages
+
+            Generated from commit ${{ github.sha }}
+
+            🤖 Automated deployment
+
+      - name: Deployment Summary
+        run: |
+          echo "## 📚 Documentation Deployment Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "The documentation has been successfully deployed to the \`web\` branch." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🔗 Access Documentation" >> $GITHUB_STEP_SUMMARY
+          echo "Once GitHub Pages is configured to use the \`web\` branch, your documentation will be available at:" >> $GITHUB_STEP_SUMMARY
+          echo "**https://${{ github.repository_owner }}.github.io/HueHordes**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### ⚙️ GitHub Pages Setup" >> $GITHUB_STEP_SUMMARY
+          echo "To complete the setup:" >> $GITHUB_STEP_SUMMARY
+          echo "1. Go to **Settings** → **Pages** in your repository" >> $GITHUB_STEP_SUMMARY
+          echo "2. Set **Source** to \"Deploy from a branch\"" >> $GITHUB_STEP_SUMMARY
+          echo "3. Select **Branch: web** and **/ (root)** folder" >> $GITHUB_STEP_SUMMARY
+          echo "4. Click **Save**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Deployment Details:**" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch**: web" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit**: \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Trigger**: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY

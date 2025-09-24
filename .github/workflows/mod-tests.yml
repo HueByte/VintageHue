@@ -1,0 +1,131 @@
+name: Mod Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'src/**'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'src/**'
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      huehordes: ${{ steps.changes.outputs.huehordes }}
+      matrix: ${{ steps.generate-matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            huehordes:
+              - 'src/HueHordes/**'
+
+      - name: Generate test matrix
+        id: generate-matrix
+        run: |
+          matrix="[]"
+
+          if [ "${{ steps.changes.outputs.huehordes }}" == "true" ]; then
+            matrix=$(echo $matrix | jq '. + [{"name": "HueHordes", "path": "src/HueHordes", "solution": "Main.sln", "test-project": "HueHordes.Test"}]')
+          fi
+
+          # Future mods can be added here following the same pattern:
+          # if [ "${{ steps.changes.outputs.othermod }}" == "true" ]; then
+          #   matrix=$(echo $matrix | jq '. + [{"name": "OtherMod", "path": "src/OtherMod", "solution": "OtherMod.sln", "test-project": "OtherMod.Test"}]')
+          # fi
+
+          echo "matrix=$(echo $matrix | jq -c .)" >> $GITHUB_OUTPUT
+          echo "Generated matrix: $matrix"
+
+  test-mods:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.matrix != '[]'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        mod: ${{ fromJson(needs.detect-changes.outputs.matrix) }}
+      fail-fast: false
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json', '**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Restore dependencies for ${{ matrix.mod.name }}
+        run: dotnet restore ${{ matrix.mod.path }}/${{ matrix.mod.solution }}
+
+      - name: Build ${{ matrix.mod.name }}
+        run: dotnet build ${{ matrix.mod.path }}/${{ matrix.mod.solution }} --no-restore --configuration Release
+
+      - name: Test ${{ matrix.mod.name }}
+        run: |
+          cd ${{ matrix.mod.path }}
+          dotnet test ${{ matrix.mod.test-project }}/${{ matrix.mod.test-project }}.csproj \
+            --no-build \
+            --configuration Release \
+            --verbosity normal \
+            --collect:"XPlat Code Coverage" \
+            --results-directory ./TestResults \
+            --logger trx \
+            --logger "console;verbosity=detailed"
+
+      - name: Upload test results for ${{ matrix.mod.name }}
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results-${{ matrix.mod.name }}
+          path: |
+            ${{ matrix.mod.path }}/TestResults/**/*.trx
+            ${{ matrix.mod.path }}/TestResults/**/*.xml
+
+      - name: Upload coverage reports for ${{ matrix.mod.name }}
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-${{ matrix.mod.name }}
+          path: ${{ matrix.mod.path }}/TestResults/**/coverage.cobertura.xml
+
+  test-summary:
+    needs: [detect-changes, test-mods]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test Summary
+        run: |
+          echo "## Test Results Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ "${{ needs.detect-changes.outputs.matrix }}" == "[]" ]; then
+            echo "✅ No mod changes detected - no tests needed" >> $GITHUB_STEP_SUMMARY
+          elif [ "${{ needs.test-mods.result }}" == "success" ]; then
+            echo "✅ All mod tests passed successfully" >> $GITHUB_STEP_SUMMARY
+          elif [ "${{ needs.test-mods.result }}" == "failure" ]; then
+            echo "❌ Some mod tests failed" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠️ Test execution was cancelled or skipped" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Changed mods in this PR:**" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ needs.detect-changes.outputs.huehordes }}" == "true" ]; then
+            echo "- 🧟 HueHordes" >> $GITHUB_STEP_SUMMARY
+          fi

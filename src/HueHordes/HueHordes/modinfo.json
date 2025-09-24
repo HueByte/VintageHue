@@ -4,7 +4,7 @@
 	"modid": "huehordes",
 	"name": "huehordes",
 	"authors": ["HueByte"],
-	"description": "To be added",
+	"description": "Periodic horde spawning system for enhanced survival gameplay",
 	"version": "1.0.0",
 	"dependencies": {
 		"game": "1.21.1"

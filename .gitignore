@@ -677,7 +677,58 @@ fabric.properties
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/csharp,visualstudio,visualstudiocode,rider
+
+# HueByte Mods Repository - Additional Exclusions
+
+# Claude Code configuration (keep some, ignore others)
 .claude/settings.local.json
 .vscode/launch.json
 .vscode/tasks.json
 CLAUDE.md
+
+# Game-specific files
+# Vintage Story
+VintagestoryData/
+VintageStoryData/
+Mods/
+ModData/
+Saves/
+Screenshots/
+Logs/
+
+# Minecraft
+.minecraft/
+mods/
+config/
+saves/
+resourcepacks/
+shaderpacks/
+
+# Mod development temp files
+*.mod
+*.zip
+publish/
+dist/
+release/
+
+# Test results and coverage
+TestResults/
+coverage/
+*.trx
+*.cobertura.xml
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Temporary development files
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+.DS_Store
+**/_site/*
