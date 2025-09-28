@@ -1,3 +1,0 @@
-# This file ensures the api directory exists in git
-
-Generated API documentation files (*.yml, .manifest, index.md) are ignored by .gitignore

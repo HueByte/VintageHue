@@ -1,0 +1,24 @@
+# Ensure all text files use LF line endings
+* text=auto eol=lf
+
+# Explicitly set line endings for specific file types
+*.cs text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.xml text eol=lf
+*.txt text eol=lf
+*.ps1 text eol=lf
+*.sh text eol=lf
+
+# Binary files should not be modified
+*.dll binary
+*.exe binary
+*.zip binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary

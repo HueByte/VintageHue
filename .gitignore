@@ -736,4 +736,5 @@ coverage/
 **/_site/*
 **/api/*.yml
 **/api/.manifest
-**/api/index.md
+# Keep index.md files in api folders
+!**/api/index.md
