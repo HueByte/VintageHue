@@ -99,7 +99,7 @@ All mods in this repository follow strict development standards:
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/HueByte/HueHordes.git
+   git clone https://github.com/HueByte/VintageHue.git
    cd HueHordes
    ```
 
@@ -159,8 +159,8 @@ We welcome contributions from the community! Please read contributing guidelines
 ### Getting Help
 
 - 📖 **Documentation** - Check the mod-specific README files
-- 🐛 **Issues** - [Report bugs or request features](https://github.com/HueByte/HueHordes/issues)
-- 💬 **Discussions** - [Community discussions and Q&A](https://github.com/HueByte/HueHordes/discussions)
+- 🐛 **Issues** - [Report bugs or request features](https://github.com/HueByte/VintageHue/issues)
+- 💬 **Discussions** - [Community discussions and Q&A](https://github.com/HueByte/VintageHue/discussions)
 
 ### Community
 
@@ -200,8 +200,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Made with ❤️ by HueByte**
 
-[![GitHub stars](https://img.shields.io/github/stars/HueByte/HueHordes.svg?style=social&label=Star)](https://github.com/HueByte/HueHordes)
-[![GitHub forks](https://img.shields.io/github/forks/HueByte/HueHordes.svg?style=social&label=Fork)](https://github.com/HueByte/HueHordes/fork)
-[![GitHub watchers](https://img.shields.io/github/watchers/HueByte/HueHordes.svg?style=social&label=Watch)](https://github.com/HueByte/HueHordes)
+[![GitHub stars](https://img.shields.io/github/stars/HueByte/VintageHue.svg?style=social&label=Star)](https://github.com/HueByte/VintageHue)
+[![GitHub forks](https://img.shields.io/github/forks/HueByte/VintageHue.svg?style=social&label=Fork)](https://github.com/HueByte/VintageHue/fork)
+[![GitHub watchers](https://img.shields.io/github/watchers/HueByte/VintageHue.svg?style=social&label=Watch)](https://github.com/HueByte/VintageHue)
 
 </div>

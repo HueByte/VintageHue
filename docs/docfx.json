@@ -4,12 +4,12 @@
       "src": [
         {
           "files": [
-            "HueHordes/**/*.csproj"
+            "HueHordes/HueHordes/HueHordes.csproj"
           ],
-          "src": "../../../src/HueHordes"
+          "src": "../src"
         }
       ],
-      "dest": "api",
+      "dest": "HueHordes/api",
       "includePrivateMembers": false,
       "disableGitFeatures": false,
       "disableDefaultFilter": false,
@@ -23,23 +23,33 @@
     "content": [
       {
         "files": [
-          "api/**.yml",
-          "api/index.md"
+          "HueHordes/api/**.yml",
+          "HueHordes/api/index.md"
         ]
       },
       {
         "files": [
-          "articles/**.md",
-          "articles/**/toc.yml",
-          "toc.yml",
-          "*.md"
+          "**/*.md",
+          "**/toc.yml"
+        ],
+        "exclude": [
+          "_site/**",
+          "HueHordes/api/**.md"
         ]
       }
     ],
     "resource": [
       {
         "files": [
-          "images/**"
+          "**/images/**",
+          "**/*.png",
+          "**/*.jpg",
+          "**/*.jpeg",
+          "**/*.gif",
+          "**/*.svg"
+        ],
+        "exclude": [
+          "_site/**"
         ]
       }
     ],
@@ -48,7 +58,7 @@
     "fileMetadataFiles": [],
     "template": [
       "default",
-      "templates/hue-horizon"
+      "modern"
     ],
     "postProcessors": [],
     "markdownEngineName": "markdig",
@@ -57,11 +67,17 @@
     "cleanupCacheHistory": false,
     "disableGitFeatures": false,
     "globalMetadata": {
-      "_appTitle": "HueHordes Documentation",
-      "_appName": "HueHordes",
-      "_appFaviconPath": "images/favicon.ico",
+      "_appTitle": "VintageHue Mods Documentation",
+      "_appName": "VintageHue",
       "_enableSearch": true,
-      "_enableNewTab": true
+      "_enableNewTab": true,
+      "_gitContribute": {
+        "repo": "https://github.com/HueByte/VintageHue",
+        "branch": "master",
+        "path": "docs"
+      },
+      "_gitUrlPattern": "github",
+      "_enableDarkMode": true
     }
   }
 }

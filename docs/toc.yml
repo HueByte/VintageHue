@@ -1,6 +1,5 @@
-- name: HueByte Mods
+- name: Home
   href: index.md
-- name: Contributing
-  href: contributing.md
 - name: HueHordes
-  href: HueHordes/toc.yml
+  href: HueHordes/
+  homepage: HueHordes/index.md

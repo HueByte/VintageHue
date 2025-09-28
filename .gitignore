@@ -731,4 +731,9 @@ coverage/
 *.swp
 *~
 .DS_Store
+
+# DocFX generated files
 **/_site/*
+**/api/*.yml
+**/api/.manifest
+**/api/index.md

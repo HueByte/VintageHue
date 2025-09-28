@@ -1,14 +1,10 @@
 - name: Overview
   href: index.md
+- name: Articles
+  href: Articles/toc.yml
 - name: Changelog
-  items:
-  - name: v1.1.0
-    href: changelog/v1.1.0.md
-  - name: v1.0.0
-    href: changelog/v1.0.0.md
-- name: Release Notes
-  items:
-  - name: v1.1.0 Release
-    href: release-notes/v1.1.0-release.md
-  - name: v1.0.0 Release
-    href: release-notes/v1.0.0-release.md
+  href: Changelog/toc.yml
+- name: Releases
+  href: Releases/toc.yml
+- name: API Reference
+  href: api/

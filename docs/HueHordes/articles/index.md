@@ -1,16 +1,18 @@
 # HueHordes Articles
 
-## Getting Started
+This section contains detailed articles and guides for HueHordes.
 
-- [Installation](getting-started/installation.md)
-- [Configuration](getting-started/configuration.md)
+## Available Articles
 
-## Guides
+*Articles will be added here as the documentation grows.*
 
-- [Basic Usage](guides/basic-usage.md)
-- [Advanced Features](guides/advanced-features.md)
+## Article Categories
 
-## Reference
+- **Getting Started** - Basic setup and installation
+- **User Guides** - How to use mod features
+- **Configuration** - Setting up the mod
+- **Troubleshooting** - Common issues and solutions
 
-- [API Reference](api-reference/index.md)
-- [Changelog](changelog/index.md)
+---
+
+*For the latest release information, see [Releases](../Releases/)*

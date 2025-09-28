@@ -1,4 +1,2 @@
-- name: Getting Started
-  href: getting-started/
-- name: Changelog
-  href: changelog/
+- name: Overview
+  href: index.md
