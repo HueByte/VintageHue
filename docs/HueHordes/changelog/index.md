@@ -18,7 +18,3 @@ Each changelog follows the [Keep a Changelog](https://keepachangelog.com/) forma
 - **Removed** - Removed features
 - **Fixed** - Bug fixes
 - **Security** - Security improvements
-
----
-
-*For detailed release notes with commit history, see [Releases](../Releases/)*

@@ -89,13 +89,15 @@
 /* Header and Navigation */
 .navbar {
   background: var(--background) !important;
-  background-image: linear-gradient(
-    90deg,
+  color: white !important;
+  /* background-image: linear-gradient(
+    135deg,
     var(--primary) 0%,
-    var(--accent) 51%,
-    var(--success) 100%
-  ) !important;
-  border-bottom: 2px solid var(--accent) !important;
+    var(--highlight) 100%
+  ) !important; */
+  border-bottom: 2px solid transparent !important;
+  border-image: linear-gradient(90deg, var(--primary) 0%, var(--highlight) 100%)
+    1 !important;
   position: relative;
   overflow: hidden;
   /* Prevent extensions from overriding */
@@ -121,14 +123,14 @@
 }
 
 .navbar-brand {
-  color: var(--text-inverse) !important;
+  color: var(--text-primary) !important;
   font-weight: bold;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .navbar-brand:hover {
-  color: var(--text-inverse) !important;
-  text-shadow: 0 0 8px rgba(102, 209, 230, 0.8), 0 1px 2px rgba(0, 0, 0, 0.3);
+  color: var(--text-primary) !important;
+  text-shadow: 0 0 8px rgba(233, 83, 120, 0.8), 0 1px 2px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
 }
 
@@ -141,7 +143,7 @@
 }
 
 .navbar-nav .nav-link {
-  color: var(--text-inverse) !important;
+  color: var(--text-primary) !important;
   position: relative;
   transition: all 0.3s ease;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
@@ -154,17 +156,21 @@
   left: 50%;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, var(--accent-light), var(--accent));
+  background: linear-gradient(90deg, var(--primary), var(--highlight));
   transition: all 0.3s ease;
   transform: translateX(-50%);
 }
 
 .navbar-nav .nav-link:hover {
-  color: var(--text-inverse) !important;
-  text-shadow: 0 0 8px rgba(102, 209, 230, 0.8), 0 1px 2px rgba(0, 0, 0, 0.3);
+  color: var(--text-primary) !important;
+  text-shadow: 0 0 8px rgba(233, 83, 120, 0.8), 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .navbar-nav .nav-link:hover::before {
+  width: 100%;
+}
+
+.navbar-nav .nav-link.active::before {
   width: 100%;
 }
 
@@ -293,7 +299,7 @@
     rgba(38, 187, 217, 0.02) 50%,
     rgba(252, 212, 184, 0.02) 100%
   );
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(38, 187, 217, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(233, 83, 120, 0.2);
   transform: translateY(-2px);
 }
 
@@ -473,10 +479,10 @@ footer.border-top {
   background: linear-gradient(
     135deg,
     var(--primary) 0%,
-    var(--accent) 100%
+    var(--highlight) 100%
   ) !important;
   color: var(--text-primary) !important;
-  border-top: 3px solid var(--secondary) !important;
+  border-top: 3px solid var(--border) !important;
   margin-top: 3rem;
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
   width: 100% !important;
@@ -544,7 +550,7 @@ footer.border-top .flex-fill {
 .footer-text strong {
   font-weight: 700;
   color: var(--text-inverse) !important;
-  text-shadow: 0 0 10px rgba(102, 209, 230, 0.8), 0 1px 3px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 0 10px rgba(233, 83, 120, 0.8), 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .footer-links {
@@ -573,13 +579,13 @@ footer.border-top .flex-fill {
 .footer-link:hover {
   color: var(--text-inverse) !important;
   background: linear-gradient(
-    90deg,
+    135deg,
     var(--primary-hover) 0%,
-    var(--accent-hover) 100%
+    var(--highlight) 100%
   );
-  box-shadow: 0 4px 16px rgba(38, 187, 217, 0.3);
+  box-shadow: 0 4px 16px rgba(233, 83, 120, 0.3);
   transform: translateY(-2px) scale(1.04);
-  text-shadow: 0 0 8px rgba(102, 209, 230, 0.6), 0 1px 2px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 0 8px rgba(233, 83, 120, 0.6), 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .scroll-to-top {
@@ -660,18 +666,17 @@ footer.border-top .flex-fill {
   border-radius: 6px;
 }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(
-    135deg,
-    var(--accent-light) 0%,
-    var(--primary-hover) 100%
-  );
+  background: linear-gradient(135deg, var(--primary) 0%, var(--highlight) 100%);
   border-radius: 6px;
   border: 2px solid var(--background-secondary);
   min-height: 30px;
   box-shadow: none;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+  background: white;
+}
+::-webkit-scrollbar-thumb:active {
+  background: white;
 }
 ::-webkit-scrollbar-corner {
   background: var(--background-secondary);
