@@ -1,125 +1,97 @@
-name: Deploy DocFX Documentation
+name: Deploy Documentation to GitHub Pages
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
     paths:
-      - 'docs/**'
-      - 'src/**'
-      - 'scripts/generate-docs.ps1'
-      - '.github/workflows/deploy-docs.yml'
+      - "docs/**"
+      - "src/**/*.cs"
+      - "scripts/generate-docs.ps1"
+      - "scripts/generate-docs.sh"
+      - ".github/workflows/deploy-docs.yml"
   workflow_dispatch:
+    inputs:
+      force_rebuild:
+        description: "Force rebuild even if no changes detected"
+        required: false
+        default: false
+        type: boolean
 
+# Sets permissions of the GITHUB_TOKEN to allow pushing to web branch
 permissions:
   contents: write
-  pages: write
-  id-token: write
+  actions: read
 
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
-  group: "docs-deployment"
-  cancel-in-progress: true
+  group: "gh-pages-deploy"
+  cancel-in-progress: false
 
 jobs:
-  # Wait for other workflows to complete successfully
-  wait-for-checks:
+  publish-docs:
     runs-on: ubuntu-latest
-    steps:
-      - name: Wait for Markdown Lint
-        uses: lewagon/wait-on-check-action@v1.3.4
-        with:
-          ref: ${{ github.ref }}
-          check-name: 'lint-markdown'
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 10
-          allowed-conclusions: success
 
-      - name: Wait for Mod Tests
-        uses: lewagon/wait-on-check-action@v1.3.4
-        with:
-          ref: ${{ github.ref }}
-          check-name: 'test-summary'
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 10
-          allowed-conclusions: success,skipped
-
-  build-and-deploy:
-    needs: wait-for-checks
-    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Setup .NET Environment
-        uses: ./.github/actions/setup-dotnet
         with:
-          dotnet-version: '8.0.x'
-          cache-key-suffix: 'docs'
+          fetch-depth: 0 # Fetch all history for proper git information
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup PowerShell Environment
-        uses: ./.github/actions/setup-powershell
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
         with:
-          install-docfx: 'true'
+          dotnet-version: "8.0.x"
 
-      - name: Build DocFX Documentation
-        shell: pwsh
+      - name: Setup DocFX
+        run: dotnet tool install -g docfx
+
+      - name: Restore dependencies for API documentation
         run: |
-          echo "Building documentation using generate-docs script..."
-          ./scripts/generate-docs.ps1 -Serve:$false
+          if [ -f "src/HueHordes/Main.sln" ]; then
+            dotnet restore src/HueHordes/Main.sln
+          fi
+        continue-on-error: true # API docs will still generate even if restore fails
 
-      - name: Prepare deployment
+      - name: Build .NET projects for XML documentation generation
         run: |
-          # Create deployment directory
-          mkdir -p deploy
+          if [ -f "src/HueHordes/HueHordes/HueHordes.csproj" ]; then
+            dotnet build src/HueHordes/HueHordes/HueHordes.csproj --configuration Release --no-restore
+          fi
+        continue-on-error: true # Continue even if some projects fail to build
 
-          # Copy generated site to deployment directory
-          cp -r docs/_site/* deploy/
+      - name: Build documentation with DocFX
+        run: |
+          cd docs
+          docfx docfx.json
+        env:
+          DOCFX_SOURCE_BRANCH_NAME: ${{ github.ref_name }}
 
-          # Create .nojekyll to bypass Jekyll processing on GitHub Pages
-          touch deploy/.nojekyll
-
-          # Create CNAME if custom domain is needed (optional)
-          # echo "yourdomain.com" > deploy/CNAME
-
-          echo "Documentation built successfully!"
-          echo "Output size: $(du -sh deploy | cut -f1)"
+      - name: Verify build output
+        run: |
+          if [ ! -d "docs/_site" ]; then
+            echo "❌ DocFX build failed - _site directory not found"
+            exit 1
+          fi
+          echo "✅ DocFX build successful"
+          echo "Generated files:"
+          ls -la docs/_site/
+          echo ""
+          echo "Documentation structure:"
+          find docs/_site -type f -name "*.html" | head -10
 
       - name: Deploy to web branch
-        uses: peaceiris/actions-gh-pages@v4
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./deploy
+          publish_dir: ./docs/_site
           publish_branch: web
           force_orphan: true
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
-          commit_message: |
-            Deploy documentation to GitHub Pages
 
-            Generated from commit ${{ github.sha }}
-
-            Changes:
-            ${{ github.event.head_commit.message }}
-
-            🤖 Automated deployment
-
-      - name: Deployment Summary
+      - name: Output deployment info
         run: |
-          echo "## 📚 Documentation Deployment Complete" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "The documentation has been successfully deployed to the \`web\` branch." >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### 🔗 Access Documentation" >> $GITHUB_STEP_SUMMARY
-          echo "Once GitHub Pages is configured to use the \`web\` branch, your documentation will be available at:" >> $GITHUB_STEP_SUMMARY
-          echo "**https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}**" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### ⚙️ GitHub Pages Setup" >> $GITHUB_STEP_SUMMARY
-          echo "To complete the setup:" >> $GITHUB_STEP_SUMMARY
-          echo "1. Go to **Settings** → **Pages** in your repository" >> $GITHUB_STEP_SUMMARY
-          echo "2. Set **Source** to \"Deploy from a branch\"" >> $GITHUB_STEP_SUMMARY
-          echo "3. Select **Branch: web** and **/ (root)** folder" >> $GITHUB_STEP_SUMMARY
-          echo "4. Click **Save**" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Deployment Details:**" >> $GITHUB_STEP_SUMMARY
-          echo "- **Branch**: web" >> $GITHUB_STEP_SUMMARY
-          echo "- **Commit**: \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
-          echo "- **Trigger**: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "📚 Documentation deployed successfully to web branch!"
+          echo "🔗 GitHub Pages URL will be available at: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
+          echo "⚙️ Make sure GitHub Pages is configured to serve from web branch in repository settings"

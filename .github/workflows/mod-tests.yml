@@ -57,11 +57,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup .NET Environment
-        uses: ./.github/actions/setup-dotnet
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
-          cache-key-suffix: 'mod-tests'
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json', '**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
 
       - name: Restore dependencies for ${{ matrix.mod.name }}
         run: dotnet restore ${{ matrix.mod.path }}/${{ matrix.mod.solution }}

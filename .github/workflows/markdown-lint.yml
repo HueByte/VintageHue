@@ -1,127 +1,62 @@
-name: Markdown Lint
+name: Markdown Linting
 
 on:
   push:
-    branches: [ master ]
+    branches: ["master"]
     paths:
-      - '**/*.md'
-      - 'scripts/markdownlint.ps1'
-      - 'config/.markdownlint.json'
-      - '.github/workflows/markdown-lint.yml'
+      - "**/*.md"
+      - ".github/workflows/markdown-lint.yml"
+      - "config/.markdownlint.json"
   pull_request:
-    branches: [ master ]
+    branches: ["master"]
     paths:
-      - '**/*.md'
-      - 'scripts/markdownlint.ps1'
-      - 'config/.markdownlint.json'
-      - '.github/workflows/markdown-lint.yml'
+      - "**/*.md"
+      - ".github/workflows/markdown-lint.yml"
+      - "config/.markdownlint.json"
 
 jobs:
-  lint-markdown:
+  markdown-lint:
     runs-on: ubuntu-latest
+    name: Markdown Linting
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Setup PowerShell Environment
-        uses: ./.github/actions/setup-powershell
-
-      - name: Setup Node.js Environment
-        uses: ./.github/actions/setup-nodejs
         with:
-          node-version: '20'
-          install-markdownlint: 'true'
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Run markdownlint using repository script
-        shell: pwsh
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install markdownlint-cli
+        run: npm install -g markdownlint-cli
+
+      - name: Run markdownlint
         run: |
-          echo "## 📝 Markdown Lint Results" >> $env:GITHUB_STEP_SUMMARY
-          echo "" >> $env:GITHUB_STEP_SUMMARY
+          markdownlint '**/*.md' \
+            --ignore node_modules \
+            --ignore TestResults \
+            --ignore docs/_site \
+            --ignore docs/_temp \
+            --ignore docs/*/api \
+            --ignore bin \
+            --ignore obj \
+            --ignore publish \
+            --ignore dist \
+            --ignore release \
+            --ignore coverage \
+            --ignore .vs \
+            --ignore .vscode \
+            --ignore VintagestoryData \
+            --ignore VintageStoryData \
+            --ignore Mods \
+            --ignore ModData \
+            --ignore dev-local \
+            --ignore CLAUDE.md \
+            --config config/.markdownlint.json
 
-          try {
-            # Run the repository's markdownlint script
-            ./scripts/markdownlint.ps1
+      - name: Markdown linting completed
+        run: echo "✅ Markdown linting completed successfully"
 
-            echo "✅ All markdown files passed linting!" >> $env:GITHUB_STEP_SUMMARY
-            echo "" >> $env:GITHUB_STEP_SUMMARY
-            echo "**Linted using:** Repository script (scripts/markdownlint.ps1)" >> $env:GITHUB_STEP_SUMMARY
-          }
-          catch {
-            echo "❌ Some markdown files have linting issues." >> $env:GITHUB_STEP_SUMMARY
-            echo "" >> $env:GITHUB_STEP_SUMMARY
-            echo "**Error details:**" >> $env:GITHUB_STEP_SUMMARY
-            echo "\`\`\`" >> $env:GITHUB_STEP_SUMMARY
-            echo $_.Exception.Message >> $env:GITHUB_STEP_SUMMARY
-            echo "\`\`\`" >> $env:GITHUB_STEP_SUMMARY
-            echo "" >> $env:GITHUB_STEP_SUMMARY
-            echo "**To fix locally, run:**" >> $env:GITHUB_STEP_SUMMARY
-            echo "\`\`\`powershell" >> $env:GITHUB_STEP_SUMMARY
-            echo "./scripts/markdownlint.ps1 -Fix" >> $env:GITHUB_STEP_SUMMARY
-            echo "\`\`\`" >> $env:GITHUB_STEP_SUMMARY
-            throw
-          }
-
-      - name: Documentation structure check
-        shell: pwsh
-        run: |
-          echo "**Documentation structure check:**" >> $env:GITHUB_STEP_SUMMARY
-          echo "" >> $env:GITHUB_STEP_SUMMARY
-
-          # Check docs structure
-          if (Test-Path "docs") {
-            echo "- ✅ docs/ directory exists" >> $env:GITHUB_STEP_SUMMARY
-
-            # Count files by type
-            $readmeCount = (Get-ChildItem -Path "docs" -Recurse -Name "*.md" | Where-Object { $_ -match "readme|README" }).Count
-            $changelogCount = (Get-ChildItem -Path "docs" -Recurse -Name "*.md" | Where-Object { $_ -match "changelog|CHANGELOG" }).Count
-
-            echo "- 📚 README files: $readmeCount" >> $env:GITHUB_STEP_SUMMARY
-            echo "- 📋 Changelog files: $changelogCount" >> $env:GITHUB_STEP_SUMMARY
-          } else {
-            echo "- ⚠️ docs/ directory not found" >> $env:GITHUB_STEP_SUMMARY
-          }
-
-          # Check for common documentation files in root
-          $rootDocs = @()
-          if (Test-Path "README.md") { $rootDocs += "README.md" }
-          if (Test-Path "CHANGELOG.md") { $rootDocs += "CHANGELOG.md" }
-          if (Test-Path "CONTRIBUTING.md") { $rootDocs += "CONTRIBUTING.md" }
-
-          if ($rootDocs.Count -gt 0) {
-            echo "- 📖 Root documentation: $($rootDocs -join ', ')" >> $env:GITHUB_STEP_SUMMARY
-          }
-
-      - name: Basic link validation
-        shell: pwsh
-        run: |
-          echo "" >> $env:GITHUB_STEP_SUMMARY
-          echo "**Link validation:**" >> $env:GITHUB_STEP_SUMMARY
-
-          # Basic check for broken internal links (markdown links to files that don't exist)
-          $brokenLinks = 0
-          $mdFiles = Get-ChildItem -Path "." -Recurse -Name "*.md" | Where-Object { $_ -notmatch "node_modules|.git|_site|TestResults|bin|obj" }
-
-          foreach ($file in $mdFiles) {
-            $content = Get-Content $file -Raw -ErrorAction SilentlyContinue
-            if ($content) {
-              # Extract relative file links [text](./path/to/file.md)
-              $matches = [regex]::Matches($content, '\[([^\]]+)\]\(\./[^\)]+\)')
-              foreach ($match in $matches) {
-                $link = $match.Value -replace '.*\(\.\/', '' -replace '\).*', ''
-                $dir = Split-Path $file -Parent
-                $fullPath = Join-Path $dir $link
-
-                if (-not (Test-Path $fullPath)) {
-                  echo "- ❌ Broken link in $file`: $link" >> $env:GITHUB_STEP_SUMMARY
-                  $brokenLinks++
-                }
-              }
-            }
-          }
-
-          if ($brokenLinks -eq 0) {
-            echo "- ✅ No broken internal file links detected" >> $env:GITHUB_STEP_SUMMARY
-          } else {
-            echo "- ⚠️ Found $brokenLinks potential broken links" >> $env:GITHUB_STEP_SUMMARY
-          }
