@@ -63,8 +63,8 @@
       },
       "_gitUrlPattern": "github",
       "_enableDarkMode": true,
-      "_appFaviconPath": "images/hue-nobg.png",
-      "_appLogoPath": "images/hue-nobg.png"
+      "_appFaviconPath": "images/hue-nobg-clean.png",
+      "_appLogoPath": "images/hue-nobg-clean.png"
     }
   }
 }
