@@ -4,7 +4,5 @@
   href: Articles/toc.yml
 - name: Changelog
   href: Changelog/toc.yml
-- name: Releases
-  href: Releases/toc.yml
 - name: API Reference
-  href: api/
+  href: api/index.md

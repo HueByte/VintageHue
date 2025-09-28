@@ -40,5 +40,3 @@ Detailed release notes with commit history between versions.
 Complete API documentation for developers.
 
 ---
-
-*Documentation generated on 2024-09-28 15:50:00 UTC*

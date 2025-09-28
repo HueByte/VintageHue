@@ -15,6 +15,10 @@ using Vintagestory.API.Util;
 
 namespace HueHordes;
 
+/// <summary>
+/// Main mod system that manages periodic horde spawning around players.
+/// Spawns waves of hostile entities at configurable intervals based on in-game time.
+/// </summary>
 public class HordeSystem : ModSystem
 {
     ICoreServerAPI? sapi;

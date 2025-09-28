@@ -3,9 +3,7 @@
     {
       "src": [
         {
-          "files": [
-            "HueHordes/HueHordes/HueHordes.csproj"
-          ],
+          "files": ["HueHordes/HueHordes/HueHordes.csproj"],
           "src": "../src"
         }
       ],
@@ -22,20 +20,11 @@
   "build": {
     "content": [
       {
-        "files": [
-          "HueHordes/api/**.yml",
-          "HueHordes/api/index.md"
-        ]
+        "files": ["HueHordes/api/**.yml", "HueHordes/api/index.md"]
       },
       {
-        "files": [
-          "**/*.md",
-          "**/toc.yml"
-        ],
-        "exclude": [
-          "_site/**",
-          "HueHordes/api/**.md"
-        ]
+        "files": ["**/*.md", "**/toc.yml"],
+        "exclude": ["_site/**", "HueHordes/api/**.md"]
       }
     ],
     "resource": [
@@ -48,18 +37,13 @@
           "**/*.gif",
           "**/*.svg"
         ],
-        "exclude": [
-          "_site/**"
-        ]
+        "exclude": ["_site/**"]
       }
     ],
     "output": "_site",
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
-    "template": [
-      "default",
-      "modern"
-    ],
+    "template": ["default", "modern", "templates/hue-horizon"],
     "postProcessors": [],
     "markdownEngineName": "markdig",
     "noLangKeyword": false,
@@ -71,13 +55,16 @@
       "_appName": "VintageHue",
       "_enableSearch": true,
       "_enableNewTab": true,
+      "_appFooter": "<div class=\"footer-custom\"><div class=\"footer-inner d-flex justify-content-between align-items-center\"><div class=\"footer-text\">Made with <strong>💖</strong> By HueByte</div><div class=\"footer-links\"><a href=\"https://github.com/HueByte/VintageHue\" class=\"footer-link\" target=\"_blank\">GitHub</a><a href=\"#\" class=\"footer-link scroll-to-top\" onclick=\"scrollToTop()\">Top</a></div></div></div><script>function scrollToTop(){window.scrollTo({top:0,behavior:'smooth'});}</script>",
       "_gitContribute": {
         "repo": "https://github.com/HueByte/VintageHue",
         "branch": "master",
         "path": "docs"
       },
       "_gitUrlPattern": "github",
-      "_enableDarkMode": true
+      "_enableDarkMode": true,
+      "_appFaviconPath": "images/hue-nobg.png",
+      "_appLogoPath": "images/hue-nobg.png"
     }
   }
 }

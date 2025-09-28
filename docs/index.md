@@ -38,5 +38,3 @@ VintageHue is a collection of high-quality Vintage Story mods that enhance your 
 - **Open Source** - Community-driven development
 
 ---
-
-*Documentation generated on 2024-09-28 15:50:00 UTC*
