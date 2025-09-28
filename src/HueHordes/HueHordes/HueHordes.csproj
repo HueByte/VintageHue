@@ -9,7 +9,8 @@
 
   <ItemGroup>
     <Reference Include="VintagestoryAPI">
-      <HintPath>$(VINTAGE_STORY)\VintagestoryAPI.dll</HintPath>
+      <HintPath Condition="'$(VINTAGE_STORY)' != ''">$(VINTAGE_STORY)\VintagestoryAPI.dll</HintPath>
+      <HintPath Condition="'$(VINTAGE_STORY)' == ''">$(MSBuildProjectDirectory)\..\lib\VintagestoryAPI.dll</HintPath>
       <Private>false</Private>
     </Reference>
   </ItemGroup>

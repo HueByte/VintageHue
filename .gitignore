@@ -703,6 +703,10 @@ publish/
 dist/
 release/
 
+# VintagestoryAPI stub assembly (generated during CI/CD)
+src/*/lib/
+lib/
+
 # Test results and coverage
 TestResults/
 coverage/
