@@ -30,7 +30,6 @@ Detailed guides, tutorials, and documentation about using HueHordes.
 
 Version history showing what changed in each release.
 
-
 ### API Reference
 
 Complete API documentation for developers.
