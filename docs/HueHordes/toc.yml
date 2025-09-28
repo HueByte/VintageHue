@@ -1,8 +1,8 @@
 - name: Overview
   href: index.md
 - name: Articles
-  href: Articles/toc.yml
+  href: articles/toc.yml
 - name: Changelog
-  href: Changelog/toc.yml
+  href: changelog/toc.yml
 - name: API Reference
   href: api/index.md

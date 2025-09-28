@@ -15,4 +15,4 @@ This section contains detailed articles and guides for HueHordes.
 
 ---
 
-*For the latest release information, see [Releases](../Releases/)*
+*For the latest release information, see [Changelog](../changelog/)*
