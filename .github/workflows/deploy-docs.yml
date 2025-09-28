@@ -2,15 +2,12 @@ name: Deploy DocFX Documentation
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
     paths:
       - 'docs/**'
-      - 'config/docfx.json'
+      - 'src/**'
+      - 'scripts/generate-docs.ps1'
       - '.github/workflows/deploy-docs.yml'
-    tags:
-      - 'v*'
-  release:
-    types: [published]
   workflow_dispatch:
 
 permissions:
@@ -23,25 +20,51 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # Wait for other workflows to complete successfully
+  wait-for-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for Markdown Lint
+        uses: lewagon/wait-on-check-action@v1.3.4
+        with:
+          ref: ${{ github.ref }}
+          check-name: 'lint-markdown'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 10
+          allowed-conclusions: success
+
+      - name: Wait for Mod Tests
+        uses: lewagon/wait-on-check-action@v1.3.4
+        with:
+          ref: ${{ github.ref }}
+          check-name: 'test-summary'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 10
+          allowed-conclusions: success,skipped
+
   build-and-deploy:
+    needs: wait-for-checks
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+      - name: Setup .NET Environment
+        uses: ./.github/actions/setup-dotnet
         with:
           dotnet-version: '8.0.x'
+          cache-key-suffix: 'docs'
 
-      - name: Install DocFX
-        run: dotnet tool install -g docfx
+      - name: Setup PowerShell Environment
+        uses: ./.github/actions/setup-powershell
+        with:
+          install-docfx: 'true'
 
       - name: Build DocFX Documentation
-        working-directory: config
+        shell: pwsh
         run: |
-          echo "Building documentation with DocFX..."
-          docfx docfx.json --warningsAsErrors
+          echo "Building documentation using generate-docs script..."
+          ./scripts/generate-docs.ps1 -Serve:$false
 
       - name: Prepare deployment
         run: |
@@ -74,6 +97,9 @@ jobs:
 
             Generated from commit ${{ github.sha }}
 
+            Changes:
+            ${{ github.event.head_commit.message }}
+
             🤖 Automated deployment
 
       - name: Deployment Summary
@@ -84,7 +110,7 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 🔗 Access Documentation" >> $GITHUB_STEP_SUMMARY
           echo "Once GitHub Pages is configured to use the \`web\` branch, your documentation will be available at:" >> $GITHUB_STEP_SUMMARY
-          echo "**https://${{ github.repository_owner }}.github.io/HueHordes**" >> $GITHUB_STEP_SUMMARY
+          echo "**https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}**" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### ⚙️ GitHub Pages Setup" >> $GITHUB_STEP_SUMMARY
           echo "To complete the setup:" >> $GITHUB_STEP_SUMMARY

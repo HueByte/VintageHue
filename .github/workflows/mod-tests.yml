@@ -2,11 +2,11 @@ name: Mod Tests
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ master ]
     paths:
       - 'src/**'
   pull_request:
-    branches: [ main, develop ]
+    branches: [ master ]
     paths:
       - 'src/**'
 
@@ -57,24 +57,31 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+      - name: Setup .NET Environment
+        uses: ./.github/actions/setup-dotnet
         with:
           dotnet-version: '8.0.x'
-
-      - name: Cache NuGet packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json', '**/*.csproj') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-
+          cache-key-suffix: 'mod-tests'
 
       - name: Restore dependencies for ${{ matrix.mod.name }}
         run: dotnet restore ${{ matrix.mod.path }}/${{ matrix.mod.solution }}
 
       - name: Build ${{ matrix.mod.name }}
-        run: dotnet build ${{ matrix.mod.path }}/${{ matrix.mod.solution }} --no-restore --configuration Release
+        run: |
+          cd ${{ matrix.mod.path }}
+
+          # Use the mod's build script if available, otherwise fall back to dotnet build
+          if [ -f "build.ps1" ]; then
+            echo "Using mod's build script..."
+            pwsh -c "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force; ./build.ps1"
+          elif [ -f "build.sh" ]; then
+            echo "Using mod's shell build script..."
+            chmod +x build.sh
+            ./build.sh
+          else
+            echo "Using dotnet build..."
+            dotnet build ${{ matrix.mod.solution }} --no-restore --configuration Release
+          fi
 
       - name: Test ${{ matrix.mod.name }}
         run: |
@@ -125,7 +132,12 @@ jobs:
           fi
 
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Changed mods in this PR:**" >> $GITHUB_STEP_SUMMARY
+          echo "**Changed mods in this commit:**" >> $GITHUB_STEP_SUMMARY
           if [ "${{ needs.detect-changes.outputs.huehordes }}" == "true" ]; then
             echo "- 🧟 HueHordes" >> $GITHUB_STEP_SUMMARY
           fi
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Test artifacts:**" >> $GITHUB_STEP_SUMMARY
+          echo "- Test results and coverage reports are available as downloadable artifacts" >> $GITHUB_STEP_SUMMARY
+          echo "- Build outputs are validated for successful compilation" >> $GITHUB_STEP_SUMMARY

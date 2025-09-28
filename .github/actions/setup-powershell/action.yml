@@ -1,0 +1,56 @@
+name: 'Setup PowerShell Environment'
+description: 'Configures PowerShell execution policy and environment for VintageHue scripts'
+inputs:
+  execution-policy:
+    description: 'PowerShell execution policy to set'
+    required: false
+    default: 'RemoteSigned'
+  install-docfx:
+    description: 'Whether to install DocFX as .NET tool'
+    required: false
+    default: 'false'
+outputs:
+  powershell-version:
+    description: 'The PowerShell version'
+    value: ${{ steps.info.outputs.version }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Configure PowerShell execution policy
+      shell: pwsh
+      run: |
+        Write-Host "🔧 Setting PowerShell execution policy to ${{ inputs.execution-policy }}..."
+        Set-ExecutionPolicy -ExecutionPolicy ${{ inputs.execution-policy }} -Scope CurrentUser -Force
+        Write-Host "✅ PowerShell execution policy set successfully"
+
+    - name: Install DocFX
+      if: inputs.install-docfx == 'true'
+      shell: pwsh
+      run: |
+        Write-Host "📦 Installing DocFX as .NET global tool..."
+        dotnet tool install -g docfx
+        Write-Host "✅ DocFX installed: $(docfx --version)"
+
+    - name: Verify PowerShell setup
+      id: info
+      shell: pwsh
+      run: |
+        $version = $PSVersionTable.PSVersion.ToString()
+        Write-Host "✅ PowerShell version: $version"
+        Write-Host "✅ Execution policy: $(Get-ExecutionPolicy -Scope CurrentUser)"
+        Write-Host "📁 Working directory: $(Get-Location)"
+        echo "version=$version" >> $env:GITHUB_OUTPUT
+
+    - name: Test script execution
+      shell: pwsh
+      run: |
+        Write-Host "🧪 Testing PowerShell script execution..."
+        # Test basic PowerShell functionality
+        $testResult = Test-Path "."
+        if ($testResult) {
+          Write-Host "✅ PowerShell environment ready for VintageHue scripts"
+        } else {
+          Write-Error "❌ PowerShell environment test failed"
+          exit 1
+        }

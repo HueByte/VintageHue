@@ -1,0 +1,72 @@
+name: 'Setup Node.js Environment'
+description: 'Sets up Node.js with npm caching for VintageHue documentation and linting tools'
+inputs:
+  node-version:
+    description: 'Node.js version to install'
+    required: false
+    default: '20'
+  install-markdownlint:
+    description: 'Whether to install markdownlint-cli globally'
+    required: false
+    default: 'true'
+  install-docfx:
+    description: 'Whether to install DocFX as .NET tool'
+    required: false
+    default: 'false'
+outputs:
+  node-version:
+    description: 'The installed Node.js version'
+    value: ${{ steps.setup.outputs.node-version }}
+  npm-cache-hit:
+    description: 'Whether npm cache was hit'
+    value: ${{ steps.npm-cache.outputs.cache-hit }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Node.js
+      id: setup
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: Get npm cache directory
+      id: npm-cache-dir
+      shell: bash
+      run: echo "dir=$(npm config get cache)" >> $GITHUB_OUTPUT
+
+    - name: Cache npm dependencies
+      id: npm-cache
+      uses: actions/cache@v4
+      with:
+        path: ${{ steps.npm-cache-dir.outputs.dir }}
+        key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json', '**/package.json') }}
+        restore-keys: |
+          ${{ runner.os }}-npm-
+
+    - name: Install markdownlint-cli
+      if: inputs.install-markdownlint == 'true'
+      shell: bash
+      run: |
+        echo "📦 Installing markdownlint-cli globally..."
+        npm install -g markdownlint-cli
+        echo "✅ markdownlint-cli installed: $(markdownlint --version)"
+
+    - name: Install DocFX
+      if: inputs.install-docfx == 'true'
+      shell: bash
+      run: |
+        echo "📦 Installing DocFX as .NET global tool..."
+        dotnet tool install -g docfx
+        echo "✅ DocFX installed: $(docfx --version)"
+
+    - name: Verify Node.js setup
+      shell: bash
+      run: |
+        echo "✅ Node.js version: $(node --version)"
+        echo "✅ npm version: $(npm --version)"
+        if [ "${{ steps.npm-cache.outputs.cache-hit }}" == "true" ]; then
+          echo "🚀 npm packages restored from cache"
+        else
+          echo "📦 npm packages will be downloaded fresh"
+        fi
