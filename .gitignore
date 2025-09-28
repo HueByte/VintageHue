@@ -696,14 +696,6 @@ Saves/
 Screenshots/
 Logs/
 
-# Minecraft
-.minecraft/
-mods/
-config/
-saves/
-resourcepacks/
-shaderpacks/
-
 # Mod development temp files
 *.mod
 *.zip
