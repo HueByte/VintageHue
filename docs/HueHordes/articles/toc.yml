@@ -1,2 +1,10 @@
 - name: Overview
   href: index.md
+- name: Advanced Pathfinding System
+  href: pathfinding-system.md
+- name: AI System Architecture
+  href: ai-system-architecture.md
+- name: Base Detection System
+  href: base-detection-system.md
+- name: Future Development Roadmap
+  href: future-development-roadmap.md

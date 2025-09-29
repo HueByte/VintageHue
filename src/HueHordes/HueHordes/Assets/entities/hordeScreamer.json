@@ -1,0 +1,184 @@
+{
+  "code": "hordeScreamer",
+  "class": "EntityHumanoid",
+  "hitboxSize": {
+    "x": 0.6,
+    "y": 1.8
+  },
+  "deadHitboxSize": {
+    "x": 0.6,
+    "y": 0.2
+  },
+  "eyeHeight": 1.6,
+  "swimSpeed": 0.02,
+  "sounds": {
+    "hurt": "creature/drifter/drifter-hurt",
+    "death": "creature/drifter/drifter-death",
+    "idle": "creature/drifter/drifter-idle",
+    "walk": "walk/walkgrass",
+    "scream": "creature/drifter/drifter-idle"
+  },
+  "drops": [
+    {
+      "type": "item",
+      "code": "bone",
+      "quantity": { "avg": 1, "var": 1 }
+    },
+    {
+      "type": "item",
+      "code": "rottenflesh",
+      "quantity": { "avg": 1, "var": 1 }
+    }
+  ],
+  "attributes": {
+    "attackDamage": 1,
+    "health": 12,
+    "walkSpeed": 0.05,
+    "canClimbLadders": false,
+    "canClimbBlockFace": false
+  },
+  "behaviorConfigs": {
+    "controlledphysics": {
+      "stepHeight": 1.1,
+      "collisionYExtra": 0.0
+    },
+    "health": {
+      "currenthealth": 12,
+      "maxhealth": 12
+    },
+    "breathe": {
+      "breatheUnderwater": false
+    },
+    "hunger": {},
+    "taskai": {
+      "aitasks": [
+        {
+          "code": "callallies",
+          "priority": 4.5,
+          "allyEntityCodes": ["hordeZombie", "hordeSpitter", "hordeScreamer"],
+          "callRange": 100,
+          "cooldown": 8000,
+          "animation": "attack",
+          "sound": "creature/drifter/drifter-idle",
+          "onlyWhenInEmotionState": "aggressiveondamage"
+        },
+        {
+          "code": "meleeattack",
+          "entityCodes": ["player", "trader"],
+          "priority": 2.5,
+          "damage": 1,
+          "attackRange": 2.0,
+          "animation": "attack",
+          "sound": "creature/drifter/drifter-hurt",
+          "seekingRange": 15,
+          "onlyWhenInEmotionState": "aggressiveondamage"
+        },
+        {
+          "code": "fleeentity",
+          "entityCodes": ["player", "trader"],
+          "priority": 3.8,
+          "movespeed": 0.1,
+          "seekingRange": 8,
+          "fleeingRange": 15,
+          "animation": "run",
+          "onlyWhenInEmotionState": "aggressiveondamage"
+        },
+        {
+          "code": "seekentity",
+          "entityCodes": ["player", "trader"],
+          "priority": 1.8,
+          "movespeed": 0.06,
+          "seekingRange": 25,
+          "animation": "run",
+          "maxDistance": 10,
+          "onlyWhenInEmotionState": "aggressiveondamage"
+        },
+        {
+          "code": "wander",
+          "priority": 1.5,
+          "movespeed": 0.04,
+          "wanderChance": 0.02,
+          "wanderRangeHorizontal": 10,
+          "wanderRangeVertical": 4,
+          "animation": "walk",
+          "onlyWhenInEmotionState": "neutral"
+        },
+        {
+          "code": "lookaround",
+          "priority": 1.0,
+          "priorityForCancel": 0.2,
+          "animation": "idle",
+          "onlyWhenInEmotionState": "neutral"
+        },
+        {
+          "code": "alertothers",
+          "priority": 4.0,
+          "allyEntityCodes": ["hordeZombie", "hordeSpitter"],
+          "alertRange": 75,
+          "cooldown": 5000,
+          "animation": "idle",
+          "sound": "creature/drifter/drifter-idle",
+          "onlyWhenInEmotionState": "aggressiveondamage"
+        }
+      ]
+    }
+  },
+  "client": {
+    "behaviors": [
+      { "code": "controlledphysics" },
+      { "code": "interpolateposition" },
+      { "code": "repulseagents" }
+    ],
+    "animations": [
+      {
+        "code": "idle",
+        "animation": "idle",
+        "animationSpeed": 1.5
+      },
+      {
+        "code": "walk",
+        "animation": "walk",
+        "animationSpeed": 2.5,
+        "weight": 10,
+        "blendMode": "Add"
+      },
+      {
+        "code": "run",
+        "animation": "run",
+        "animationSpeed": 2.0,
+        "weight": 10,
+        "blendMode": "Add"
+      },
+      {
+        "code": "attack",
+        "animation": "attack",
+        "animationSpeed": 2.2,
+        "weight": 10,
+        "blendMode": "AddAverage"
+      }
+    ],
+    "shape": { "base": "entity/humanoid/drifter" },
+    "texture": { "base": "entity/drifter" },
+    "size": 0.85,
+    "glowLevel": 6
+  },
+  "server": {
+    "behaviors": [
+      { "code": "controlledphysics" },
+      { "code": "health" },
+      { "code": "breathe" },
+      { "code": "repulseagents" },
+      { "code": "taskai" },
+      { "code": "simplehorde" }
+    ],
+    "attributes": {
+      "agentWalkspeed": 0.05,
+      "agentRunspeed": 0.1,
+      "pathfinder": {
+        "movespeed": 0.05,
+        "canOpenDoors": false,
+        "canBreakBlocks": false
+      }
+    }
+  }
+}

@@ -1,0 +1,371 @@
+{
+  "code": "hordeZombie",
+  "class": "EntityHumanoid",
+  "hitboxSize": {
+    "x": 0.6,
+    "y": 1.8
+  },
+  "deadHitboxSize": {
+    "x": 0.6,
+    "y": 0.2
+  },
+  "eyeHeight": 1.6,
+  "swimSpeed": 0.02,
+  "sounds": {
+    "hurt": "creature/drifter/drifter-hurt",
+    "death": "creature/drifter/drifter-death",
+    "idle": "creature/drifter/drifter-idle",
+    "walk": "walk/walkgrass"
+  },
+  "drops": [
+    {
+      "type": "item",
+      "code": "bone",
+      "quantity": { "avg": 3, "var": 2 }
+    },
+    {
+      "type": "item",
+      "code": "rottenflesh",
+      "quantity": { "avg": 2, "var": 1 }
+    }
+  ],
+  "attributes": {
+    "attackDamage": 4,
+    "health": 20,
+    "walkSpeed": 0.04,
+    "canClimbLadders": false,
+    "canClimbBlockFace": false
+  },
+  "behaviorConfigs": {
+    "controlledphysics": {
+      "stepHeight": 1.1,
+      "collisionYExtra": 0.0
+    },
+    "health": {
+      "currenthealth": 20,
+      "maxhealth": 20
+    },
+    "breathe": {
+      "breatheUnderwater": false
+    },
+    "hunger": {},
+    "taskai": {
+      "aitasks": [
+        {
+          "code": "meleeattack",
+          "entityCodes": ["player", "trader"],
+          "priority": 3.5,
+          "damage": 4,
+          "attackRange": 2.5,
+          "animation": "attack",
+          "sound": "creature/drifter/drifter-hurt",
+          "seekingRange": 25,
+          "onlyWhenInEmotionState": "aggressiveondamage"
+        },
+        {
+          "code": "seekentity",
+          "entityCodes": ["player", "trader"],
+          "priority": 2.8,
+          "movespeed": 0.06,
+          "seekingRange": 50,
+          "animation": "run",
+          "onlyWhenInEmotionState": "aggressiveondamage",
+          "whenInEmotionState": "aggressiveondamage",
+          "whenNotInEmotionState": "fleeondamage"
+        },
+        {
+          "code": "wander",
+          "priority": 1.5,
+          "movespeed": 0.035,
+          "wanderChance": 0.015,
+          "wanderRangeHorizontal": 8,
+          "wanderRangeVertical": 5,
+          "animation": "walk",
+          "sound": "walk/walkgrass",
+          "onlyWhenInEmotionState": "neutral"
+        },
+        {
+          "code": "lookaround",
+          "priority": 1.0,
+          "priorityForCancel": 0.2,
+          "animation": "idle",
+          "onlyWhenInEmotionState": "neutral"
+        },
+        {
+          "code": "lookaroundwheninclosecombat",
+          "priority": 0.8,
+          "searchRange": 5,
+          "animation": "idle"
+        },
+        {
+          "code": "fleeentity",
+          "entityCodes": ["player"],
+          "priority": 4.0,
+          "movespeed": 0.08,
+          "seekingRange": 15,
+          "fleeingRange": 25,
+          "animation": "run",
+          "onlyWhenInEmotionState": "fleeondamage",
+          "cooldown": 3000
+        }
+      ],
+      "whenInEmotionState": "aggressiveondamage",
+      "whenNotInEmotionState": "neutral"
+    }
+  },
+  "client": {
+    "behaviors": [
+      { "code": "controlledphysics" },
+      { "code": "interpolateposition" },
+      { "code": "repulseagents" }
+    ],
+    "animations": [
+      {
+        "code": "idle",
+        "animation": "idle",
+        "animationSpeed": 1.25
+      },
+      {
+        "code": "walk",
+        "animation": "walk",
+        "animationSpeed": 2.2,
+        "weight": 10,
+        "blendMode": "Add"
+      },
+      {
+        "code": "run",
+        "animation": "run",
+        "animationSpeed": 1.5,
+        "weight": 10,
+        "blendMode": "Add"
+      },
+      {
+        "code": "attack",
+        "animation": "attack",
+        "animationSpeed": 1.8,
+        "weight": 10,
+        "blendMode": "AddAverage"
+      }
+    ],
+    "shape": { "base": "entity/humanoid/drifter" },
+    "texture": { "base": "entity/drifter" },
+    "size": 1.0,
+    "glowLevel": 4
+  },
+  "server": {
+    "behaviors": [
+      { "code": "controlledphysics" },
+      { "code": "health" },
+      { "code": "breathe" },
+      { "code": "repulseagents" },
+      { "code": "taskai" },
+      { "code": "simplehorde" }
+    ],
+    "attributes": {
+      "agentWalkspeed": 0.04,
+      "agentRunspeed": 0.08,
+      "pathfinder": {
+        "movespeed": 0.04,
+        "canOpenDoors": false,
+        "canBreakBlocks": false
+      }
+    }
+  },
+  "variantgroups": [
+    {
+      "code": "type",
+      "states": ["standard", "fast", "tank", "stealth", "smart"]
+    }
+  ],
+  "byVariant": {
+    "*-fast": {
+      "attributes": {
+        "walkSpeed": 0.06,
+        "agentWalkspeed": 0.06,
+        "agentRunspeed": 0.12
+      },
+      "behaviorConfigs": {
+        "taskai": {
+          "aitasks": [
+            {
+              "code": "meleeattack",
+              "entityCodes": ["player", "trader"],
+              "priority": 3.8,
+              "damage": 3,
+              "attackRange": 2.8,
+              "movespeed": 0.12,
+              "animation": "attack",
+              "seekingRange": 30
+            },
+            {
+              "code": "seekentity",
+              "entityCodes": ["player", "trader"],
+              "priority": 3.2,
+              "movespeed": 0.1,
+              "seekingRange": 60,
+              "animation": "run"
+            },
+            {
+              "code": "wander",
+              "priority": 1.8,
+              "movespeed": 0.05,
+              "wanderChance": 0.025,
+              "animation": "run"
+            }
+          ]
+        }
+      }
+    },
+    "*-tank": {
+      "attributes": {
+        "health": 40,
+        "walkSpeed": 0.025,
+        "agentWalkspeed": 0.025,
+        "agentRunspeed": 0.05,
+        "attackDamage": 6
+      },
+      "behaviorConfigs": {
+        "health": {
+          "currenthealth": 40,
+          "maxhealth": 40
+        },
+        "taskai": {
+          "aitasks": [
+            {
+              "code": "meleeattack",
+              "entityCodes": ["player", "trader"],
+              "priority": 4.0,
+              "damage": 6,
+              "attackRange": 3.5,
+              "movespeed": 0.05,
+              "animation": "attack",
+              "seekingRange": 20
+            },
+            {
+              "code": "seekentity",
+              "entityCodes": ["player", "trader"],
+              "priority": 2.5,
+              "movespeed": 0.04,
+              "seekingRange": 40,
+              "animation": "walk"
+            },
+            {
+              "code": "breakblocks",
+              "priority": 2.0,
+              "blockCodes": ["wood", "planks", "door"],
+              "animation": "attack"
+            }
+          ]
+        }
+      }
+    },
+    "*-stealth": {
+      "attributes": {
+        "walkSpeed": 0.03,
+        "agentWalkspeed": 0.03,
+        "agentRunspeed": 0.06
+      },
+      "behaviorConfigs": {
+        "taskai": {
+          "aitasks": [
+            {
+              "code": "meleeattack",
+              "entityCodes": ["player", "trader"],
+              "priority": 3.8,
+              "damage": 5,
+              "attackRange": 2.2,
+              "movespeed": 0.08,
+              "animation": "attack",
+              "seekingRange": 35,
+              "whenNotInEmotionState": "fleeondamage"
+            },
+            {
+              "code": "seekentity",
+              "entityCodes": ["player", "trader"],
+              "priority": 2.2,
+              "movespeed": 0.015,
+              "seekingRange": 35,
+              "animation": "walk",
+              "whenNotInEmotionState": "fleeondamage"
+            },
+            {
+              "code": "wander",
+              "priority": 1.8,
+              "movespeed": 0.02,
+              "wanderChance": 0.008,
+              "wanderRangeHorizontal": 15,
+              "animation": "walk"
+            },
+            {
+              "code": "stalking",
+              "entityCodes": ["player", "trader"],
+              "priority": 2.5,
+              "movespeed": 0.01,
+              "stalkingRange": 25,
+              "minDistance": 8,
+              "maxDistance": 15,
+              "animation": "walk"
+            }
+          ]
+        }
+      }
+    },
+    "*-smart": {
+      "attributes": {
+        "health": 25,
+        "attackDamage": 5
+      },
+      "behaviorConfigs": {
+        "health": {
+          "currenthealth": 25,
+          "maxhealth": 25
+        },
+        "taskai": {
+          "aitasks": [
+            {
+              "code": "meleeattack",
+              "entityCodes": ["player", "trader"],
+              "priority": 3.5,
+              "damage": 5,
+              "attackRange": 2.8,
+              "movespeed": 0.08,
+              "animation": "attack",
+              "seekingRange": 28
+            },
+            {
+              "code": "seekentity",
+              "entityCodes": ["player", "trader"],
+              "priority": 3.0,
+              "movespeed": 0.06,
+              "seekingRange": 45,
+              "animation": "run"
+            },
+            {
+              "code": "callallies",
+              "priority": 2.8,
+              "allyEntityCodes": ["hordeZombie"],
+              "callRange": 75,
+              "cooldown": 10000,
+              "animation": "idle",
+              "sound": "creature/drifter/drifter-idle"
+            },
+            {
+              "code": "wander",
+              "priority": 1.5,
+              "movespeed": 0.04,
+              "wanderChance": 0.02,
+              "wanderRangeHorizontal": 12,
+              "animation": "walk"
+            },
+            {
+              "code": "breakblocks",
+              "priority": 2.2,
+              "blockCodes": ["wood", "planks", "door", "fence"],
+              "animation": "attack"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

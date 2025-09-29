@@ -734,3 +734,4 @@ coverage/
 **/api/.manifest
 # Keep index.md files in api folders
 !**/api/index.md
+!**/HueHordes/Debug/*

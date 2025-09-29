@@ -6,15 +6,30 @@ Welcome to the comprehensive documentation for all VintageHue mods!
 
 ### [HueHordes](HueHordes/)
 
-**Version:** 1.0.0
-**Description:** Periodic horde spawning system for enhanced survival gameplay
+**Version:** 1.0.0+  
+**Description:** Advanced horde spawning system with intelligent AI, sophisticated pathfinding, and particle debugging
+
+**Key Features:**
+
+- 🧭 Enhanced 3D A* pathfinding with entity-aware coordinates
+- ✨ Real-time particle visualization for debugging and development  
+- 🎯 Symmetrical ±1 block movement with diagonal validation
+- 🏠 Smart base detection and targeting system
+- 🔧 Comprehensive debug commands and logging
+
+## Technical Documentation
+
+### Core Systems
+
+- **[Advanced Pathfinding System](HueHordes/articles/pathfinding-system.md)** - Comprehensive guide to the 3D A* pathfinding implementation
 
 ## Repository Structure
 
 This documentation follows a structured approach:
 
 - **Each mod has its own documentation folder** under docs/ModName/
-- **Articles** - Detailed guides and tutorials
+- **Articles** - Detailed guides and tutorials  
+- **Technical Docs** - System architecture and implementation details
 - **Changelog** - Version-specific changes following Keep a Changelog
 - **Releases** - Release notes with commit history
 - **API Reference** - Auto-generated API documentation

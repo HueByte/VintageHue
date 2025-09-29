@@ -1,0 +1,169 @@
+{
+  "code": "hordeSpitter",
+  "class": "EntityHumanoid",
+  "hitboxSize": {
+    "x": 0.6,
+    "y": 1.8
+  },
+  "deadHitboxSize": {
+    "x": 0.6,
+    "y": 0.2
+  },
+  "eyeHeight": 1.6,
+  "swimSpeed": 0.015,
+  "sounds": {
+    "hurt": "creature/drifter/drifter-hurt",
+    "death": "creature/drifter/drifter-death",
+    "idle": "creature/drifter/drifter-idle",
+    "walk": "walk/walkgrass"
+  },
+  "drops": [
+    {
+      "type": "item",
+      "code": "bone",
+      "quantity": { "avg": 2, "var": 1 }
+    },
+    {
+      "type": "item",
+      "code": "rottenflesh",
+      "quantity": { "avg": 3, "var": 2 }
+    }
+  ],
+  "attributes": {
+    "attackDamage": 2,
+    "health": 15,
+    "walkSpeed": 0.03,
+    "canClimbLadders": false,
+    "canClimbBlockFace": false
+  },
+  "behaviorConfigs": {
+    "controlledphysics": {
+      "stepHeight": 1.1,
+      "collisionYExtra": 0.0
+    },
+    "health": {
+      "currenthealth": 15,
+      "maxhealth": 15
+    },
+    "breathe": {
+      "breatheUnderwater": false
+    },
+    "hunger": {},
+    "taskai": {
+      "aitasks": [
+        {
+          "code": "rangedattack",
+          "entityCodes": ["player", "trader"],
+          "priority": 3.5,
+          "damage": 3,
+          "attackRange": 8,
+          "animation": "attack",
+          "sound": "sounds/player/throw",
+          "seekingRange": 25,
+          "projectile": {
+            "code": "arrow-flint",
+            "velocity": 15,
+            "gravity": 0.8
+          },
+          "cooldown": 3000,
+          "onlyWhenInEmotionState": "aggressiveondamage"
+        },
+        {
+          "code": "seekentity",
+          "entityCodes": ["player", "trader"],
+          "priority": 2.5,
+          "movespeed": 0.04,
+          "seekingRange": 35,
+          "animation": "walk",
+          "maxDistance": 6,
+          "onlyWhenInEmotionState": "aggressiveondamage"
+        },
+        {
+          "code": "fleeentity",
+          "entityCodes": ["player", "trader"],
+          "priority": 3.0,
+          "movespeed": 0.08,
+          "seekingRange": 4,
+          "fleeingRange": 8,
+          "animation": "run",
+          "onlyWhenInEmotionState": "aggressiveondamage"
+        },
+        {
+          "code": "wander",
+          "priority": 1.2,
+          "movespeed": 0.025,
+          "wanderChance": 0.01,
+          "wanderRangeHorizontal": 6,
+          "wanderRangeVertical": 3,
+          "animation": "walk",
+          "onlyWhenInEmotionState": "neutral"
+        },
+        {
+          "code": "lookaround",
+          "priority": 1.0,
+          "priorityForCancel": 0.2,
+          "animation": "idle",
+          "onlyWhenInEmotionState": "neutral"
+        }
+      ]
+    }
+  },
+  "client": {
+    "behaviors": [
+      { "code": "controlledphysics" },
+      { "code": "interpolateposition" },
+      { "code": "repulseagents" }
+    ],
+    "animations": [
+      {
+        "code": "idle",
+        "animation": "idle",
+        "animationSpeed": 1.0
+      },
+      {
+        "code": "walk",
+        "animation": "walk",
+        "animationSpeed": 1.8,
+        "weight": 10,
+        "blendMode": "Add"
+      },
+      {
+        "code": "run",
+        "animation": "run",
+        "animationSpeed": 1.8,
+        "weight": 10,
+        "blendMode": "Add"
+      },
+      {
+        "code": "attack",
+        "animation": "attack",
+        "animationSpeed": 1.2,
+        "weight": 10,
+        "blendMode": "AddAverage"
+      }
+    ],
+    "shape": { "base": "entity/humanoid/drifter" },
+    "texture": { "base": "entity/drifter" },
+    "size": 0.9,
+    "glowLevel": 2
+  },
+  "server": {
+    "behaviors": [
+      { "code": "controlledphysics" },
+      { "code": "health" },
+      { "code": "breathe" },
+      { "code": "repulseagents" },
+      { "code": "taskai" },
+      { "code": "simplehorde" }
+    ],
+    "attributes": {
+      "agentWalkspeed": 0.03,
+      "agentRunspeed": 0.08,
+      "pathfinder": {
+        "movespeed": 0.03,
+        "canOpenDoors": false,
+        "canBreakBlocks": false
+      }
+    }
+  }
+}

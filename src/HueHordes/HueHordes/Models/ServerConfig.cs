@@ -41,4 +41,14 @@ public class ServerConfig
     /// Motion per tick (e.g., ~0.05–0.12).
     /// </summary>
     public float NudgeSpeed { get; set; } = 0.05f;
+
+    /// <summary>
+    /// Enable debug logging system
+    /// </summary>
+    public bool EnableDebugLogging { get; set; } = false;
+
+    /// <summary>
+    /// Debug logging level (0=off, 1=basic, 2=detailed, 3=verbose)
+    /// </summary>
+    public int DebugLoggingLevel { get; set; } = 1;
 }

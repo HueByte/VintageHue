@@ -4,7 +4,6 @@
 [![GitHub Release](https://img.shields.io/github/v/release/HueByte/VintageHue?style=flat-square)](https://github.com/HueByte/VintageHue/releases)
 [![GitHub Stars](https://img.shields.io/github/stars/HueByte/VintageHue?style=flat-square)](https://github.com/HueByte/VintageHue/stargazers)
 [![Issues](https://img.shields.io/github/issues/HueByte/VintageHue?style=flat-square)](https://github.com/HueByte/VintageHue/issues)
-[![Mod Tests](https://img.shields.io/github/actions/workflow/status/HueByte/VintageHue/mod-tests.yml?branch=master&style=flat-square&label=Mod%20Tests)](https://github.com/HueByte/VintageHue/actions/workflows/mod-tests.yml)
 
 > A curated collection of high-quality mods for Vintage Story, crafted with passion by **HueByte** 🦄
 
@@ -15,12 +14,10 @@ Welcome to **VintageHue** - my personal collection of Vintage Story modification
 This repository follows a modular structure where each mod is contained in its own dedicated folder within the `src` directory:
 
 ```
-HueHordes/
+VintageHue/
 ├── README.md                 # This file - repository overview
 ├── LICENSE                   # Repository license
 ├── .gitignore               # Git ignore patterns
-├── .vscode/                 # VS Code workspace configuration
-├── .claude/                 # Claude Code configuration
 └── src/                     # Source code directory
     ├── HueHordes/          # Horde spawning mod for Vintage Story
     │   ├── HueHordes/      # Main mod project
@@ -44,9 +41,9 @@ Each mod is:
 
 ## 📦 Available Mods
 
-| Mod Name | Build Status | Documentation | Description |
-|----------|-------------|---------------|-------------|
-| **🧟 HueHordes** | [![Build Status](https://img.shields.io/github/actions/workflow/status/HueByte/VintageHue/mod-tests.yml?branch=master&style=flat-square&label=Build)](https://github.com/HueByte/VintageHue/actions/workflows/mod-tests.yml) | [![Documentation](https://img.shields.io/badge/Docs-GitHub%20Pages-brightgreen?style=flat-square)](https://huebyte.github.io/VintageHue/HueHordes/) | Advanced horde spawning system with intelligent AI that detects player bases and spawns dynamic waves of enemies for challenging survival gameplay |
+| Mod Name | Status | Documentation | Description |
+|----------|--------|---------------|-------------|
+| **🧟 HueHordes** | ✅ **Stable** | [README](src/HueHordes/README.md) | Enhanced horde spawning system with intelligent AI, base detection, and health-based door destruction for challenging survival gameplay |
 
 ### 🔄 Status Legend
 
@@ -57,13 +54,23 @@ Each mod is:
 
 ### 🧟 HueHordes Features
 
-- **🤖 Modern Async AI System** - Task-based asynchronous programming with .NET 8
-- **🏠 Smart Base Detection** - Intelligent detection of player structures and bases
-- **🎯 Dynamic Targeting** - Advanced AI targeting system with priority-based selection
-- **⚡ High Performance** - Concurrent processing with semaphores and channels
-- **🔧 Hot-Reload Configuration** - Real-time configuration updates with FileSystemWatcher
-- **🧪 Comprehensive Testing** - 33+ unit and integration tests with 100% pass rate
-- **📊 Performance Monitoring** - Built-in metrics and statistics tracking
+**Current Implementation:**
+
+- **🤖 Intelligent AI System** - Clean AI behavior with pathfinding and target detection
+- **🏠 Smart Base Detection** - Automatic detection of player structures and bases
+- **🎯 Dynamic Targeting** - Advanced targeting system that ignores creative/spectator players
+- **🚪 Health-Based Door Destruction** - Doors have 2000HP, max 3 attackers per door
+- **⚡ Optimized Performance** - 5-tick update intervals with stuck detection
+- **🎮 Command System** - In-game commands for spawning and testing
+- **🔧 Configurable Settings** - Debug logging and performance tuning
+
+**Technical Features:**
+
+- **A* Pathfinding** - 3D pathfinding with obstacle avoidance and jump mechanics
+- **Line of Sight** - Realistic vision checks for target detection
+- **Entity State Management** - Clean state machine for AI behavior
+- **Door Health Manager** - Concurrent attacker limits and health tracking
+- **Debug Logging** - Comprehensive logging system for troubleshooting
 
 ## Development Standards
 
@@ -72,37 +79,37 @@ All mods in this repository follow strict development standards:
 ### 🏗️ Architecture
 
 - **Modern .NET** - Latest framework versions with nullable reference types
-- **Async/Await** - Task-based asynchronous programming (TAP)
-- **SOLID Principles** - Clean, maintainable, and extensible code
-- **Dependency Injection** - Proper separation of concerns
+- **Clean Code** - SOLID principles and maintainable design
+- **Performance Optimized** - Efficient tick-based updates and memory management
+- **Modular Design** - Separated concerns with clear interfaces
 
 ### 🧪 Testing
 
-- **Comprehensive Test Suites** - Unit, integration, and performance tests
-- **High Code Coverage** - Aim for >90% test coverage
-- **Continuous Integration** - Automated testing on all commits
-- **Test-Driven Development** - Tests written alongside or before implementation
+- **Unit Testing** - Comprehensive test coverage for core functionality
+- **Integration Testing** - End-to-end testing scenarios
+- **Performance Testing** - Load testing and optimization validation
+- **Manual Testing** - In-game validation and user experience testing
 
 ### 📦 Build & Deployment
 
-- **Automated Builds** - Cake Build system with PowerShell scripts
+- **Automated Builds** - Consistent build process with dotnet CLI
 - **Version Management** - Semantic versioning (SemVer)
-- **Documentation** - Comprehensive README files and code documentation
-- **Cross-Platform** - Windows, macOS, and Linux compatibility where applicable
+- **Documentation** - Comprehensive README files and inline documentation
+- **Cross-Platform** - Windows, macOS, and Linux compatibility
 
 ### 🔧 Code Quality
 
-- **Static Analysis** - Code analysis and linting
-- **Performance Monitoring** - Built-in metrics and profiling
+- **Static Analysis** - Code analysis and best practices
 - **Error Handling** - Comprehensive exception handling and logging
 - **Security** - Defensive programming practices
+- **Performance** - Optimized algorithms and memory usage
 
 ## Getting Started
 
 ### Prerequisites
 
 - **.NET 8 SDK** or later
-- **Game-specific requirements** (see individual mod documentation)
+- **Vintage Story** - Compatible with version 1.21.1+
 - **Visual Studio 2022**, **VS Code**, or **JetBrains Rider** (recommended)
 
 ### Quick Start
@@ -111,7 +118,7 @@ All mods in this repository follow strict development standards:
 
    ```bash
    git clone https://github.com/HueByte/VintageHue.git
-   cd HueHordes
+   cd VintageHue
    ```
 
 2. **Navigate to desired mod:**
@@ -123,15 +130,13 @@ All mods in this repository follow strict development standards:
 3. **Build the mod:**
 
    ```bash
-   ./build.ps1       # Windows
-   ./build.sh        # Linux/macOS
+   cd HueHordes
+   dotnet build
    ```
 
-4. **Run tests:**
-
-   ```bash
-   dotnet test
-   ```
+4. **Install the mod:**
+   - Copy the built DLL from `bin/Debug/Mods/mod/` to your Vintage Story mods folder
+   - Or use the provided build scripts for automated installation
 
 ### Development Workflow
 
@@ -140,10 +145,11 @@ All mods in this repository follow strict development standards:
 3. **Write** tests for new functionality
 4. **Implement** the feature
 5. **Ensure** all tests pass (`dotnet test`)
-6. **Build** the mod (`./build.ps1`)
-7. **Commit** changes (`git commit -m 'Add amazing feature'`)
-8. **Push** to branch (`git push origin feature/amazing-feature`)
-9. **Open** a Pull Request
+6. **Build** the mod (`dotnet build`)
+7. **Test** in-game functionality
+8. **Commit** changes (`git commit -m 'Add amazing feature'`)
+9. **Push** to branch (`git push origin feature/amazing-feature`)
+10. **Open** a Pull Request
 
 ## 🤝 Contributing
 
@@ -157,16 +163,6 @@ We welcome contributions from the community! Whether you're:
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg?style=flat-square)](CODE_OF_CONDUCT.md)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
-
-### 📝 Contribution Guidelines
-
-Please read our [Contributing Guide](CONTRIBUTING.md) for detailed information on:
-
-- Development setup and workflow
-- Code style and standards
-- Testing requirements
-- Pull request process
-- Community guidelines
 
 ### 🎯 Ways to Contribute
 
@@ -189,7 +185,6 @@ Please read our [Contributing Guide](CONTRIBUTING.md) for detailed information o
 
 [![GitHub](https://img.shields.io/badge/GitHub-HueByte-black?style=flat-square&logo=github)](https://github.com/HueByte)
 [![Steam Workshop](https://img.shields.io/badge/Steam-Workshop-blue?style=flat-square&logo=steam)](https://steamcommunity.com/id/HueByte/)
-<!-- [![Ko-fi](https://img.shields.io/badge/Ko--fi-Support-ff5e5b?style=flat-square&logo=ko-fi)](https://ko-fi.com/huebyte) -->
 
 ### 🏆 Acknowledgments
 
@@ -202,17 +197,19 @@ Please read our [Contributing Guide](CONTRIBUTING.md) for detailed information o
 
 ### Planned Features
 
-- 🔄 **Auto-Update System** - Automatic mod updates
-- 🌍 **Multiplayer Enhancements** - Better multiplayer compatibility
+- 🔄 **Enhanced AI Behaviors** - More sophisticated AI patterns
+- 🌍 **Multiplayer Optimizations** - Better server performance
+- 🎮 **Additional Game Modes** - New spawning patterns and challenges
+- 🔧 **Configuration UI** - In-game configuration interface
 
 ### Future Mods
 
-We're always working on new mods for various games. Stay tuned for:
+We're always working on new mods for Vintage Story. Stay tuned for:
 
-- Additional Vintage Story mods
-- More AI and gameplay enhancements
 - Quality-of-life improvements
 - New content and mechanics
+- Performance enhancements
+- Multiplayer features
 
 ## 📄 License & Legal
 
