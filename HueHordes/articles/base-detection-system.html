@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Base Detection System | VintageHue Mods Documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Base Detection System | VintageHue Mods Documentation ">
+      
+      
+      <link rel="icon" href="../../images/hue-nobg-clean.png">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HueByte/VintageHue/blob/master/docs/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/hue-nobg-clean.png" alt="VintageHue">
+            VintageHue
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="base-detection-system">Base Detection System</h1>
+
+<p>The Base Detection System in HueHordes is responsible for identifying player-constructed bases and structures, enabling intelligent horde targeting and strategic gameplay mechanics.</p>
+<h2 id="system-overview">System Overview</h2>
+<p>The base detection system analyzes the game world to identify areas that represent player investment and activity. This allows hordes to focus on meaningful targets rather than wandering aimlessly.</p>
+<pre><code class="lang-mermaid">flowchart LR
+    World[Scan World] --&gt; Analyze[Analyze Blocks]
+    Analyze --&gt; Score[Score Base Value]
+    Score --&gt; Select[Select Target]
+    Select --&gt; Horde[Send Horde]
+</code></pre>
+<h2 id="core-components">Core Components</h2>
+<h3 id="1-structure-analysis-engine">1. Structure Analysis Engine</h3>
+<p>The structure analysis engine examines the physical composition of potential bases.</p>
+<h4 id="block-type-classification">Block Type Classification</h4>
+<p><strong>Crafted vs Natural Blocks</strong>:</p>
+<pre><code class="lang-csharp">public enum BlockClassification
+{
+    Natural,        // Stone, dirt, naturally generated blocks
+    BasicCrafted,   // Simple player-made blocks (cobble, planks)
+    Advanced,       // Refined materials (cut stone, metal)
+    Functional,     // Interactive blocks (chests, workbenches)
+    Decorative,     // Non-functional aesthetic blocks
+    Defensive       // Walls, doors, gates
+}
+</code></pre>
+<p><strong>Detection Criteria</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Block Type</th>
+<th>Base Indicator</th>
+<th>Weight</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Natural Blocks</strong></td>
+<td>Low (unless arranged)</td>
+<td>1x</td>
+</tr>
+<tr>
+<td><strong>Crafted Materials</strong></td>
+<td>Medium</td>
+<td>3x</td>
+</tr>
+<tr>
+<td><strong>Functional Blocks</strong></td>
+<td>High</td>
+<td>5x</td>
+</tr>
+<tr>
+<td><strong>Rare Materials</strong></td>
+<td>Very High</td>
+<td>8x</td>
+</tr>
+<tr>
+<td><strong>Defensive Structures</strong></td>
+<td>Maximum</td>
+<td>10x</td>
+</tr>
+</tbody>
+</table>
+<h4 id="pattern-recognition">Pattern Recognition</h4>
+<p><strong>Structure Patterns</strong>:</p>
+<pre><code class="lang-csharp">public class StructurePattern
+{
+    public PatternType Type { get; set; }
+    public int MinBlockCount { get; set; }
+    public double RequiredDensity { get; set; }
+    public List&lt;BlockClassification&gt; RequiredBlocks { get; set; }
+}
+
+public enum PatternType
+{
+    Wall,           // Linear defensive structures
+    Room,           // Enclosed spaces with floor, walls, ceiling
+    Farm,           // Agricultural areas with crops
+    Workshop,       // Areas with multiple functional blocks
+    Storage,        // Concentrated chest/container areas
+    Compound        // Large multi-structure bases
+}
+</code></pre>
+<p><strong>Pattern Detection Algorithm</strong>:</p>
+<ol>
+<li><strong>Flood Fill Analysis</strong>: Identifies connected crafted block regions</li>
+<li><strong>Geometric Analysis</strong>: Detects rectangular, circular, and irregular shapes</li>
+<li><strong>Density Calculation</strong>: Measures block concentration in areas</li>
+<li><strong>Connectivity Mapping</strong>: Links separate structures into compound bases</li>
+</ol>
+<h3 id="2-activity-detection-system">2. Activity Detection System</h3>
+<p>The activity detection system identifies recent player interaction and ongoing base development.</p>
+<h4 id="player-presence-indicators">Player Presence Indicators</h4>
+<p><strong>Direct Indicators</strong>:</p>
+<ul>
+<li>Player spawn points and beds</li>
+<li>Recent player positions (tracked over time)</li>
+<li>Light sources (torches, lanterns)</li>
+<li>Active furnaces and workstations</li>
+</ul>
+<p><strong>Indirect Indicators</strong>:</p>
+<ul>
+<li>Recently placed blocks</li>
+<li>Harvested crops or resources</li>
+<li>Modified terrain (mining, excavation)</li>
+<li>Tool usage patterns</li>
+</ul>
+<h4 id="change-tracking">Change Tracking</h4>
+<pre><code class="lang-csharp">public class ActivityTracker
+{
+    private Dictionary&lt;Vec3i, BlockChange&gt; recentChanges;
+    private Dictionary&lt;long, PlayerActivity&gt; playerActivities;
+    
+    public void TrackBlockChange(Vec3i position, Block oldBlock, Block newBlock)
+    {
+        var change = new BlockChange
+        {
+            Position = position,
+            OldBlock = oldBlock,
+            NewBlock = newBlock,
+            Timestamp = DateTime.UtcNow,
+            ChangeType = ClassifyChange(oldBlock, newBlock)
+        };
+        
+        recentChanges[position] = change;
+        UpdateActivityHeatmap(position);
+    }
+}
+</code></pre>
+<p><strong>Change Classification</strong>:</p>
+<ul>
+<li><strong>Construction</strong>: Placing crafted blocks</li>
+<li><strong>Destruction</strong>: Breaking player-made structures</li>
+<li><strong>Improvement</strong>: Upgrading materials (cobble → stone)</li>
+<li><strong>Expansion</strong>: Adding to existing structures</li>
+<li><strong>Maintenance</strong>: Replacing damaged blocks</li>
+</ul>
+<h3 id="3-base-scoring-system">3. Base Scoring System</h3>
+<p>The scoring system evaluates detected structures to determine their importance as horde targets.</p>
+<h4 id="scoring-factors">Scoring Factors</h4>
+<p><strong>Size and Complexity</strong>:</p>
+<pre><code class="lang-csharp">public class BaseScorer
+{
+    public double CalculateBaseScore(DetectedBase baseData)
+    {
+        double score = 0;
+        
+        // Size factor (larger bases are more significant)
+        score += baseData.BlockCount * 0.1;
+        
+        // Complexity factor (variety of block types)
+        score += baseData.UniqueBlockTypes * 2.0;
+        
+        // Functional factor (workstations, storage)
+        score += baseData.FunctionalBlocks * 5.0;
+        
+        // Defensive factor (walls, gates, towers)
+        score += baseData.DefensiveStructures * 8.0;
+        
+        // Activity factor (recent player interaction)
+        score += baseData.RecentActivity * 3.0;
+        
+        // Rarity factor (valuable materials)
+        score += baseData.RareMaterials * 10.0;
+        
+        return Math.Min(score, 1000); // Cap maximum score
+    }
+}
+</code></pre>
+<p><strong>Scoring Categories</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Description</th>
+<th>Score Range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Outpost</strong></td>
+<td>Small, basic structures</td>
+<td>1-50</td>
+</tr>
+<tr>
+<td><strong>Settlement</strong></td>
+<td>Medium complexity bases</td>
+<td>51-200</td>
+</tr>
+<tr>
+<td><strong>Fortress</strong></td>
+<td>Large, well-defended bases</td>
+<td>201-500</td>
+</tr>
+<tr>
+<td><strong>Metropolis</strong></td>
+<td>Massive compound bases</td>
+<td>501-1000</td>
+</tr>
+</tbody>
+</table>
+<h4 id="priority-calculation">Priority Calculation</h4>
+<p><strong>Target Priority Factors</strong>:</p>
+<ol>
+<li><strong>Base Score</strong>: Primary scoring metric</li>
+<li><strong>Distance</strong>: Closer bases get priority bonus</li>
+<li><strong>Accessibility</strong>: Easier to reach bases preferred</li>
+<li><strong>Player Count</strong>: More active players increase priority</li>
+<li><strong>Defense Level</strong>: Higher defenses increase challenge value</li>
+</ol>
+<pre><code class="lang-csharp">public double CalculatePriority(DetectedBase baseData, Vec3d hordePosition)
+{
+    double baseScore = CalculateBaseScore(baseData);
+    double distance = baseData.Center.DistanceTo(hordePosition);
+    double accessibility = CalculateAccessibility(baseData, hordePosition);
+    
+    // Distance penalty (farther bases less attractive)
+    double distanceFactor = Math.Max(0.1, 1.0 - (distance / 500.0));
+    
+    // Accessibility bonus (easier paths preferred)
+    double accessFactor = Math.Max(0.5, accessibility);
+    
+    return baseScore * distanceFactor * accessFactor;
+}
+</code></pre>
+<h3 id="4-detection-algorithms">4. Detection Algorithms</h3>
+<h4 id="area-scanning">Area Scanning</h4>
+<p><strong>Chunk-Based Analysis</strong>:</p>
+<pre><code class="lang-csharp">public class ChunkAnalyzer
+{
+    public void AnalyzeChunk(IWorldChunk chunk)
+    {
+        var blockCounts = new Dictionary&lt;BlockClassification, int&gt;();
+        var patterns = new List&lt;StructurePattern&gt;();
+        
+        // Iterate through all blocks in chunk
+        for (int x = 0; x &lt; 32; x++)
+        {
+            for (int y = 0; y &lt; 256; y++)
+            {
+                for (int z = 0; z &lt; 32; z++)
+                {
+                    var block = chunk.GetBlock(x, y, z);
+                    var classification = ClassifyBlock(block);
+                    blockCounts[classification]++;
+                    
+                    // Check for structure patterns
+                    CheckPatterns(x, y, z, block, patterns);
+                }
+            }
+        }
+        
+        // Evaluate chunk for base potential
+        EvaluateChunk(blockCounts, patterns);
+    }
+}
+</code></pre>
+<p><strong>Radial Scanning</strong>:</p>
+<ul>
+<li><strong>Center Point</strong>: Start from player spawn or known bases</li>
+<li><strong>Expanding Radius</strong>: Search outward in growing circles</li>
+<li><strong>Selective Depth</strong>: Focus on areas with initial base indicators</li>
+<li><strong>Performance Optimization</strong>: Skip areas with no crafted blocks</li>
+</ul>
+<h4 id="multi-level-detection">Multi-Level Detection</h4>
+<p><strong>Level 1 - Quick Scan</strong>:</p>
+<ul>
+<li>Identify chunks with crafted blocks</li>
+<li>Basic pattern recognition</li>
+<li>Minimal computational cost</li>
+</ul>
+<p><strong>Level 2 - Detailed Analysis</strong>:</p>
+<ul>
+<li>Complete structure mapping</li>
+<li>Activity correlation</li>
+<li>Pattern classification</li>
+</ul>
+<p><strong>Level 3 - Deep Evaluation</strong>:</p>
+<ul>
+<li>Complex base relationships</li>
+<li>Historical activity analysis</li>
+<li>Strategic value assessment</li>
+</ul>
+<h2 id="integration-with-horde-system">Integration with Horde System</h2>
+<h3 id="target-selection">Target Selection</h3>
+<pre><code class="lang-csharp">public class TargetSelector
+{
+    public DetectedBase SelectTarget(List&lt;DetectedBase&gt; availableBases, Vec3d hordePosition)
+    {
+        // Calculate priorities for all bases
+        var prioritizedBases = availableBases
+            .Select(b =&gt; new { Base = b, Priority = CalculatePriority(b, hordePosition) })
+            .OrderByDescending(x =&gt; x.Priority)
+            .ToList();
+        
+        // Select highest priority accessible base
+        foreach (var entry in prioritizedBases)
+        {
+            if (IsAccessible(entry.Base, hordePosition))
+            {
+                return entry.Base;
+            }
+        }
+        
+        return null; // No suitable target found
+    }
+}
+</code></pre>
+<h3 id="pathfinding-integration">Pathfinding Integration</h3>
+<p>The base detection system works closely with the pathfinding engine:</p>
+<ol>
+<li><strong>Target Identification</strong>: Base detection provides destination coordinates</li>
+<li><strong>Access Point Analysis</strong>: Identifies optimal approach routes to bases</li>
+<li><strong>Obstacle Mapping</strong>: Provides defensive structure information</li>
+<li><strong>Dynamic Updates</strong>: Updates pathfinding when base structures change</li>
+</ol>
+<h2 id="configuration-and-tuning">Configuration and Tuning</h2>
+<h3 id="detection-parameters">Detection Parameters</h3>
+<p><strong>Sensitivity Settings</strong>:</p>
+<pre><code class="lang-json">{
+  &quot;BaseDetection&quot;: {
+    &quot;MinimumBlockCount&quot;: 20,
+    &quot;RequiredBlockDensity&quot;: 0.3,
+    &quot;ScanRadius&quot;: 100,
+    &quot;UpdateFrequency&quot;: 300,
+    &quot;ActivityTimeWindow&quot;: 3600,
+    &quot;ScoreThreshold&quot;: 25.0
+  }
+}
+</code></pre>
+<p><strong>Block Weights Configuration</strong>:</p>
+<pre><code class="lang-json">{
+  &quot;BlockWeights&quot;: {
+    &quot;Natural&quot;: 1.0,
+    &quot;BasicCrafted&quot;: 3.0,
+    &quot;Advanced&quot;: 5.0,
+    &quot;Functional&quot;: 8.0,
+    &quot;Defensive&quot;: 10.0,
+    &quot;Rare&quot;: 15.0
+  }
+}
+</code></pre>
+<h3 id="performance-optimization">Performance Optimization</h3>
+<p><strong>Caching Strategy</strong>:</p>
+<ul>
+<li><strong>Result Caching</strong>: Store detection results for reuse</li>
+<li><strong>Incremental Updates</strong>: Only re-analyze changed areas</li>
+<li><strong>Background Processing</strong>: Perform scans during low activity periods</li>
+</ul>
+<p><strong>Resource Management</strong>:</p>
+<pre><code class="lang-csharp">public class DetectionManager
+{
+    private readonly Timer scanTimer;
+    private readonly LRUCache&lt;Vec3i, DetectionResult&gt; resultCache;
+    
+    public void ScheduleScan(Vec3i center, int priority)
+    {
+        // Queue scan based on priority
+        // Manage computational resources
+        // Balance accuracy vs performance
+    }
+}
+</code></pre>
+<h2 id="debug-and-visualization">Debug and Visualization</h2>
+<h3 id="debug-commands">Debug Commands</h3>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Function</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/horde detectbase [player] [radius]</code></td>
+<td>Scan area for base</td>
+<td>Base detection results</td>
+</tr>
+<tr>
+<td><code>/horde debug base [player]</code></td>
+<td>Visualize detected base</td>
+<td>Base particle indicators</td>
+</tr>
+<tr>
+<td><code>/horde spawntobase [player] [count]</code></td>
+<td>Test base targeting</td>
+<td>Spawn entities that target base</td>
+</tr>
+</tbody>
+</table>
+<h3 id="visual-indicators">Visual Indicators</h3>
+<p><strong>Base Visualization</strong>:</p>
+<ul>
+<li><strong>Green Particles</strong>: Confirmed base areas</li>
+<li><strong>Yellow Particles</strong>: Potential base regions</li>
+<li><strong>Red Particles</strong>: High-priority targets</li>
+<li><strong>Blue Particles</strong>: Recent activity areas</li>
+</ul>
+<h2 id="limitations-and-considerations">Limitations and Considerations</h2>
+<h3 id="current-limitations">Current Limitations</h3>
+<ol>
+<li><strong>Natural Formations</strong>: May occasionally flag natural formations as bases</li>
+<li><strong>Underground Bases</strong>: Limited detection of deep underground structures</li>
+<li><strong>Distributed Bases</strong>: Difficulty linking separated but related structures</li>
+<li><strong>Performance Impact</strong>: Large-scale scans can impact server performance</li>
+</ol>
+<h3 id="future-improvements">Future Improvements</h3>
+<p><strong>Enhanced Pattern Recognition</strong>:</p>
+<ul>
+<li>Machine learning integration for better pattern detection</li>
+<li>Historical data analysis for improved accuracy</li>
+<li>Player behavior prediction</li>
+</ul>
+<p><strong>Advanced Activity Tracking</strong>:</p>
+<ul>
+<li>Economic activity monitoring (trading, crafting)</li>
+<li>Social activity detection (multiplayer interaction)</li>
+<li>Defensive activity recognition (combat preparations)</li>
+</ul>
+<hr>
+<p><em>For related systems, see <a href="ai-system-architecture.html">AI System Architecture</a> and <a href="pathfinding-system.html">Pathfinding System Guide</a>.</em></p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/HueByte/VintageHue/blob/master/docs/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <div class="footer-custom"><div class="footer-inner d-flex justify-content-between align-items-center"><div class="footer-text">Made with <strong>💖</strong> By HueByte</div><div class="footer-links"><a href="https://github.com/HueByte/VintageHue" class="footer-link" target="_blank">GitHub</a><a href="#" class="footer-link scroll-to-top" onclick="scrollToTop()">Top</a></div></div></div><script>function scrollToTop(){window.scrollTo({top:0,behavior:'smooth'});}</script>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

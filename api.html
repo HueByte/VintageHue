@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>&#128218; HueHordes API Reference | VintageHue Mods Documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="&#128218; HueHordes API Reference | VintageHue Mods Documentation ">
+      
+      
+      <link rel="icon" href="images/hue-nobg-clean.png">
+      <link rel="stylesheet" href="public/docfx.min.css">
+      <link rel="stylesheet" href="public/main.css">
+      <meta name="docfx:navrel" content="toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HueByte/VintageHue/blob/master/docs/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="index.html">
+            <img id="logo" class="svg" src="images/hue-nobg-clean.png" alt="VintageHue">
+            VintageHue
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="-huehordes-api-reference">📚 HueHordes API Reference</h1>
+
+<blockquote>
+<p>Comprehensive API documentation for the HueHordes Vintage Story mod</p>
+</blockquote>
+<p>This document provides detailed information about the HueHordes mod architecture, classes, and extension points for developers who want to understand or extend the mod.</p>
+<hr>
+<h2 id="-architecture-overview">🏗️ Architecture Overview</h2>
+<p>HueHordes follows a clean, modular architecture with separated concerns:</p>
+<pre><code>HueHordes/
+├── 🎮 HueHordesModSystem.cs      # Main mod entry point
+├── 📁 AI/                     # Core AI implementation
+│   ├── 🤖 AIBehavior.cs          # Entity AI behavior
+│   ├── 🗺️ AStarPathfinder.cs     # 3D pathfinding
+│   ├── 🏠 BaseDetection.cs       # Player base detection
+│   ├── 🚪 DoorHealthManager.cs   # Door destruction system
+│   ├── 🎯 TargetDetection.cs     # Player targeting
+│   ├── 🏢 HordeSystem.cs         # Main coordinator
+│   └── 🌟 SpawningSystem.cs      # Entity spawning
+├── 📊 Debug/                     # Logging system
+│   └── 🔍 DebugLogger.cs         # Centralized logging
+└── 📋 Models/                    # Data models
+    └── ⚙️ ServerConfig.cs        # Configuration
+</code></pre>
+<hr>
+<h2 id="-core-classes">🎮 Core Classes</h2>
+<h3 id="huehordesmodsystem">HueHordesModSystem</h3>
+<p><strong>Namespace</strong>: <code>HueHordes</code>
+<strong>Purpose</strong>: Main mod system that integrates all components</p>
+<pre><code class="lang-csharp">public class HueHordesModSystem : ModSystem
+{
+    public override void StartServerSide(ICoreServerAPI api)
+    public override void Dispose()
+}
+</code></pre>
+<p><strong>Key Responsibilities</strong>:</p>
+<ul>
+<li>Mod initialization and cleanup</li>
+<li>Configuration loading and management</li>
+<li>Integration with HordeSystem</li>
+</ul>
+<hr>
+<h2 id="-ai-system-classes">🤖 AI System Classes</h2>
+<h3 id="aibehavior">AIBehavior</h3>
+<p><strong>Namespace</strong>: <code>HueHordes.AI</code>
+<strong>Purpose</strong>: Core AI behavior for spawned entities</p>
+<pre><code class="lang-csharp">public class AIBehavior : EntityBehavior
+{
+    public AIBehavior(Entity entity, DoorHealthManager doorHealthManager)
+    public override void OnGameTick(float dt)
+    public override string PropertyName() =&gt; &quot;ai&quot;
+}
+</code></pre>
+<p><strong>Key Features</strong>:</p>
+<ul>
+<li>State machine with 3 states: <code>NavigatingToBase</code>, <code>AttackingTarget</code>, <code>DestroyingDoor</code></li>
+<li>Performance optimized with 5-tick update intervals</li>
+<li>Automatic stuck detection and recovery</li>
+<li>Clean integration with Vintage Story's entity system</li>
+</ul>
+<p><strong>AI States</strong>:</p>
+<pre><code class="lang-csharp">public enum AIState
+{
+    NavigatingToBase,    // Moving toward player base
+    AttackingTarget,     // Engaging nearby players
+    DestroyingDoor      // Attacking doors/gates
+}
+</code></pre>
+<h3 id="astarpathfinder">AStarPathfinder</h3>
+<p><strong>Namespace</strong>: <code>HueHordes.AI</code>
+<strong>Purpose</strong>: 3D pathfinding algorithm for entity navigation</p>
+<pre><code class="lang-csharp">public class AStarPathfinder
+{
+    public AStarPathfinder(ICoreServerAPI sapi)
+    public List&lt;Vec3d&gt; FindPath(Vec3d start, Vec3d end, int maxNodes = 10000)
+    public Vec3d? FindNearestAccessiblePosition(Vec3d targetPos, int searchRadius = 5)
+}
+</code></pre>
+<p><strong>Key Features</strong>:</p>
+<ul>
+<li>3D A* pathfinding algorithm</li>
+<li>Obstacle avoidance and jump mechanics</li>
+<li>Accessibility checking for unreachable targets</li>
+<li>Performance optimized with node limits</li>
+</ul>
+<p><strong>Supporting Classes</strong>:</p>
+<pre><code class="lang-csharp">public class PathNode : IComparable&lt;PathNode&gt;
+{
+    public Vec3d Position { get; set; }
+    public float GCost { get; set; }  // Distance from start
+    public float HCost { get; set; }  // Distance to end
+    public float FCost =&gt; GCost + HCost;
+    public PathNode? Parent { get; set; }
+}
+
+public class PriorityQueue&lt;T&gt; where T : IComparable&lt;T&gt;
+{
+    public void Enqueue(T item)
+    public T Dequeue()
+    public int Count { get; }
+}
+</code></pre>
+<h3 id="basedetection">BaseDetection</h3>
+<p><strong>Namespace</strong>: <code>HueHordes.AI</code>
+<strong>Purpose</strong>: Intelligent detection of player bases and structures</p>
+<pre><code class="lang-csharp">public class BaseDetection
+{
+    public BaseDetection(ICoreServerAPI serverApi)
+    public DetectedBase? DetectPlayerBase(IServerPlayer player, int searchRadius)
+    public Vec3d? FindPlayerBed(IServerPlayer player, int searchRadius = 50)
+}
+</code></pre>
+<p><strong>Detection Algorithm</strong>:</p>
+<ul>
+<li>Scans for key indicators: beds, doors, chests, workstations</li>
+<li>Calculates base score based on structure density</li>
+<li>Classifies base types: <code>HomeBase</code>, <code>WorkshopBase</code>, <code>BasicBase</code>, <code>Outpost</code></li>
+<li>Caches results for performance</li>
+</ul>
+<p><strong>DetectedBase Model</strong>:</p>
+<pre><code class="lang-csharp">public class DetectedBase
+{
+    public Vec3d Center { get; set; }
+    public string BaseType { get; set; }
+    public int BaseScore { get; set; }
+    public int IndicatorCount { get; set; }
+    public double DistanceFromPlayer { get; set; }
+    public Vec3d? BedPosition { get; set; }
+}
+</code></pre>
+<h3 id="doorhealthmanager">DoorHealthManager</h3>
+<p><strong>Namespace</strong>: <code>HueHordes.AI</code>
+<strong>Purpose</strong>: Health-based door destruction with attacker limits</p>
+<pre><code class="lang-csharp">public class DoorHealthManager
+{
+    public DoorHealthManager(ICoreServerAPI serverApi)
+    public bool TryRegisterAttacker(Vec3d doorPos, long entityId)
+    public void UnregisterAttacker(Vec3d doorPos, long entityId)
+    public bool AttackDoor(Vec3d doorPos, long entityId, float damage = 50f)
+    public void CleanupOldDoors()
+}
+</code></pre>
+<p><strong>Features</strong>:</p>
+<ul>
+<li>2000HP per door/gate</li>
+<li>Maximum 3 concurrent attackers per door</li>
+<li>Automatic cleanup of destroyed doors</li>
+<li>Thread-safe attacker management</li>
+</ul>
+<p><strong>DoorInfo Model</strong>:</p>
+<pre><code class="lang-csharp">public class DoorInfo
+{
+    public Vec3i Position { get; set; }
+    public float MaxHealth { get; set; } = 2000f;
+    public float CurrentHealth { get; set; } = 2000f;
+    public int MaxAttackers { get; set; } = 3;
+    public HashSet&lt;long&gt; CurrentAttackers { get; set; }
+    public long LastAttackTime { get; set; }
+    public float HealthPercentage =&gt; CurrentHealth / MaxHealth;
+}
+</code></pre>
+<h3 id="targetdetection">TargetDetection</h3>
+<p><strong>Namespace</strong>: <code>HueHordes.AI</code>
+<strong>Purpose</strong>: Player targeting with line-of-sight and game mode filtering</p>
+<pre><code class="lang-csharp">public class TargetDetection
+{
+    public TargetDetection(ICoreServerAPI serverApi)
+    public Entity? FindNearestPlayer(Vec3d position, float maxRange)
+    public Entity[] FindAllPlayersInRange(Vec3d position, float maxRange)
+    public bool IsValidTarget(Entity entity)
+    public Vec3d GetTargetAimPoint(Entity target)
+    public Vec3d PredictTargetPosition(Entity target, float predictionTime)
+}
+</code></pre>
+<p><strong>Smart Features</strong>:</p>
+<ul>
+<li>Ignores creative and spectator mode players</li>
+<li>Line-of-sight checking with transparent block support</li>
+<li>Target prediction for moving players</li>
+<li>Realistic aim point calculation</li>
+</ul>
+<hr>
+<h2 id="-system-coordination">🏢 System Coordination</h2>
+<h3 id="hordesystem">HordeSystem</h3>
+<p><strong>Namespace</strong>: <code>HueHordes.AI</code>
+<strong>Purpose</strong>: Main coordinator for all AI systems</p>
+<pre><code class="lang-csharp">public class HordeSystem
+{
+    public HordeSystem(ICoreServerAPI serverApi)
+    public DoorHealthManager DoorHealthManager { get; }
+    public BaseDetection GetBaseDetection()
+    public SpawningSystem GetSpawningSystem()
+}
+</code></pre>
+<p><strong>Command System</strong>:</p>
+<ul>
+<li><code>/newhorde spawn [playername] [count] [entitytype]</code></li>
+<li><code>/newhorde detectbase [playername] [radius]</code></li>
+<li><code>/newhorde spawntobase [playername] [count]</code></li>
+</ul>
+<h3 id="spawningsystem">SpawningSystem</h3>
+<p><strong>Namespace</strong>: <code>HueHordes.AI</code>
+<strong>Purpose</strong>: Entity spawning with AI behavior assignment</p>
+<pre><code class="lang-csharp">public class SpawningSystem
+{
+    public SpawningSystem(ICoreServerAPI serverApi, DoorHealthManager doorHealthManager)
+    public List&lt;Entity&gt; SpawnAroundPlayer(IServerPlayer player, SpawnConfig config)
+}
+</code></pre>
+<p><strong>SpawnConfig Model</strong>:</p>
+<pre><code class="lang-csharp">public class SpawnConfig
+{
+    public string EntityCode { get; set; } = &quot;game:drifter-normal&quot;;
+    public int EntityCount { get; set; } = 5;
+    public float MinRadius { get; set; } = 20f;
+    public float MaxRadius { get; set; } = 50f;
+
+    public static SpawnConfig Default { get; }
+}
+</code></pre>
+<hr>
+<h2 id="-debug-system">📊 Debug System</h2>
+<h3 id="debuglogger">DebugLogger</h3>
+<p><strong>Namespace</strong>: <code>HueHordes.Debug</code>
+<strong>Purpose</strong>: Centralized logging system for debugging and monitoring</p>
+<pre><code class="lang-csharp">public static class DebugLogger
+{
+    public static void Initialize(ICoreServerAPI api, bool enableDebugLogging, int debugLevel)
+    public static void AIEvent(string eventName, string details, string entityId = &quot;&quot;)
+    public static void AISpawn(string entityType, string position, string target)
+    public static void AITarget(string entityId, string targetType, string targetName, string context)
+    public static void Event(string eventName, string details)
+    public static void Error(string message, Exception? ex = null)
+}
+</code></pre>
+<p><strong>Logging Categories</strong>:</p>
+<ul>
+<li><strong>AI Events</strong>: State changes, pathfinding, behavior</li>
+<li><strong>Spawn Events</strong>: Entity creation and placement</li>
+<li><strong>Target Events</strong>: Player targeting and detection</li>
+<li><strong>General Events</strong>: System operations</li>
+<li><strong>Errors</strong>: Exception handling and troubleshooting</li>
+</ul>
+<hr>
+<h2 id="-configuration">📋 Configuration</h2>
+<h3 id="serverconfig">ServerConfig</h3>
+<p><strong>Namespace</strong>: <code>HueHordes.Models</code>
+<strong>Purpose</strong>: Mod configuration with hot-reload support</p>
+<pre><code class="lang-csharp">public class ServerConfig
+{
+    public bool EnableDebugLogging { get; set; } = false;
+    public int DebugLoggingLevel { get; set; } = 1;
+}
+</code></pre>
+<p><strong>Configuration File</strong>: <code>ModConfig/Horde.server.json</code></p>
+<hr>
+<h2 id="-extension-points">🔌 Extension Points</h2>
+<h3 id="creating-custom-ai-behaviors">Creating Custom AI Behaviors</h3>
+<p>Extend the <code>AIBehavior</code> class to create custom entity behaviors:</p>
+<pre><code class="lang-csharp">public class CustomAIBehavior : AIBehavior
+{
+    public CustomAIBehavior(Entity entity, DoorHealthManager doorHealthManager)
+        : base(entity, doorHealthManager)
+    {
+        // Custom initialization
+    }
+
+    protected override void HandleCustomState(Vec3d entityPos, long currentTime)
+    {
+        // Custom behavior logic
+    }
+}
+</code></pre>
+<h3 id="adding-new-ai-states">Adding New AI States</h3>
+<ol>
+<li>Extend the <code>AIState</code> enum:</li>
+</ol>
+<pre><code class="lang-csharp">public enum AIState
+{
+    NavigatingToBase,
+    AttackingTarget,
+    DestroyingDoor,
+    CustomState  // Your new state
+}
+</code></pre>
+<ol start="2">
+<li>Add handling in <code>AIBehavior.OnGameTick()</code>:</li>
+</ol>
+<pre><code class="lang-csharp">switch (currentState)
+{
+    case AIState.CustomState:
+        HandleCustomState(entityPos, currentTime);
+        break;
+}
+</code></pre>
+<h3 id="custom-base-detection">Custom Base Detection</h3>
+<p>Extend <code>BaseDetection</code> to add new structure types:</p>
+<pre><code class="lang-csharp">public class CustomBaseDetection : BaseDetection
+{
+    protected override bool IsCustomIndicator(Block block)
+    {
+        // Custom structure detection logic
+        return block.Code?.ToString().Contains(&quot;custom-structure&quot;) == true;
+    }
+}
+</code></pre>
+<h3 id="enhanced-door-systems">Enhanced Door Systems</h3>
+<p>Extend <code>DoorHealthManager</code> for custom destruction mechanics:</p>
+<pre><code class="lang-csharp">public class CustomDoorHealthManager : DoorHealthManager
+{
+    public bool AttackCustomStructure(Vec3d pos, long entityId, float damage)
+    {
+        // Custom destruction logic
+        return base.AttackDoor(pos, entityId, damage);
+    }
+}
+</code></pre>
+<hr>
+<h2 id="-testing-and-development">🧪 Testing and Development</h2>
+<h3 id="debug-configuration">Debug Configuration</h3>
+<p>Enable comprehensive logging:</p>
+<pre><code class="lang-json">{
+  &quot;EnableDebugLogging&quot;: true,
+  &quot;DebugLoggingLevel&quot;: 3
+}
+</code></pre>
+<h3 id="testing-commands">Testing Commands</h3>
+<p>Use admin commands for development testing:</p>
+<pre><code class="lang-bash"># Test basic functionality
+/newhorde spawn TestPlayer 1 drifter-normal
+
+# Test base detection
+/newhorde detectbase TestPlayer 50
+
+# Test full system integration
+/newhorde spawntobase TestPlayer 3
+</code></pre>
+<h3 id="performance-monitoring">Performance Monitoring</h3>
+<p>Monitor performance through debug logs:</p>
+<ul>
+<li>AI update frequency (5-tick intervals)</li>
+<li>Pathfinding performance (node counts, timing)</li>
+<li>Memory usage (entity cleanup, path caching)</li>
+<li>Concurrent attacker limits (door health system)</li>
+</ul>
+<hr>
+<h2 id="-api-usage-examples">📄 API Usage Examples</h2>
+<h3 id="basic-entity-spawning">Basic Entity Spawning</h3>
+<pre><code class="lang-csharp">var spawningSystem = hordeSystem.GetSpawningSystem();
+var config = new SpawnConfig
+{
+    EntityCode = &quot;game:drifter-normal&quot;,
+    EntityCount = 5,
+    MinRadius = 20f,
+    MaxRadius = 40f
+};
+
+var entities = spawningSystem.SpawnAroundPlayer(player, config);
+</code></pre>
+<h3 id="base-detection">Base Detection</h3>
+<pre><code class="lang-csharp">var baseDetection = hordeSystem.GetBaseDetection();
+var detectedBase = baseDetection.DetectPlayerBase(player, 60);
+
+if (detectedBase != null)
+{
+    Console.WriteLine($&quot;Found {detectedBase.BaseType} at {detectedBase.Center}&quot;);
+}
+</code></pre>
+<h3 id="door-health-management">Door Health Management</h3>
+<pre><code class="lang-csharp">var doorManager = hordeSystem.DoorHealthManager;
+if (doorManager.TryRegisterAttacker(doorPosition, entityId))
+{
+    bool destroyed = doorManager.AttackDoor(doorPosition, entityId, 50f);
+    if (destroyed)
+    {
+        // Door was destroyed
+    }
+}
+</code></pre>
+<hr>
+<div align="center">
+<p><strong>📚 API Reference Complete</strong></p>
+<p>For more information, see the <a href="../README.md">main documentation</a> or <a href="../CONTRIBUTING.md">contributing guide</a>.</p>
+<p><a href="../README.md"><img src="https://img.shields.io/badge/Back%20to-Documentation-blue?style=flat-square" alt="Back to Documentation"></a></p>
+</div>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/HueByte/VintageHue/blob/master/docs/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <div class="footer-custom"><div class="footer-inner d-flex justify-content-between align-items-center"><div class="footer-text">Made with <strong>💖</strong> By HueByte</div><div class="footer-links"><a href="https://github.com/HueByte/VintageHue" class="footer-link" target="_blank">GitHub</a><a href="#" class="footer-link scroll-to-top" onclick="scrollToTop()">Top</a></div></div></div><script>function scrollToTop(){window.scrollTo({top:0,behavior:'smooth'});}</script>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

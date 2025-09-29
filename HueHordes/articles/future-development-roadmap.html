@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Future Development Roadmap | VintageHue Mods Documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Future Development Roadmap | VintageHue Mods Documentation ">
+      
+      
+      <link rel="icon" href="../../images/hue-nobg-clean.png">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HueByte/VintageHue/blob/master/docs/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/hue-nobg-clean.png" alt="VintageHue">
+            VintageHue
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="future-development-roadmap">Future Development Roadmap</h1>
+
+<p>This roadmap outlines the planned features, improvements, and long-term vision for HueHordes development. The roadmap is organized by development phases and priority levels.</p>
+<h2 id="development-philosophy">Development Philosophy</h2>
+<p>HueHordes development follows these core principles:</p>
+<ul>
+<li><strong>Player-Centric Design</strong>: All features should enhance player experience and engagement</li>
+<li><strong>Performance First</strong>: New features must maintain or improve game performance</li>
+<li><strong>Modular Architecture</strong>: Systems should be extensible and maintainable</li>
+<li><strong>Community Feedback</strong>: Player input drives feature prioritization</li>
+<li><strong>Vintage Story Integration</strong>: Seamless integration with base game mechanics</li>
+</ul>
+<h2 id="current-status-v10x">Current Status (v1.0.x)</h2>
+<h3 id="-completed-features">✅ Completed Features</h3>
+<p><strong>Core Systems</strong>:</p>
+<ul>
+<li>Basic horde spawning and management</li>
+<li>3D A* pathfinding with entity-aware coordinates</li>
+<li>Particle-based debug visualization</li>
+<li>Configuration system with JSON settings</li>
+<li>Command-line interface for testing and debugging</li>
+</ul>
+<p><strong>AI Features</strong>:</p>
+<ul>
+<li>Intelligent pathfinding to player bases</li>
+<li>Obstacle avoidance and navigation</li>
+<li>Basic behavior state management</li>
+<li>Symmetrical movement validation</li>
+</ul>
+<p><strong>Infrastructure</strong>:</p>
+<ul>
+<li>Comprehensive documentation system</li>
+<li>Automated build pipeline</li>
+<li>Testing framework</li>
+<li>Performance monitoring tools</li>
+</ul>
+<h3 id="-current-development-v11x">🔄 Current Development (v1.1.x)</h3>
+<p><strong>In Progress</strong>:</p>
+<ul>
+<li>Enhanced base detection algorithms</li>
+<li>Improved AI decision-making systems</li>
+<li>Performance optimizations for large hordes</li>
+<li>Additional debug and analysis tools</li>
+</ul>
+<p><strong>Planned for Next Release</strong>:</p>
+<ul>
+<li>Advanced behavior patterns</li>
+<li>Configuration GUI interface</li>
+<li>Multiplayer synchronization improvements</li>
+<li>Extended entity customization options</li>
+</ul>
+<h2 id="short-term-roadmap-3-6-months">Short-Term Roadmap (3-6 months)</h2>
+<h3 id="version-120---enhanced-ai-systems">Version 1.2.0 - Enhanced AI Systems</h3>
+<p><strong>🎯 Primary Goals</strong>:</p>
+<ul>
+<li>Implement advanced AI behavior patterns</li>
+<li>Add dynamic difficulty scaling</li>
+<li>Enhance base detection accuracy</li>
+<li>Improve pathfinding performance</li>
+</ul>
+<p><strong>🔧 Technical Improvements</strong>:</p>
+<pre><code class="lang-mermaid">gantt
+    title v1.2.0 Development Timeline
+    dateFormat YYYY-MM-DD
+    section AI Enhancement
+    Behavior Patterns    :active, ai1, 2024-02-01, 2024-02-28
+    Difficulty Scaling   :ai2, 2024-03-01, 2024-03-15
+    section Detection Systems  
+    Base Detection v2    :detect1, 2024-02-15, 2024-03-30
+    Activity Tracking    :detect2, 2024-03-15, 2024-04-15
+    section Performance
+    Pathfinding Optimization :perf1, 2024-02-01, 2024-03-01
+    Memory Management    :perf2, 2024-03-01, 2024-03-30
+</code></pre>
+<p><strong>New Features</strong>:</p>
+<ul>
+<li><strong>Adaptive AI</strong>: AI that learns from player behavior patterns</li>
+<li><strong>Swarm Intelligence</strong>: Coordinated group behaviors for horde entities</li>
+<li><strong>Dynamic Events</strong>: Special horde events triggered by player actions</li>
+<li><strong>Enhanced Visualization</strong>: Improved debug tools and real-time monitoring</li>
+</ul>
+<p><strong>Performance Targets</strong>:</p>
+<ul>
+<li>50% reduction in pathfinding calculation time</li>
+<li>30% decrease in memory usage for large hordes</li>
+<li>Support for 100+ simultaneous entities</li>
+<li>Sub-second response time for base detection</li>
+</ul>
+<h3 id="version-130---player-experience-focus">Version 1.3.0 - Player Experience Focus</h3>
+<p><strong>🎯 Primary Goals</strong>:</p>
+<ul>
+<li>Improve player interaction and feedback</li>
+<li>Add comprehensive customization options</li>
+<li>Enhance multiplayer experience</li>
+<li>Implement progression systems</li>
+</ul>
+<p><strong>Player Features</strong>:</p>
+<ul>
+<li><strong>Horde Difficulty Progression</strong>: Gradual increase in challenge over time</li>
+<li><strong>Player Statistics</strong>: Detailed tracking of horde encounters and survival</li>
+<li><strong>Customizable Behaviors</strong>: Player-configurable AI personalities</li>
+<li><strong>Notification Systems</strong>: In-game alerts for horde activities</li>
+</ul>
+<p><strong>Multiplayer Enhancements</strong>:</p>
+<ul>
+<li><strong>Synchronized Events</strong>: Coordinated horde attacks across all players</li>
+<li><strong>Cooperative Challenges</strong>: Special events requiring teamwork</li>
+<li><strong>Individual Targeting</strong>: AI that considers each player's base separately</li>
+<li><strong>Load Balancing</strong>: Optimized server performance for multiplayer</li>
+</ul>
+<h2 id="medium-term-roadmap-6-12-months">Medium-Term Roadmap (6-12 months)</h2>
+<h3 id="version-200---major-system-overhaul">Version 2.0.0 - Major System Overhaul</h3>
+<p><strong>🎯 Revolutionary Changes</strong>:</p>
+<ul>
+<li>Complete AI architecture redesign</li>
+<li>Machine learning integration</li>
+<li>Advanced ecosystem simulation</li>
+<li>Cross-mod compatibility framework</li>
+</ul>
+<p><strong>🧠 AI Revolution</strong>:</p>
+<pre><code class="lang-mermaid">graph TB
+    A[AI Core v2.0] --&gt; B[Machine Learning Engine]
+    A --&gt; C[Ecosystem Simulation]
+    A --&gt; D[Predictive Behaviors]
+    
+    B --&gt; B1[Player Pattern Analysis]
+    B --&gt; B2[Adaptive Strategies]
+    B --&gt; B3[Learning Algorithms]
+    
+    C --&gt; C1[Environmental Factors]
+    C --&gt; C2[Resource Competition]
+    C --&gt; C3[Natural Behaviors]
+    
+    D --&gt; D1[Movement Prediction]
+    D --&gt; D2[Action Anticipation]
+    D --&gt; D3[Counter-Strategies]
+</code></pre>
+<p><strong>Machine Learning Features</strong>:</p>
+<ul>
+<li><strong>Behavioral Analysis</strong>: AI learns from successful and failed strategies</li>
+<li><strong>Pattern Recognition</strong>: Identification of player building and movement patterns</li>
+<li><strong>Adaptive Strategies</strong>: Dynamic adjustment of horde tactics based on player behavior</li>
+<li><strong>Predictive Pathfinding</strong>: Anticipation of player movements and base expansion</li>
+</ul>
+<p><strong>Ecosystem Integration</strong>:</p>
+<ul>
+<li><strong>Environmental Awareness</strong>: AI considers weather, time of day, and seasons</li>
+<li><strong>Resource Competition</strong>: Hordes compete with players for resources</li>
+<li><strong>Natural Behaviors</strong>: Integration with existing animal AI systems</li>
+<li><strong>Food Chain Dynamics</strong>: Complex predator-prey relationships</li>
+</ul>
+<h3 id="version-210---content-expansion">Version 2.1.0 - Content Expansion</h3>
+<p><strong>🎯 Content Goals</strong>:</p>
+<ul>
+<li>Multiple horde types with unique behaviors</li>
+<li>Specialized entity roles and abilities</li>
+<li>Dynamic event system</li>
+<li>Quest and objective integration</li>
+</ul>
+<p><strong>Horde Varieties</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Horde Type</th>
+<th>Behavior</th>
+<th>Specialization</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Raiders</strong></td>
+<td>Aggressive, direct assault</td>
+<td>Combat and destruction</td>
+</tr>
+<tr>
+<td><strong>Scouts</strong></td>
+<td>Stealth, reconnaissance</td>
+<td>Intelligence gathering</td>
+</tr>
+<tr>
+<td><strong>Builders</strong></td>
+<td>Construct siege equipment</td>
+<td>Engineering and siege</td>
+</tr>
+<tr>
+<td><strong>Swarm</strong></td>
+<td>Overwhelming numbers</td>
+<td>Coordination and persistence</td>
+</tr>
+<tr>
+<td><strong>Elite</strong></td>
+<td>Advanced tactics</td>
+<td>Strategic planning</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Dynamic Events</strong>:</p>
+<ul>
+<li><strong>Seasonal Migrations</strong>: Horde movements following natural patterns</li>
+<li><strong>Territory Disputes</strong>: Conflicts between different horde factions</li>
+<li><strong>Resource Wars</strong>: Competition for scarce materials</li>
+<li><strong>Ancient Awakenings</strong>: Rare, powerful entities with unique abilities</li>
+</ul>
+<h2 id="long-term-vision-1-2-years">Long-Term Vision (1-2 years)</h2>
+<h3 id="version-300---ecosystem-simulation">Version 3.0.0 - Ecosystem Simulation</h3>
+<p><strong>🌍 Vision Statement</strong>:
+Create a living, breathing world where hordes are part of a complex ecosystem that reacts dynamically to player actions and environmental changes.</p>
+<p><strong>🔬 Advanced Systems</strong>:</p>
+<pre><code class="lang-mermaid">mindmap
+  root)HueHordes Ecosystem(
+    AI Evolution
+      Neural Networks
+      Genetic Algorithms
+      Emergent Behaviors
+      Self-Modifying Code
+    
+    Environmental Systems
+      Climate Simulation
+      Resource Dynamics
+      Territorial Control
+      Migration Patterns
+    
+    Player Integration
+      Reputation Systems
+      Diplomatic Options
+      Trade Relationships
+      Influence Networks
+    
+    Cross-Mod Compatibility
+      API Framework
+      Event System
+      Data Exchange
+      Shared Resources
+</code></pre>
+<p><strong>Revolutionary Features</strong>:</p>
+<p><strong>AI Evolution System</strong>:</p>
+<ul>
+<li><strong>Neural Network AI</strong>: Deep learning for complex decision-making</li>
+<li><strong>Genetic Algorithms</strong>: Evolution of successful horde strategies</li>
+<li><strong>Emergent Behaviors</strong>: Unpredictable but logical AI actions</li>
+<li><strong>Self-Improvement</strong>: AI that modifies its own behavior patterns</li>
+</ul>
+<p><strong>Environmental Simulation</strong>:</p>
+<ul>
+<li><strong>Climate Effects</strong>: Weather patterns influence horde behavior</li>
+<li><strong>Resource Scarcity</strong>: Dynamic resource availability affects AI goals</li>
+<li><strong>Territorial Systems</strong>: Horde factions control and defend territories</li>
+<li><strong>Migration Simulation</strong>: Realistic seasonal and behavioral migrations</li>
+</ul>
+<p><strong>Player Relationship Systems</strong>:</p>
+<ul>
+<li><strong>Reputation Mechanics</strong>: Player actions affect horde faction relationships</li>
+<li><strong>Diplomatic Options</strong>: Negotiation and alliance possibilities with certain hordes</li>
+<li><strong>Trade Systems</strong>: Economic interactions with peaceful horde factions</li>
+<li><strong>Cultural Exchange</strong>: Learning and technology sharing between players and AI</li>
+</ul>
+<h3 id="version-400---multiverse-integration">Version 4.0.0 - Multiverse Integration</h3>
+<p><strong>🌌 Ultimate Vision</strong>:
+Cross-server, cross-world integration creating a persistent horde multiverse where actions in one world affect others.</p>
+<p><strong>Multiverse Features</strong>:</p>
+<ul>
+<li><strong>Cross-Server Events</strong>: Coordinated activities across multiple game servers</li>
+<li><strong>Persistent Lore</strong>: Shared history and mythology across all installations</li>
+<li><strong>Global Statistics</strong>: Worldwide tracking of player and horde activities</li>
+<li><strong>Universal Progression</strong>: Character and faction progression that spans worlds</li>
+</ul>
+<h2 id="technical-roadmap">Technical Roadmap</h2>
+<h3 id="architecture-evolution">Architecture Evolution</h3>
+<p><strong>Current Architecture (v1.x)</strong>:</p>
+<pre><code>Game Server
+├── HueHordes Core
+├── Pathfinding Engine
+├── Behavior System
+└── Configuration Manager
+</code></pre>
+<p><strong>Target Architecture (v3.x)</strong>:</p>
+<pre><code>HueHordes Ecosystem
+├── AI Core Engine
+│   ├── Neural Network Processor
+│   ├── Genetic Algorithm Manager
+│   └── Learning Database
+├── Environmental Simulator
+│   ├── Climate System
+│   ├── Resource Manager
+│   └── Territory Controller
+├── Cross-Mod Interface
+│   ├── API Gateway
+│   ├── Event Publisher
+│   └── Data Exchange
+└── Multiverse Connector
+    ├── Server Network
+    ├── Global Database
+    └── Synchronization Manager
+</code></pre>
+<h3 id="performance-scaling">Performance Scaling</h3>
+<p><strong>Computational Requirements</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>CPU Usage</th>
+<th>Memory Usage</th>
+<th>Network</th>
+<th>Storage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>v1.x</strong></td>
+<td>Low</td>
+<td>100MB</td>
+<td>Local</td>
+<td>50MB</td>
+</tr>
+<tr>
+<td><strong>v2.x</strong></td>
+<td>Medium</td>
+<td>500MB</td>
+<td>Regional</td>
+<td>200MB</td>
+</tr>
+<tr>
+<td><strong>v3.x</strong></td>
+<td>High</td>
+<td>2GB</td>
+<td>Global</td>
+<td>1GB</td>
+</tr>
+<tr>
+<td><strong>v4.x</strong></td>
+<td>Variable</td>
+<td>4GB+</td>
+<td>Multiverse</td>
+<td>5GB+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Optimization Strategies</strong>:</p>
+<ul>
+<li><strong>Distributed Computing</strong>: Spread AI calculations across multiple threads/servers</li>
+<li><strong>Cloud Integration</strong>: Offload complex calculations to cloud services</li>
+<li><strong>Caching Systems</strong>: Intelligent caching of expensive computations</li>
+<li><strong>Adaptive Quality</strong>: Dynamic adjustment of AI complexity based on performance</li>
+</ul>
+<h2 id="community-integration">Community Integration</h2>
+<h3 id="open-source-evolution">Open Source Evolution</h3>
+<p><strong>Current Status</strong>: Closed source with open documentation
+<strong>Target</strong>: Gradual open-sourcing of non-core components</p>
+<p><strong>Open Source Roadmap</strong>:</p>
+<ol>
+<li><strong>Phase 1</strong>: API and interface specifications</li>
+<li><strong>Phase 2</strong>: Utility libraries and tools</li>
+<li><strong>Phase 3</strong>: Behavior scripting system</li>
+<li><strong>Phase 4</strong>: Core AI algorithms (selective)</li>
+</ol>
+<h3 id="community-features">Community Features</h3>
+<p><strong>Planned Community Systems</strong>:</p>
+<ul>
+<li><strong>Behavior Marketplace</strong>: User-created AI behaviors</li>
+<li><strong>Scenario Sharing</strong>: Custom horde events and challenges</li>
+<li><strong>Mod Integration</strong>: Seamless integration with other popular mods</li>
+<li><strong>Community Challenges</strong>: Server-wide events and competitions</li>
+</ul>
+<h3 id="developer-tools">Developer Tools</h3>
+<p><strong>Planned Development Tools</strong>:</p>
+<ul>
+<li><strong>Visual Behavior Editor</strong>: GUI for creating custom AI behaviors</li>
+<li><strong>Scenario Designer</strong>: Tool for creating complex horde events</li>
+<li><strong>Performance Profiler</strong>: Real-time analysis of AI performance</li>
+<li><strong>Debug Visualizer</strong>: Advanced 3D visualization of AI decision-making</li>
+</ul>
+<h2 id="research-areas">Research Areas</h2>
+<h3 id="experimental-features">Experimental Features</h3>
+<p><strong>Current Research</strong>:</p>
+<ul>
+<li><strong>Quantum Computing Integration</strong>: Exploring quantum algorithms for pathfinding</li>
+<li><strong>Blockchain Persistence</strong>: Decentralized storage of horde evolution data</li>
+<li><strong>VR Integration</strong>: Virtual reality interfaces for horde observation</li>
+<li><strong>Procedural Behavior Generation</strong>: AI that creates new behaviors automatically</li>
+</ul>
+<p><strong>Future Research Directions</strong>:</p>
+<ul>
+<li><strong>Consciousness Simulation</strong>: Exploring true AI consciousness in game entities</li>
+<li><strong>Emotional Intelligence</strong>: AI with emotional responses and memory</li>
+<li><strong>Creative Problem Solving</strong>: AI that invents new strategies and tools</li>
+<li><strong>Player Psychology</strong>: Deep analysis of player behavior and preferences</li>
+</ul>
+<h2 id="implementation-timeline">Implementation Timeline</h2>
+<h3 id="development-phases">Development Phases</h3>
+<pre><code class="lang-mermaid">timeline
+    title HueHordes Development Timeline
+    
+    2024 Q1 : v1.2.0 Release
+           : Enhanced AI Systems
+           : Performance Optimization
+    
+    2024 Q2 : v1.3.0 Release  
+           : Player Experience
+           : Multiplayer Enhancement
+    
+    2024 Q3 : v2.0.0 Development
+           : AI Architecture Redesign
+           : Machine Learning Integration
+    
+    2024 Q4 : v2.0.0 Release
+           : Revolutionary AI Systems
+           : Ecosystem Simulation
+    
+    2025 Q1 : v2.1.0 Release
+           : Content Expansion
+           : Multiple Horde Types
+    
+    2025 Q2 : v3.0.0 Development
+           : Advanced Ecosystem
+           : Environmental Simulation
+    
+    2025 Q4 : v3.0.0 Release
+           : Complete Ecosystem
+           : Cross-Mod Integration
+    
+    2026+   : v4.0.0+ 
+           : Multiverse Integration
+           : Universal Connectivity
+</code></pre>
+<h3 id="milestone-dependencies">Milestone Dependencies</h3>
+<p><strong>Critical Dependencies</strong>:</p>
+<ul>
+<li><strong>Vintage Story API Stability</strong>: Core game updates affecting mod compatibility</li>
+<li><strong>Performance Requirements</strong>: Hardware and server capabilities</li>
+<li><strong>Community Feedback</strong>: Player responses to new features</li>
+<li><strong>Technical Feasibility</strong>: Research outcomes and implementation challenges</li>
+</ul>
+<h2 id="risk-assessment">Risk Assessment</h2>
+<h3 id="technical-risks">Technical Risks</h3>
+<table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Probability</th>
+<th>Impact</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Performance Degradation</strong></td>
+<td>Medium</td>
+<td>High</td>
+<td>Extensive testing, performance monitoring</td>
+</tr>
+<tr>
+<td><strong>Compatibility Issues</strong></td>
+<td>Low</td>
+<td>High</td>
+<td>Careful API usage, version testing</td>
+</tr>
+<tr>
+<td><strong>Complexity Creep</strong></td>
+<td>High</td>
+<td>Medium</td>
+<td>Modular design, feature prioritization</td>
+</tr>
+<tr>
+<td><strong>Resource Limitations</strong></td>
+<td>Medium</td>
+<td>Medium</td>
+<td>Efficient algorithms, optimization focus</td>
+</tr>
+</tbody>
+</table>
+<h3 id="market-risks">Market Risks</h3>
+<table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Probability</th>
+<th>Impact</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Player Interest Decline</strong></td>
+<td>Low</td>
+<td>High</td>
+<td>Regular content updates, community engagement</td>
+</tr>
+<tr>
+<td><strong>Competing Mods</strong></td>
+<td>Medium</td>
+<td>Medium</td>
+<td>Unique features, quality focus</td>
+</tr>
+<tr>
+<td><strong>Game Engine Changes</strong></td>
+<td>Low</td>
+<td>High</td>
+<td>Flexible architecture, adaptation planning</td>
+</tr>
+</tbody>
+</table>
+<h2 id="success-metrics">Success Metrics</h2>
+<h3 id="key-performance-indicators">Key Performance Indicators</h3>
+<p><strong>Technical Metrics</strong>:</p>
+<ul>
+<li><strong>Performance</strong>: Frame rate impact &lt;5%, memory usage optimization</li>
+<li><strong>Stability</strong>: Zero critical bugs, 99%+ uptime</li>
+<li><strong>Compatibility</strong>: Support for all major VS versions and popular mods</li>
+</ul>
+<p><strong>Player Engagement Metrics</strong>:</p>
+<ul>
+<li><strong>Adoption Rate</strong>: Downloads and active installations</li>
+<li><strong>Retention</strong>: Continued usage over time periods</li>
+<li><strong>Satisfaction</strong>: Community feedback and ratings</li>
+<li><strong>Innovation</strong>: Unique features not found in competing mods</li>
+</ul>
+<p><strong>Development Metrics</strong>:</p>
+<ul>
+<li><strong>Release Cadence</strong>: Regular, predictable update schedule</li>
+<li><strong>Code Quality</strong>: Maintainable, well-documented codebase</li>
+<li><strong>Community Contribution</strong>: Developer participation and contribution rates</li>
+</ul>
+<hr>
+<p><em>This roadmap is subject to change based on community feedback, technical discoveries, and development constraints. For the most current status, check the <a href="https://github.com/HueByte/VintageHue">GitHub repository</a> and <a href="https://github.com/HueByte/VintageHue/discussions">development blog</a>.</em></p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/HueByte/VintageHue/blob/master/docs/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <div class="footer-custom"><div class="footer-inner d-flex justify-content-between align-items-center"><div class="footer-text">Made with <strong>💖</strong> By HueByte</div><div class="footer-links"><a href="https://github.com/HueByte/VintageHue" class="footer-link" target="_blank">GitHub</a><a href="#" class="footer-link scroll-to-top" onclick="scrollToTop()">Top</a></div></div></div><script>function scrollToTop(){window.scrollTo({top:0,behavior:'smooth'});}</script>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

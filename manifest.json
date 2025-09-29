@@ -1,0 +1,566 @@
+{
+  "source_base_path": "/home/runner/work/VintageHue/VintageHue/docs",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      }
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "HueHordes/api/HueHordes.AI.AIBehavior.yml",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/api/HueHordes.AI.AIBehavior.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HueHordes.AI.AIBehavior",
+      "Summary": "<p sourcefile=\"HueHordes/api/HueHordes.AI.AIBehavior.yml\" sourcestartlinenumber=\"1\">Clean AI behavior that follows the step-by-step logic:</p>\n<ol sourcefile=\"HueHordes/api/HueHordes.AI.AIBehavior.yml\" sourcestartlinenumber=\"2\">\n<li sourcefile=\"HueHordes/api/HueHordes.AI.AIBehavior.yml\" sourcestartlinenumber=\"2\">Spawn → Navigate to base center</li>\n<li sourcefile=\"HueHordes/api/HueHordes.AI.AIBehavior.yml\" sourcestartlinenumber=\"3\">Attack players on sight while pathfinding</li>\n<li sourcefile=\"HueHordes/api/HueHordes.AI.AIBehavior.yml\" sourcestartlinenumber=\"4\">Return to base navigation when player is lost</li>\n<li sourcefile=\"HueHordes/api/HueHordes.AI.AIBehavior.yml\" sourcestartlinenumber=\"5\">Priority on doors/gates for destruction</li>\n</ol>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "HueHordes/api/HueHordes.AI.AIState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/api/HueHordes.AI.AIState.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HueHordes.AI.AIState",
+      "Summary": "<p sourcefile=\"HueHordes/api/HueHordes.AI.AIState.yml\" sourcestartlinenumber=\"1\">AI States for the behavior</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "HueHordes/api/HueHordes.AI.AStarNode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/api/HueHordes.AI.AStarNode.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HueHordes.AI.AStarNode",
+      "Summary": "<p sourcefile=\"HueHordes/api/HueHordes.AI.AStarNode.yml\" sourcestartlinenumber=\"1\">A* node for pathfinding</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "HueHordes/api/HueHordes.AI.AStarPathfinder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/api/HueHordes.AI.AStarPathfinder.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HueHordes.AI.AStarPathfinder",
+      "Summary": "<p sourcefile=\"HueHordes/api/HueHordes.AI.AStarPathfinder.yml\" sourcestartlinenumber=\"1\">A* pathfinding implementation for 3D space with jump capability\nHandles terrain navigation with 1-block jump height</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "HueHordes/api/HueHordes.AI.BaseDetection.yml",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/api/HueHordes.AI.BaseDetection.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HueHordes.AI.BaseDetection",
+      "Summary": "<p sourcefile=\"HueHordes/api/HueHordes.AI.BaseDetection.yml\" sourcestartlinenumber=\"1\">Base detection system that finds player bases by looking for key structures\nStep 2: Basic base detection functionality</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "HueHordes/api/HueHordes.AI.BaseIndicator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/api/HueHordes.AI.BaseIndicator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HueHordes.AI.BaseIndicator",
+      "Summary": "<p sourcefile=\"HueHordes/api/HueHordes.AI.BaseIndicator.yml\" sourcestartlinenumber=\"1\">An indicator that suggests the presence of a player base</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "HueHordes/api/HueHordes.AI.BaseIndicatorType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/api/HueHordes.AI.BaseIndicatorType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HueHordes.AI.BaseIndicatorType",
+      "Summary": "<p sourcefile=\"HueHordes/api/HueHordes.AI.BaseIndicatorType.yml\" sourcestartlinenumber=\"1\">Types of base indicators</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "HueHordes/api/HueHordes.AI.DebugVisualization.yml",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/api/HueHordes.AI.DebugVisualization.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HueHordes.AI.DebugVisualization",
+      "Summary": "<p sourcefile=\"HueHordes/api/HueHordes.AI.DebugVisualization.yml\" sourcestartlinenumber=\"1\">Debug visualization system for base detection and pathfinding\nShows colored particles above detected structures and along mob paths</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "HueHordes/api/HueHordes.AI.DetectedBase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/api/HueHordes.AI.DetectedBase.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HueHordes.AI.DetectedBase",
+      "Summary": "<p sourcefile=\"HueHordes/api/HueHordes.AI.DetectedBase.yml\" sourcestartlinenumber=\"1\">Represents a detected player base</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "HueHordes/api/HueHordes.AI.DoorHealthManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/api/HueHordes.AI.DoorHealthManager.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HueHordes.AI.DoorHealthManager",
+      "Summary": "<p sourcefile=\"HueHordes/api/HueHordes.AI.DoorHealthManager.yml\" sourcestartlinenumber=\"1\">Manages health and concurrent attackers for doors and gates</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "HueHordes/api/HueHordes.AI.DoorInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/api/HueHordes.AI.DoorInfo.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HueHordes.AI.DoorInfo",
+      "Summary": "<p sourcefile=\"HueHordes/api/HueHordes.AI.DoorInfo.yml\" sourcestartlinenumber=\"1\">Information about a door being attacked</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "HueHordes/api/HueHordes.AI.HordeSystem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/api/HueHordes.AI.HordeSystem.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HueHordes.AI.HordeSystem",
+      "Summary": "<p sourcefile=\"HueHordes/api/HueHordes.AI.HordeSystem.yml\" sourcestartlinenumber=\"1\">Clean horde system that focuses on basic functionality\nStep 3: Integration and testing system</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "HueHordes/api/HueHordes.AI.PriorityQueue-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/api/HueHordes.AI.PriorityQueue-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HueHordes.AI.PriorityQueue<T>",
+      "Summary": "<p sourcefile=\"HueHordes/api/HueHordes.AI.PriorityQueue-1.yml\" sourcestartlinenumber=\"1\">Priority queue for A* pathfinding</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "HueHordes/api/HueHordes.AI.SpawnConfig.yml",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/api/HueHordes.AI.SpawnConfig.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HueHordes.AI.SpawnConfig",
+      "Summary": "<p sourcefile=\"HueHordes/api/HueHordes.AI.SpawnConfig.yml\" sourcestartlinenumber=\"1\">Configuration for spawning entities</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "HueHordes/api/HueHordes.AI.SpawningSystem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/api/HueHordes.AI.SpawningSystem.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HueHordes.AI.SpawningSystem",
+      "Summary": "<p sourcefile=\"HueHordes/api/HueHordes.AI.SpawningSystem.yml\" sourcestartlinenumber=\"1\">Clean spawning system that handles radius-based spawning around players\nStep 1: Basic spawning functionality</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "HueHordes/api/HueHordes.AI.TargetDetection.yml",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/api/HueHordes.AI.TargetDetection.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HueHordes.AI.TargetDetection",
+      "Summary": "<p sourcefile=\"HueHordes/api/HueHordes.AI.TargetDetection.yml\" sourcestartlinenumber=\"1\">Handles target detection and validation for AI entities\nFocuses on finding players while ignoring creative/spectator mode players</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "HueHordes/api/HueHordes.AI.Vec3i.yml",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/api/HueHordes.AI.Vec3i.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HueHordes.AI.Vec3i",
+      "Summary": "<p sourcefile=\"HueHordes/api/HueHordes.AI.Vec3i.yml\" sourcestartlinenumber=\"1\">3D integer vector for pathfinding</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "HueHordes/api/HueHordes.AI.yml",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/api/HueHordes.AI.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HueHordes.AI",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "HueHordes/api/HueHordes.Debug.DebugLogger.yml",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/api/HueHordes.Debug.DebugLogger.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HueHordes.Debug.DebugLogger",
+      "Summary": "<p sourcefile=\"HueHordes/api/HueHordes.Debug.DebugLogger.yml\" sourcestartlinenumber=\"1\">Minimal debug logging system for the NewAI</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "HueHordes/api/HueHordes.Debug.yml",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/api/HueHordes.Debug.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HueHordes.Debug",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "HueHordes/api/HueHordes.HueHordesModSystem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/api/HueHordes.HueHordesModSystem.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HueHordes.HueHordesModSystem",
+      "Summary": "<p sourcefile=\"HueHordes/api/HueHordes.HueHordesModSystem.yml\" sourcestartlinenumber=\"1\">Main mod system that integrates the AI horde system.\nProvides commands and configuration for the clean AI implementation.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "HueHordes/api/HueHordes.ServerConfig.yml",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/api/HueHordes.ServerConfig.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HueHordes.ServerConfig",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "HueHordes/api/HueHordes.yml",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/api/HueHordes.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HueHordes",
+      "Summary": null
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "HueHordes/api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/api/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "HueHordes/api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/api/toc.html"
+        },
+        ".json": {
+          "relative_path": "HueHordes/api/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "HueHordes/articles/ai-system-architecture.md",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/articles/ai-system-architecture.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "HueHordes/articles/base-detection-system.md",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/articles/base-detection-system.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "HueHordes/articles/future-development-roadmap.md",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/articles/future-development-roadmap.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "HueHordes/articles/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/articles/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "HueHordes/articles/installation-guide.md",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/articles/installation-guide.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "HueHordes/articles/pathfinding-system.md",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/articles/pathfinding-system.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "HueHordes/articles/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/articles/toc.html"
+        },
+        ".json": {
+          "relative_path": "HueHordes/articles/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "HueHordes/changelog/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/changelog/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "HueHordes/changelog/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/changelog/toc.html"
+        },
+        ".json": {
+          "relative_path": "HueHordes/changelog/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "HueHordes/changelog/v1.0.0.md",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/changelog/v1.0.0.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "HueHordes/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "HueHordes/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "HueHordes/toc.html"
+        },
+        ".json": {
+          "relative_path": "HueHordes/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api.md",
+      "output": {
+        ".html": {
+          "relative_path": "api.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/hue-nobg-clean.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/hue-nobg-clean.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/hue-nobg.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/hue-nobg.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/hue.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/hue.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/modicon.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/modicon.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html"
+        },
+        ".json": {
+          "relative_path": "toc.json"
+        }
+      },
+      "version": ""
+    }
+  ],
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

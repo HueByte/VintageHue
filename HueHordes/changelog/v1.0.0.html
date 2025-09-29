@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>HueHordes v1.0.0 | VintageHue Mods Documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="HueHordes v1.0.0 | VintageHue Mods Documentation ">
+      
+      
+      <link rel="icon" href="../../images/hue-nobg-clean.png">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HueByte/VintageHue/blob/master/docs/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/hue-nobg-clean.png" alt="VintageHue">
+            VintageHue
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="huehordes-v100">HueHordes v1.0.0</h1>
+
+<p><strong>Release Date:</strong> 28/09/2025
+<strong>Target Game Version:</strong> Vintage Story 1.21.1</p>
+<h2 id="added">Added</h2>
+<h3 id="core-horde-system">Core Horde System</h3>
+<ul>
+<li><strong>Periodic horde spawning system</strong> that creates waves of hostile entities around players</li>
+<li><strong>Configurable timing system</strong> with default 3-day intervals between horde events</li>
+<li><strong>Ring-based spawn mechanics</strong> with customizable radius (12-24 blocks from player)</li>
+<li><strong>Multi-entity support</strong> with configurable entity types (defaults to drifter-normal)</li>
+<li><strong>Smart spawn count management</strong> (default: 8 entities per horde)</li>
+</ul>
+<h3 id="ai--behavior-systems">AI &amp; Behavior Systems</h3>
+<ul>
+<li><strong>Clean AI architecture</strong> with modern entity behavior system</li>
+<li><strong>AIBehavior</strong> - Entity behavior that handles pathfinding and targeting</li>
+<li><strong>Smart targeting system</strong> with line-of-sight detection</li>
+<li><strong>Base detection capabilities</strong> for intelligent horde targeting</li>
+<li><em><em>Advanced A</em> pathfinding</em>* with 3D navigation and obstacle avoidance</li>
+<li><strong>State management</strong> with NavigatingToBase, AttackingTarget, and DestroyingDoor states</li>
+<li><strong>Door destruction system</strong> with health tracking and coordinated attacks</li>
+</ul>
+<h3 id="configuration-management">Configuration Management</h3>
+<ul>
+<li><strong>Server-side JSON configuration</strong> (Horde.server.json) with the following options:
+<ul>
+<li><code>DaysBetweenHordes</code> - Interval between horde events (default: 3 days)</li>
+<li><code>Count</code> - Number of mobs per horde (default: 8)</li>
+<li><code>SpawnRadiusMin/Max</code> - Spawn distance range (default: 12-24 blocks)</li>
+<li><code>EntityCodes</code> - Array of entity types to spawn</li>
+<li><code>NudgeTowardInitialPos</code> - Enable movement toward player (default: true)</li>
+<li><code>NudgeSeconds</code> - Duration of nudge behavior (default: 20s)</li>
+<li><code>NudgeSpeed</code> - Movement speed multiplier (default: 0.05)</li>
+<li><code>EnableDebugLogging</code> - Enable debug logging system (default: false)</li>
+<li><code>DebugLoggingLevel</code> - Debug logging level 0-3 (default: 1)</li>
+</ul>
+</li>
+</ul>
+<h3 id="administrative-commands">Administrative Commands</h3>
+<ul>
+<li><strong><code>/horde spawn [playername] [count] [entitytype]</code></strong> - Spawn entities around player for testing</li>
+<li><strong><code>/horde detectbase [playername] [radius]</code></strong> - Test base detection for player</li>
+<li><strong><code>/horde spawntobase [playername] [count]</code></strong> - Spawn entities that target player's base</li>
+<li><strong><code>/horde debug [playername] [mode]</code></strong> - Debug visualization with particle system</li>
+</ul>
+<h3 id="debug-commands">Debug Commands</h3>
+<ul>
+<li><strong><code>/horde &lt;command&gt; [args]</code></strong> - Main horde management system with integrated debug visualization</li>
+</ul>
+<h3 id="advanced-pathfinding--visualization">Advanced Pathfinding &amp; Visualization</h3>
+<ul>
+<li><em><em>3D A</em> pathfinding</em>* with entity-aware coordinate system</li>
+<li><strong>Particle debug system</strong> for real-time path and base visualization</li>
+<li><strong>Entity base detection</strong> with intelligent targeting</li>
+<li><strong>Door health management</strong> with coordinated destruction</li>
+<li><strong>Debug logging system</strong> with comprehensive AI event tracking</li>
+</ul>
+<h3 id="technical-features">Technical Features</h3>
+<ul>
+<li><strong>Modern entity behavior system</strong> with clean state management</li>
+<li><strong>Comprehensive error handling</strong> and validation systems</li>
+<li><strong>Game tick integration</strong> with 5-tick intervals for efficient processing</li>
+<li><strong>Performance optimization</strong> with stuck detection and path caching</li>
+<li><strong>Type safety</strong> with strongly-typed configuration models</li>
+<li><strong>Debug visualization</strong> with particle system integration</li>
+</ul>
+<h2 id="technical-details">Technical Details</h2>
+<h3 id="architecture">Architecture</h3>
+<ul>
+<li>Built as a Vintage Story Code Mod using C# and .NET 8.0</li>
+<li>Implements ModSystem base class for proper game integration</li>
+<li>Uses Vintage Story API 1.21.1 for full game compatibility</li>
+<li>Follows async/await patterns for modern, non-blocking code execution</li>
+</ul>
+<h3 id="entity-spawning">Entity Spawning</h3>
+<ul>
+<li>Supports any Vintage Story entity code (full or domain-less)</li>
+<li>Ring-based spawning algorithm prevents entities from spawning too close to players</li>
+<li>Intelligent spawn validation to ensure entities spawn in valid locations</li>
+<li>Custom nudge behavior temporarily guides entities toward player positions</li>
+</ul>
+<h3 id="performance-optimizations">Performance Optimizations</h3>
+<ul>
+<li>Async AI systems reduce game lag during horde processing</li>
+<li>5-second tick intervals balance responsiveness with performance</li>
+<li>Efficient base detection algorithms minimize computational overhead</li>
+<li>Smart targeting reduces unnecessary entity scanning</li>
+</ul>
+<hr>
+<p><em>This changelog follows <a href="https://keepachangelog.com/">Keep a Changelog</a> format.</em></p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/HueByte/VintageHue/blob/master/docs/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <div class="footer-custom"><div class="footer-inner d-flex justify-content-between align-items-center"><div class="footer-text">Made with <strong>💖</strong> By HueByte</div><div class="footer-links"><a href="https://github.com/HueByte/VintageHue" class="footer-link" target="_blank">GitHub</a><a href="#" class="footer-link scroll-to-top" onclick="scrollToTop()">Top</a></div></div></div><script>function scrollToTop(){window.scrollTo({top:0,behavior:'smooth'});}</script>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

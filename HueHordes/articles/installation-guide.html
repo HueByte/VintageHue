@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Installation Guide | VintageHue Mods Documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Installation Guide | VintageHue Mods Documentation ">
+      
+      
+      <link rel="icon" href="../../images/hue-nobg-clean.png">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HueByte/VintageHue/blob/master/docs/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/hue-nobg-clean.png" alt="VintageHue">
+            VintageHue
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="installation-guide">Installation Guide</h1>
+
+<p>This guide covers everything you need to know about installing and setting up HueHordes for Vintage Story.</p>
+<h2 id="system-requirements">System Requirements</h2>
+<h3 id="minimum-requirements">Minimum Requirements</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Requirement</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Vintage Story</strong></td>
+<td>Version 1.21.1+</td>
+<td>Base game required</td>
+</tr>
+<tr>
+<td><strong>Operating System</strong></td>
+<td>Windows 10+, Linux, macOS</td>
+<td>Cross-platform support</td>
+</tr>
+<tr>
+<td><strong>Memory</strong></td>
+<td>4GB RAM available</td>
+<td>For mod and game operation</td>
+</tr>
+<tr>
+<td><strong>Storage</strong></td>
+<td>50MB free space</td>
+<td>For mod files and logs</td>
+</tr>
+</tbody>
+</table>
+<h3 id="recommended-requirements">Recommended Requirements</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Recommendation</th>
+<th>Benefits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Vintage Story</strong></td>
+<td>Latest stable version</td>
+<td>Best compatibility and performance</td>
+</tr>
+<tr>
+<td><strong>Memory</strong></td>
+<td>8GB+ RAM</td>
+<td>Smooth operation with larger hordes</td>
+</tr>
+<tr>
+<td><strong>CPU</strong></td>
+<td>Multi-core processor</td>
+<td>Better pathfinding performance</td>
+</tr>
+</tbody>
+</table>
+<h2 id="installation-methods">Installation Methods</h2>
+<pre><code class="lang-mermaid">flowchart TD
+    Start([&quot;🚀 Start Installation&quot;])
+    
+    subgraph &quot;Installation Options&quot;
+        Browser[&quot;📦 Mod Browser&lt;br/&gt;(Recommended)&quot;]
+        Manual[&quot;💾 Manual Installation&quot;]
+        Source[&quot;🛠️ Build from Source&quot;]
+    end
+    
+    subgraph &quot;Mod Browser Process&quot;
+        LaunchGame[&quot;▶️ Launch Vintage Story&quot;]
+        OpenMods[&quot;📋 Open Mod Manager&quot;]
+        Search[&quot;🔍 Search 'HueHordes'&quot;]
+        Download[&quot;⬇️ Download &amp; Install&quot;]
+        RestartBrowser[&quot;🔄 Restart Game&quot;]
+    end
+    
+    subgraph &quot;Manual Process&quot;
+        GetRelease[&quot;📁 Download Release&quot;]
+        FindMods[&quot;📂 Locate Mods Folder&quot;]
+        CopyFiles[&quot;📋 Copy Files&quot;]
+        RestartManual[&quot;🔄 Restart Game&quot;]
+    end
+    
+    subgraph &quot;Source Process&quot;
+        Clone[&quot;📥 Clone Repository&quot;]
+        Build[&quot;🔧 Build Project&quot;]
+        CopySource[&quot;📋 Copy to Mods&quot;]
+        RestartSource[&quot;🔄 Restart Game&quot;]
+    end
+    
+    subgraph &quot;Verification&quot;
+        CheckMods[&quot;✅ Check Mod List&quot;]
+        TestCommands[&quot;🎮 Test Commands&quot;]
+        ConfigCheck[&quot;⚙️ Check Config&quot;]
+    end
+    
+    Success([&quot;🎉 Installation Complete&quot;])
+    
+    Start --&gt; Browser
+    Start --&gt; Manual
+    Start --&gt; Source
+    
+    Browser --&gt; LaunchGame
+    LaunchGame --&gt; OpenMods
+    OpenMods --&gt; Search
+    Search --&gt; Download
+    Download --&gt; RestartBrowser
+    
+    Manual --&gt; GetRelease
+    GetRelease --&gt; FindMods
+    FindMods --&gt; CopyFiles
+    CopyFiles --&gt; RestartManual
+    
+    Source --&gt; Clone
+    Clone --&gt; Build
+    Build --&gt; CopySource
+    CopySource --&gt; RestartSource
+    
+    RestartBrowser --&gt; CheckMods
+    RestartManual --&gt; CheckMods
+    RestartSource --&gt; CheckMods
+    
+    CheckMods --&gt; TestCommands
+    TestCommands --&gt; ConfigCheck
+    ConfigCheck --&gt; Success
+</code></pre>
+<h3 id="method-1-mod-browser-recommended">Method 1: Mod Browser (Recommended)</h3>
+<ol>
+<li><strong>Launch Vintage Story</strong></li>
+<li><strong>Open Mod Manager</strong>:
+<ul>
+<li>Click &quot;Mods&quot; in the main menu</li>
+<li>Select &quot;Browse &amp; Download Mods&quot;</li>
+</ul>
+</li>
+<li><strong>Search for HueHordes</strong>:
+<ul>
+<li>Type &quot;HueHordes&quot; in the search box</li>
+<li>Click on the HueHordes mod entry</li>
+</ul>
+</li>
+<li><strong>Install the Mod</strong>:
+<ul>
+<li>Click &quot;Download &amp; Install&quot;</li>
+<li>Wait for download to complete</li>
+<li>Restart Vintage Story when prompted</li>
+</ul>
+</li>
+</ol>
+<h3 id="method-2-manual-installation">Method 2: Manual Installation</h3>
+<h4 id="download-release">Download Release</h4>
+<ol>
+<li><p><strong>Get the Latest Release</strong>:</p>
+<ul>
+<li>Visit <a href="https://github.com/HueByte/VintageHue/releases">GitHub Releases</a></li>
+<li>Download the latest <code>HueHordes-vX.X.X.zip</code> file</li>
+<li>Extract the ZIP archive</li>
+</ul>
+</li>
+<li><p><strong>Locate Mods Directory</strong>:</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th>Mods Directory Path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🪟 <strong>Windows</strong></td>
+<td><code>%APPDATA%\VintageStory\Mods\</code></td>
+</tr>
+<tr>
+<td>🐧 <strong>Linux</strong></td>
+<td><code>~/.config/VintageStory/Mods/</code></td>
+</tr>
+<tr>
+<td>🍎 <strong>macOS</strong></td>
+<td><code>~/Library/Application Support/VintageStory/Mods/</code></td>
+</tr>
+</tbody>
+</table>
+<ol start="3">
+<li><strong>Install Mod Files</strong>:
+<ul>
+<li>Copy <code>HueHordes.dll</code> to your Mods directory</li>
+<li>Ensure the file is not in a subfolder</li>
+<li>Restart Vintage Story</li>
+</ul>
+</li>
+</ol>
+<h4 id="build-from-source">Build from Source</h4>
+<p>For developers and advanced users:</p>
+<pre><code class="lang-bash"># Clone the repository
+git clone https://github.com/HueByte/VintageHue.git
+cd VintageHue/src/HueHordes/HueHordes
+
+# Build the project
+dotnet build --configuration Release
+
+# Copy to mods directory
+cp bin/Release/Mods/mod/HueHordes.dll [YOUR_MODS_DIRECTORY]/
+</code></pre>
+<h2 id="installation-verification">Installation Verification</h2>
+<h3 id="check-mod-loading">Check Mod Loading</h3>
+<ol>
+<li><strong>Launch Vintage Story</strong></li>
+<li><strong>Open Mod Manager</strong>:
+<ul>
+<li>Click &quot;Mods&quot; in main menu</li>
+<li>Select &quot;Manage Installed Mods&quot;</li>
+</ul>
+</li>
+<li><strong>Verify HueHordes</strong>:
+<ul>
+<li>Look for &quot;HueHordes&quot; in the list</li>
+<li>Ensure status shows &quot;Loaded&quot; (green)</li>
+<li>Check version matches downloaded version</li>
+</ul>
+</li>
+</ol>
+<h3 id="test-basic-functionality">Test Basic Functionality</h3>
+<h4 id="server-side-testing-single-player-or-server-admin">Server-Side Testing (Single Player or Server Admin)</h4>
+<pre><code class="lang-bash"># Test configuration loading
+# Check server logs for: &quot;HueHordes: Mod system starting&quot;
+
+# Test commands (requires admin privileges)
+/horde spawn          # Test entity spawning
+/horde detectbase     # Test base detection
+/horde spawntobase    # Spawn entities targeting base
+/horde debug base     # Test debug system
+</code></pre>
+<h4 id="client-side-verification">Client-Side Verification</h4>
+<ul>
+<li><strong>No Error Messages</strong>: Game should load without HueHordes-related errors</li>
+<li><strong>Performance</strong>: No significant FPS drops or lag</li>
+<li><strong>Compatibility</strong>: Other mods should continue working normally</li>
+</ul>
+<h2 id="configuration-setup">Configuration Setup</h2>
+<h3 id="initial-configuration">Initial Configuration</h3>
+<p>HueHordes automatically creates a configuration file on first run:</p>
+<p><strong>Location</strong>: <code>[VS_DATA]/ModConfig/Horde.server.json</code></p>
+<p><strong>Default Configuration</strong>:</p>
+<pre><code class="lang-json">{
+  &quot;DaysBetweenHordes&quot;: 3,
+  &quot;Count&quot;: 8,
+  &quot;SpawnRadiusMin&quot;: 12.0,
+  &quot;SpawnRadiusMax&quot;: 24.0,
+  &quot;EntityCodes&quot;: [&quot;drifter-normal&quot;],
+  &quot;NudgeTowardInitialPos&quot;: true,
+  &quot;NudgeSeconds&quot;: 20.0,
+  &quot;NudgeSpeed&quot;: 0.05,
+  &quot;EnableDebugLogging&quot;: false,
+  &quot;DebugLoggingLevel&quot;: 1
+}
+</code></pre>
+<h3 id="recommended-first-time-settings">Recommended First-Time Settings</h3>
+<p>For new installations, consider these adjustments:</p>
+<pre><code class="lang-json">{
+  &quot;DaysBetweenHordes&quot;: 7,        // Longer intervals for learning
+  &quot;Count&quot;: 5,                    // Smaller hordes initially
+  &quot;EnableDebugLogging&quot;: true,    // Enable for troubleshooting
+  &quot;DebugLoggingLevel&quot;: 2         // Detailed logging
+}
+</code></pre>
+<h2 id="troubleshooting-installation">Troubleshooting Installation</h2>
+<h3 id="troubleshooting-flowchart">Troubleshooting Flowchart</h3>
+<pre><code class="lang-mermaid">flowchart TD
+    Start([🔧 Installation Problem])
+    
+    ModVisible{Mod Visible in&lt;br/&gt;Mod Manager?}
+    ModLoaded{Mod Status&lt;br/&gt;Shows 'Loaded'?}
+    CommandWork{Commands&lt;br/&gt;Work?}
+    Performance{Performance&lt;br/&gt;Issues?}
+    
+    %% File Issues
+    CheckFile[📁 Check File Location&lt;br/&gt;• DLL in Mods folder&lt;br/&gt;• Not in subfolder]
+    CheckVersion[🔍 Check Game Version&lt;br/&gt;• VS 1.21.1+&lt;br/&gt;• Compatible version]
+    RedownloadMod[⬇️ Re-download Mod&lt;br/&gt;• Check file integrity&lt;br/&gt;• Use official source]
+    
+    %% Loading Issues  
+    CheckLogs[📋 Check Logs&lt;br/&gt;• server-main.txt&lt;br/&gt;• Look for errors]
+    CheckDeps[🔗 Check Dependencies&lt;br/&gt;• VS API version&lt;br/&gt;• Conflicting mods]
+    ResetConfig[⚙️ Reset Config&lt;br/&gt;• Delete config file&lt;br/&gt;• Let mod recreate]
+    
+    %% Performance Issues
+    DisableDebug[🐛 Disable Debug&lt;br/&gt;• Set EnableDebugLogging: false&lt;br/&gt;• Reduce logging level]
+    ReduceHordes[📉 Reduce Load&lt;br/&gt;• Lower horde count&lt;br/&gt;• Increase intervals]
+    CheckResources[💻 Check Resources&lt;br/&gt;• Monitor RAM/CPU&lt;br/&gt;• Close other apps]
+    
+    Success([✅ Problem Solved])
+    GetHelp[🆘 Get Help&lt;br/&gt;• GitHub Issues&lt;br/&gt;• Community Support&lt;br/&gt;• Include logs]
+    
+    Start --&gt; ModVisible
+    
+    ModVisible --&gt;|No| CheckFile
+    CheckFile --&gt; CheckVersion
+    CheckVersion --&gt; RedownloadMod
+    RedownloadMod --&gt; ModVisible
+    
+    ModVisible --&gt;|Yes| ModLoaded
+    ModLoaded --&gt;|No| CheckLogs
+    CheckLogs --&gt; CheckDeps
+    CheckDeps --&gt; ResetConfig
+    ResetConfig --&gt; ModLoaded
+    
+    ModLoaded --&gt;|Yes| CommandWork
+    CommandWork --&gt;|No| CheckLogs
+    
+    CommandWork --&gt;|Yes| Performance
+    Performance --&gt;|Yes| DisableDebug
+    DisableDebug --&gt; ReduceHordes
+    ReduceHordes --&gt; CheckResources
+    CheckResources --&gt; Success
+    
+    Performance --&gt;|No| Success
+    
+    %% Failed paths
+    RedownloadMod -.-&gt;|Still Failed| GetHelp
+    ResetConfig -.-&gt;|Still Failed| GetHelp
+    CheckResources -.-&gt;|Still Failed| GetHelp
+</code></pre>
+<h3 id="common-issues">Common Issues</h3>
+<h4 id="mod-not-loading">Mod Not Loading</h4>
+<p><strong>Symptoms</strong>: HueHordes not visible in mod list</p>
+<p><strong>Solutions</strong>:</p>
+<ol>
+<li><strong>Check file location</strong>: Ensure <code>HueHordes.dll</code> is directly in Mods folder</li>
+<li><strong>Verify game version</strong>: Confirm Vintage Story 1.21.1+</li>
+<li><strong>Check file integrity</strong>: Re-download if file is corrupted</li>
+<li><strong>Review logs</strong>: Check <code>Logs/server-main.txt</code> for errors</li>
+</ol>
+<h4 id="configuration-errors">Configuration Errors</h4>
+<p><strong>Symptoms</strong>: Mod loads but doesn't function properly</p>
+<p><strong>Solutions</strong>:</p>
+<ol>
+<li><strong>Delete config file</strong>: Let HueHordes recreate defaults</li>
+<li><strong>Check JSON syntax</strong>: Validate configuration format</li>
+<li><strong>Reset to defaults</strong>: Use minimal configuration first</li>
+</ol>
+<h4 id="performance-issues">Performance Issues</h4>
+<p><strong>Symptoms</strong>: Game lag or low FPS after installation</p>
+<p><strong>Solutions</strong>:</p>
+<ol>
+<li><strong>Disable debug logging</strong>: Set <code>EnableDebugLogging: false</code></li>
+<li><strong>Reduce horde size</strong>: Lower <code>Count</code> value</li>
+<li><strong>Increase intervals</strong>: Higher <code>DaysBetweenHordes</code></li>
+<li><strong>Check system resources</strong>: Monitor RAM and CPU usage</li>
+</ol>
+<h4 id="compatibility-problems">Compatibility Problems</h4>
+<p><strong>Symptoms</strong>: Other mods stop working or conflicts occur</p>
+<p><strong>Solutions</strong>:</p>
+<ol>
+<li><strong>Test mod isolation</strong>: Disable other mods temporarily</li>
+<li><strong>Check mod versions</strong>: Ensure all mods support VS 1.21.1+</li>
+<li><strong>Review load order</strong>: Some mods may conflict with HueHordes</li>
+<li><strong>Report issues</strong>: Submit bug report with mod list</li>
+</ol>
+<h3 id="getting-help">Getting Help</h3>
+<h4 id="log-collection">Log Collection</h4>
+<p>When reporting issues, include:</p>
+<ol>
+<li><strong>Server Logs</strong>: <code>Logs/server-main.txt</code></li>
+<li><strong>Client Logs</strong>: <code>Logs/client-main.txt</code></li>
+<li><strong>Configuration</strong>: Your <code>Horde.server.json</code> file</li>
+<li><strong>Mod List</strong>: All installed mods and versions</li>
+</ol>
+<h4 id="support-channels">Support Channels</h4>
+<ul>
+<li><strong>GitHub Issues</strong>: <a href="https://github.com/HueByte/VintageHue/issues">Report bugs and feature requests</a></li>
+<li><strong>Documentation</strong>: Check articles for detailed guides</li>
+<li><strong>Community</strong>: Vintage Story modding communities</li>
+</ul>
+<h2 id="next-steps">Next Steps</h2>
+<p>After successful installation:</p>
+<ol>
+<li><strong><a href="configuration-guide.md">Configuration Guide</a></strong> - Customize mod behavior</li>
+<li><strong><a href="ai-system-architecture.html">AI System Architecture</a></strong> - Understand how the AI works</li>
+<li><strong><a href="base-detection-system.html">Base Detection System</a></strong> - Learn about base detection mechanics</li>
+<li><strong><a href="troubleshooting-guide.md">Troubleshooting Guide</a></strong> - Solve common problems</li>
+</ol>
+<h2 id="advanced-installation">Advanced Installation</h2>
+<h3 id="server-installation">Server Installation</h3>
+<p>For dedicated servers:</p>
+<ol>
+<li><strong>Install on Server</strong>: Place <code>HueHordes.dll</code> in server's Mods directory</li>
+<li><strong>Configure Settings</strong>: Adjust <code>Horde.server.json</code> for server environment</li>
+<li><strong>Admin Commands</strong>: Test commands with server admin privileges</li>
+<li><strong>Client Compatibility</strong>: Clients don't need the mod installed</li>
+</ol>
+<h3 id="development-setup">Development Setup</h3>
+<p>For mod development and testing:</p>
+<ol>
+<li><strong>Development Environment</strong>: Set up .NET 8.0 SDK</li>
+<li><strong>Source Code</strong>: Clone repository for full source access</li>
+<li><strong>Debug Mode</strong>: Enable comprehensive logging</li>
+<li><strong>Testing Tools</strong>: Use particle debug commands for development</li>
+</ol>
+<hr>
+<p><em>Need help? Check the <a href="troubleshooting-guide.md">Troubleshooting Guide</a> or visit our <a href="https://github.com/HueByte/VintageHue/issues">GitHub Issues</a> page.</em></p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/HueByte/VintageHue/blob/master/docs/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <div class="footer-custom"><div class="footer-inner d-flex justify-content-between align-items-center"><div class="footer-text">Made with <strong>💖</strong> By HueByte</div><div class="footer-links"><a href="https://github.com/HueByte/VintageHue" class="footer-link" target="_blank">GitHub</a><a href="#" class="footer-link scroll-to-top" onclick="scrollToTop()">Top</a></div></div></div><script>function scrollToTop(){window.scrollTo({top:0,behavior:'smooth'});}</script>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

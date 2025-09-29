@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Advanced Pathfinding System | VintageHue Mods Documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Advanced Pathfinding System | VintageHue Mods Documentation ">
+      
+      
+      <link rel="icon" href="../../images/hue-nobg-clean.png">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HueByte/VintageHue/blob/master/docs/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/hue-nobg-clean.png" alt="VintageHue">
+            VintageHue
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="advanced-pathfinding-system">Advanced Pathfinding System</h1>
+
+<p>HueHordes features a sophisticated 3D A* pathfinding system designed specifically for Vintage Story's blocky terrain. The system provides realistic entity movement with intelligent obstacle avoidance and terrain navigation.</p>
+<h2 id="coordinate-system">Coordinate System</h2>
+<h3 id="entity-based-coordinates">Entity-Based Coordinates</h3>
+<p>The pathfinding system validates three Y levels for each position:</p>
+<pre><code>Y-1: Ground block (must be solid for entity to stand on)
+Y:   Entity base level (must be passable for entity body)  
+Y+1: Entity head clearance (must be passable for entity head)
+</code></pre>
+<h3 id="coordinate-conversion">Coordinate Conversion</h3>
+<p>Entity world positions are automatically converted to base-level coordinates:</p>
+<ul>
+<li>Entity at Y=3.4 → Entity base Y=3 (rounded down)</li>
+<li>Entity at Y=5.0 → Entity base Y=5</li>
+<li>Pathfinding operates on integer coordinates for precise block-based movement</li>
+</ul>
+<h2 id="how-pathfinding-works">How Pathfinding Works</h2>
+<pre><code class="lang-mermaid">flowchart TD
+    Start[Entity needs path] --&gt; Check[Check if target reachable]
+    Check --&gt; |Yes| Calculate[Calculate A* path]
+    Check --&gt; |No| Fail[Return no path]
+    Calculate --&gt; Path[Return waypoints]
+    Path --&gt; Move[Entity follows path]
+</code></pre>
+<h2 id="movement-system">Movement System</h2>
+<h3 id="symmetrical-movement">Symmetrical Movement</h3>
+<p>The pathfinding enforces <strong>±1 block vertical movement</strong> for realistic navigation:</p>
+<h4 id="upward-movement-jumping">Upward Movement (Jumping)</h4>
+<ul>
+<li>Entity can jump from base level Y to Y+1</li>
+<li>Requires solid ground at destination Y-1</li>
+<li>Additional jump cost penalty applied to A* algorithm</li>
+</ul>
+<h4 id="downward-movement-walking">Downward Movement (Walking)</h4>
+<ul>
+<li>Entity can walk down from base level Y to Y-1</li>
+<li>No jumping required, natural stepping down</li>
+<li>Same movement cost as upward movement for algorithm balance</li>
+</ul>
+<h3 id="movement-validation">Movement Validation</h3>
+<p>For each potential move, the system validates:</p>
+<ol>
+<li><strong>Ground Check (Y-1)</strong>: Must be solid block for entity to stand on</li>
+<li><strong>Base Clearance (Y)</strong>: Must be clear air for entity base/bottom</li>
+<li><strong>Body Clearance (Y+1)</strong>: Must be clear air for entity body/top</li>
+</ol>
+<h3 id="diagonal-movement-protection">Diagonal Movement Protection</h3>
+<p>Special validation prevents corner-cutting through solid blocks:</p>
+<pre><code class="lang-csharp">// For diagonal moves, check intermediate positions
+var intermediatePos1 = new Vec3i(from.X, from.Y, to.Z);
+var intermediatePos2 = new Vec3i(to.X, from.Y, from.Z);
+
+// Both intermediate positions must be walkable
+return IsPositionWalkable(intermediatePos1) &amp;&amp; IsPositionWalkable(intermediatePos2);
+</code></pre>
+<h2 id="algorithm-features">Algorithm Features</h2>
+<h3 id="a-implementation">A* Implementation</h3>
+<ul>
+<li><strong>Heuristic</strong>: Manhattan distance for accurate 3D pathfinding</li>
+<li><strong>Cost Function</strong>: Horizontal (1.0), Vertical (1.4), Diagonal (1.4), Jump penalty (2.0)</li>
+<li><strong>Open/Closed Sets</strong>: Efficient node management with priority queue</li>
+<li><strong>Maximum Nodes</strong>: Configurable search limit (default: 1000 nodes)</li>
+</ul>
+<h3 id="performance-optimizations">Performance Optimizations</h3>
+<ul>
+<li><strong>Integer Coordinates</strong>: Fast coordinate operations without floating-point overhead</li>
+<li><strong>Early Termination</strong>: Stops search when maximum nodes reached</li>
+<li><strong>Stuck Detection</strong>: Automatic fallback to nearest accessible position</li>
+<li><strong>Memory Management</strong>: Reusable data structures for multiple pathfinding calls</li>
+</ul>
+<h2 id="visual-debugging">Visual Debugging</h2>
+<h3 id="particle-system-integration">Particle System Integration</h3>
+<p>The pathfinding system includes built-in visualization:</p>
+<ul>
+<li><strong>Path Particles</strong>: Real-time display of calculated routes</li>
+<li><strong>Coordinate Logging</strong>: Detailed debug output for each waypoint</li>
+<li><strong>Entity Tracking</strong>: Unique particle colors per entity</li>
+<li><strong>Performance Monitoring</strong>: Path calculation timing and node statistics</li>
+</ul>
+<h3 id="debug-commands">Debug Commands</h3>
+<pre><code class="lang-bash"># Show base detection with particles
+/horde debug base
+
+# Show pathfinding visualization  
+/horde debug paths
+
+# Clear all debug particles
+/horde debug clear
+</code></pre>
+<h3 id="log-output-examples">Log Output Examples</h3>
+<pre><code class="lang-log">[AStar/PathCoordinates] Entity mob_123: START(100.0,2.0,200.0) -&gt; END(150.0,3.0,250.0)
+Path length: 23 waypoints
+
+[Particles/ParticleSpawned] Particle #1 at entity base (100,2,200) -&gt; world pos (100.5,2.0,200.5)
+[Particles/ParticleSpawned] Particle #2 at entity base (101,2,201) -&gt; world pos (101.5,2.0,201.5)
+
+[Particles/PathComplete] Complete path: (100,2,200) -&gt; (101,2,201) -&gt; (150,3,250)
+Entity mob_123: 23 nodes, 23 particles spawned
+</code></pre>
+<h2 id="integration-with-ai-system">Integration with AI System</h2>
+<h3 id="entity-behavior">Entity Behavior</h3>
+<ol>
+<li><strong>Path Calculation</strong>: AI calls <code>FindPath(start, end, entityId)</code></li>
+<li><strong>Route Following</strong>: Entity follows waypoints in sequence</li>
+<li><strong>Obstacle Handling</strong>: Dynamic recalculation when blocked</li>
+<li><strong>State Management</strong>: Clean integration with AI state machine</li>
+</ol>
+<h3 id="base-detection-integration">Base Detection Integration</h3>
+<ul>
+<li><strong>Target Validation</strong>: Ensures bases are reachable before pathfinding</li>
+<li><strong>Height Adjustment</strong>: Automatically finds accessible positions near targets</li>
+<li><strong>Multi-level Bases</strong>: Handles complex base structures with proper navigation</li>
+</ul>
+<h2 id="configuration">Configuration</h2>
+<h3 id="pathfinding-parameters">Pathfinding Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MAX_JUMP_HEIGHT</code></td>
+<td>1</td>
+<td>Maximum blocks entity can jump up</td>
+</tr>
+<tr>
+<td><code>MAX_FALL_HEIGHT</code></td>
+<td>10</td>
+<td>Maximum blocks entity can safely fall</td>
+</tr>
+<tr>
+<td><code>MOVE_COST_HORIZONTAL</code></td>
+<td>1.0</td>
+<td>Cost for horizontal movement</td>
+</tr>
+<tr>
+<td><code>MOVE_COST_VERTICAL</code></td>
+<td>1.4</td>
+<td>Cost for vertical movement</td>
+</tr>
+<tr>
+<td><code>MOVE_COST_DIAGONAL</code></td>
+<td>1.4</td>
+<td>Cost for diagonal movement</td>
+</tr>
+<tr>
+<td><code>JUMP_COST_PENALTY</code></td>
+<td>2.0</td>
+<td>Additional cost for jumping</td>
+</tr>
+</tbody>
+</table>
+<h3 id="performance-tuning">Performance Tuning</h3>
+<pre><code class="lang-csharp">// Adjust maximum nodes for performance vs. accuracy
+public List&lt;Vec3d&gt; FindPath(Vec3d start, Vec3d end, string entityId, int maxNodes = 1000)
+
+// Enable/disable visualization for production
+var pathfinder = new AStarPathfinder(serverApi, enablePathVisualization: false);
+</code></pre>
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="for-modders">For Modders</h3>
+<ol>
+<li><strong>Use Entity IDs</strong>: Always provide unique entity identifiers for debugging</li>
+<li><strong>Handle Failed Paths</strong>: Check for empty results and implement fallbacks</li>
+<li><strong>Cache Results</strong>: Store paths for entities to reduce computation</li>
+<li><strong>Monitor Performance</strong>: Watch node count and calculation time in logs</li>
+</ol>
+<h3 id="for-server-operators">For Server Operators</h3>
+<ol>
+<li><strong>Debug Mode</strong>: Enable visualization only during development/testing</li>
+<li><strong>Performance Monitoring</strong>: Watch for excessive pathfinding calls</li>
+<li><strong>Memory Usage</strong>: Monitor entity count and active paths</li>
+<li><strong>Log Analysis</strong>: Use coordinate logging to debug movement issues</li>
+</ol>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="common-issues">Common Issues</h3>
+<table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>Cause</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No path found</td>
+<td>Unreachable target</td>
+<td>Check for blocks between start/end</td>
+</tr>
+<tr>
+<td>Entities stuck</td>
+<td>Invalid terrain</td>
+<td>Verify ground blocks and clearance</td>
+</tr>
+<tr>
+<td>Performance lag</td>
+<td>Too many pathfinding calls</td>
+<td>Reduce entity count or cache paths</td>
+</tr>
+<tr>
+<td>Incorrect particles</td>
+<td>Coordinate mismatch</td>
+<td>Verify Y-coordinate system usage</td>
+</tr>
+</tbody>
+</table>
+<h3 id="debug-logging">Debug Logging</h3>
+<p>Enable detailed pathfinding logs in <code>ModConfig/Horde.server.json</code>:</p>
+<pre><code class="lang-json">{
+  &quot;EnableDebugLogging&quot;: true,
+  &quot;DebugLoggingLevel&quot;: 2
+}
+</code></pre>
+<p>This will output comprehensive pathfinding information for analysis and troubleshooting.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/HueByte/VintageHue/blob/master/docs/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <div class="footer-custom"><div class="footer-inner d-flex justify-content-between align-items-center"><div class="footer-text">Made with <strong>💖</strong> By HueByte</div><div class="footer-links"><a href="https://github.com/HueByte/VintageHue" class="footer-link" target="_blank">GitHub</a><a href="#" class="footer-link scroll-to-top" onclick="scrollToTop()">Top</a></div></div></div><script>function scrollToTop(){window.scrollTo({top:0,behavior:'smooth'});}</script>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
